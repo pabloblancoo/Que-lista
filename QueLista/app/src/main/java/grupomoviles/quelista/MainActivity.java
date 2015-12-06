@@ -21,6 +21,9 @@ public class MainActivity extends ActionBarActivity {
 
         //Ejemplo de Stream y funcion lambda
         Stream.of(lista).filter(s -> s.isEmpty());
+
+        //Linea de prueba
+        Stream.of(lista).filter( s -> s.length() == 3 );
     }
 
     @Override
