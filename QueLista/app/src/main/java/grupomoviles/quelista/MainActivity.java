@@ -75,16 +75,19 @@ List<String> lista;
 
         //Por alguna razon no muestra el contenido de cada elemento del array, solamente el ultimo
 
+        tx.setText("");
+
         Stream.of(lista).forEach((s) -> {
+
                     RelativeLayout layout = (RelativeLayout) findViewById(R.id.layoutPrincipal);
                     TextView tx2 = new TextView(MainActivity.this);
-                    layout.add
                     tx.setText(s);
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    tx.setText(tx.getText() + s + "\n");
                 }
         );
 
