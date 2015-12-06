@@ -4,6 +4,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
@@ -13,12 +15,22 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
 
+TextView tx ;
+List<String> lista;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tx = (TextView) findViewById(R.id.titulo);
 
-        List<String> lista = new ArrayList<String>();
+        lista = new ArrayList<String>();
+
+        lista.add("Hola");
+        lista.add("Hol");
+        lista.add("Hoa");
+        lista.add("ola");
+        lista.add("Hoasla");
+        lista.add("333");
 
         //Ejemplo de Stream y funcion lambda
         Stream.of(lista).filter(s -> s.isEmpty());
@@ -28,6 +40,8 @@ public class MainActivity extends ActionBarActivity {
 
         //Retornar la lista (.collect())
         lista = Stream.of(lista).filter( s -> s.length() == 3 ).collect(Collectors.toList());
+
+
 
     }
 
@@ -51,5 +65,22 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void prueba(View view){
+
+        //Prueba de boton que ejecuta una funcion lambda
+
+        //Por alguna razon no muestra el contenido de cada elemento del array, solamente el ultimo
+
+        Stream.of(lista).forEach((s) -> {
+                    tx.setText(s);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
     }
 }

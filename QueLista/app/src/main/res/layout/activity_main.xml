@@ -11,6 +11,18 @@
         android:textColor="#00ff9d"
         android:textStyle="bold"
         android:textSize="60sp"
-        android:textIsSelectable="false" />
+        android:textIsSelectable="false"
+        android:id="@+id/titulo" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="70dp"
+        android:nestedScrollingEnabled="true"
+        android:onClick="prueba" />
 
 </RelativeLayout>
