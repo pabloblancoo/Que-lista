@@ -1,11 +1,13 @@
 package grupomoviles.quelista;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -69,29 +71,36 @@ List<String> lista;
         return super.onOptionsItemSelected(item);
     }
 
+//    public void prueba(View view){
+//
+//        //Prueba de boton que ejecuta una funcion lambda
+//
+//        //Por alguna razon no muestra el contenido de cada elemento del array, solamente el ultimo
+//
+//        tx.setText("");
+//
+//        Stream.of(lista).forEach((s) -> {
+//
+//                    RelativeLayout layout2 = (RelativeLayout) findViewById(R.id.layoutPrincipal);
+//                    TextView tx2 = new TextView(this);
+//                    tx2.setLayoutParams(new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+//
+//                    tx2.setText(s);
+//                    layout2.addView(tx2);
+//
+//
+//                    tx.setText(s);
+//
+//                    //tx.setText(tx.getText() + s + "\n");
+//                }
+//        );
+//
+//
+//       // Intent intent = new Intent(MainActivity.this,ActivityPruebas.class);
+//       //startActivity(intent);
+//    }
+
     public void prueba(View view){
 
-        //Prueba de boton que ejecuta una funcion lambda
-
-        //Por alguna razon no muestra el contenido de cada elemento del array, solamente el ultimo
-
-        tx.setText("");
-
-        Stream.of(lista).forEach((s) -> {
-
-                    RelativeLayout layout = (RelativeLayout) findViewById(R.id.layoutPrincipal);
-                    TextView tx2 = new TextView(MainActivity.this);
-                    tx.setText(s);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    tx.setText(tx.getText() + s + "\n");
-                }
-        );
-
-        Intent intent = new Intent(MainActivity.this,ActivityPruebas.class);
-        startActivity(intent);
     }
 }
