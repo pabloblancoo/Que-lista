@@ -1,10 +1,12 @@
 package grupomoviles.quelista;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.annimon.stream.Collectors;
@@ -74,6 +76,9 @@ List<String> lista;
         //Por alguna razon no muestra el contenido de cada elemento del array, solamente el ultimo
 
         Stream.of(lista).forEach((s) -> {
+                    RelativeLayout layout = (RelativeLayout) findViewById(R.id.layoutPrincipal);
+                    TextView tx2 = new TextView(MainActivity.this);
+                    layout.add
                     tx.setText(s);
                     try {
                         Thread.sleep(1000);
@@ -82,5 +87,8 @@ List<String> lista;
                     }
                 }
         );
+
+        Intent intent = new Intent(MainActivity.this,ActivityPruebas.class);
+        startActivity(intent);
     }
 }
