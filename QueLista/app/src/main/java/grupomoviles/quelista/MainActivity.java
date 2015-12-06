@@ -19,8 +19,9 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
 
-TextView tx ;
-List<String> lista;
+    TextView tx;
+    List<String> lista;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +41,10 @@ List<String> lista;
         Stream.of(lista).filter(s -> s.isEmpty());
 
         //Linea de prueba
-        Stream.of(lista).filter( s -> s.length() == 3 );
+        Stream.of(lista).filter(s -> s.length() == 3);
 
         //Retornar la lista (.collect())
-        lista = Stream.of(lista).filter( s -> s.length() == 3 ).collect(Collectors.toList());
-
+        lista = Stream.of(lista).filter(s -> s.length() == 3).collect(Collectors.toList());
 
 
     }
@@ -100,7 +100,8 @@ List<String> lista;
 //       //startActivity(intent);
 //    }
 
-    public void prueba(View view){
-
+    public void prueba(View view) {
+        Intent intent = new Intent(MainActivity.this,ActivityPruebas.class);
+        startActivity(intent);
     }
 }
