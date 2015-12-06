@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: "me.tatarka.retrolambda"
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.0"
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         applicationId "grupomoviles.quelista"
@@ -16,10 +17,31 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+        }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.annimon:stream:1.0.4'
+    compile files('lib/core-3.2.1.jar')
+    compile files('lib/gradle-retrolambda-3.2.3.jar')
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.2.3'
+    }
+}
+
+repositories {
+    mavenCentral()
 }

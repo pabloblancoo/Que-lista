@@ -5,12 +5,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.annimon.stream.Stream;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        List<String> lista = new ArrayList<String>();
+
+        //Ejemplo de Stream y funcion lambda
+        Stream.of(lista).filter(s -> s.isEmpty());
     }
 
     @Override
