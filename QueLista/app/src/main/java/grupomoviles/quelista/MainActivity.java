@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 
 import java.util.ArrayList;
@@ -24,6 +25,10 @@ public class MainActivity extends ActionBarActivity {
 
         //Linea de prueba
         Stream.of(lista).filter( s -> s.length() == 3 );
+
+        //Retornar la lista (.collect())
+        lista = Stream.of(lista).filter( s -> s.length() == 3 ).collect(Collectors.toList());
+
     }
 
     @Override
