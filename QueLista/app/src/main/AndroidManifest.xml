@@ -24,12 +24,12 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <!-- Activity para escanear códigos -->
-        <activity android:name=".CaptureActivityAnyOrientation"
-            android:screenOrientation="fullSensor"
-            android:stateNotNeeded="true"
-            android:theme="@style/zxing_CaptureTheme"
-            android:windowSoftInputMode="stateAlwaysHidden">
+        <activity
+            android:name=".captureCodes.CaptureActivity"
+            android:label=""
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" >
         </activity>
+
     </application>
 
 </manifest>

@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context="nauce.imgftp.CaptureActivity">
+    <item android:id="@+id/action_beep" android:title="Beep"
+        android:orderInCategory="100" app:showAsAction="always"
+        android:icon="@drawable/icon_beep_off"/>
+    <item android:id="@+id/action_camera" android:title="Camera"
+        android:orderInCategory="100" app:showAsAction="always"
+        android:icon="@drawable/icon_change_camera" />
+    <item android:id="@+id/action_flash" android:title="Flash"
+        android:orderInCategory="100" app:showAsAction="always"
+        android:icon="@drawable/icon_flash"/>
+</menu>
