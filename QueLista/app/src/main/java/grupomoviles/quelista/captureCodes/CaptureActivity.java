@@ -15,7 +15,7 @@ import com.journeyapps.barcodescanner.CompoundBarcodeView;
 
 import java.util.List;
 
-import nauce.registrarproductos.R;
+import grupomoviles.quelista.R;
 
 public class CaptureActivity extends ActionBarActivity {
 
