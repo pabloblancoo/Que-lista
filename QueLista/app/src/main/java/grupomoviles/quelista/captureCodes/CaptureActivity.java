@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.zxing.ResultPoint;
 import com.google.zxing.client.android.BeepManager;
@@ -43,9 +44,18 @@ public class CaptureActivity extends ActionBarActivity {
         ica = (IntentCaptureActivity) getIntent().getExtras().get("this");
 
         barcodeView = (CompoundBarcodeView) findViewById(R.id.view);
-        barcodeView.decodeSingle(callback);
         barcodeView.setStatusText(ica.getStatusText());
+        reconfig();
         beepManager = new BeepManager(this);
+
+        barcodeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                barcodeView.pause();
+                barcodeView.resume();
+                barcodeView.decodeSingle(callback);
+            }
+        });
 
         torchOff();
     }
@@ -151,30 +161,27 @@ public class CaptureActivity extends ActionBarActivity {
     protected void onStart() {
         super.onStart();
 
-        barcodeView.getBarcodeView().getCameraSettings().setAutoFocusEnabled(true);
-        if(flash)
-            barcodeView.setTorchOn();
-        torchOff();
+        barcodeView.pause();
+        barcodeView.resume();
+        reconfig();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
+        barcodeView.pause();
         barcodeView.resume();
-        if(flash)
-            barcodeView.setTorchOn();
-        torchOff();
+        reconfig();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
 
+        barcodeView.pause();
         barcodeView.resume();
-        if(flash)
-            barcodeView.setTorchOn();
-        torchOff();
+        reconfig();
     }
 
     @Override
@@ -209,6 +216,15 @@ public class CaptureActivity extends ActionBarActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        reconfig();
+    }
+
+    private void reconfig() {
+        barcodeView.decodeSingle(callback);
+        barcodeView.getBarcodeView().getCameraSettings().setAutoFocusEnabled(true);
+        barcodeView.getBarcodeView().getCameraSettings().setExposureEnabled(true);
+        barcodeView.getBarcodeView().getCameraSettings().setMeteringEnabled(true);
+        barcodeView.getBarcodeView().getCameraSettings().setBarcodeSceneModeEnabled(true);
         if(flash)
             barcodeView.setTorchOn();
         torchOff();
