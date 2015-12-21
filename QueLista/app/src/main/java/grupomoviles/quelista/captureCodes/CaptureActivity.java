@@ -3,6 +3,7 @@ package grupomoviles.quelista.captureCodes;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +19,7 @@ import java.util.List;
 
 import grupomoviles.quelista.R;
 
-public class CaptureActivity extends ActionBarActivity {
+public class CaptureActivity extends AppCompatActivity {
 
     public static final String SCAN_FORMAT = "SCAN_FORMAT";
     public static final String SCAN_CONTENT = "SCAN_CONTENT";
