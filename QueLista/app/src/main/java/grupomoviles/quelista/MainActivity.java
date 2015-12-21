@@ -17,6 +17,8 @@ import com.annimon.stream.Stream;
 import java.util.ArrayList;
 import java.util.List;
 
+import grupomoviles.quelista.Database.LocalDatabase;
+
 public class MainActivity extends ActionBarActivity {
 
     TextView tx;
@@ -48,6 +50,9 @@ public class MainActivity extends ActionBarActivity {
         //Retornar la lista (.collect())
         lista = Stream.of(lista).filter(s -> s.length() == 3).collect(Collectors.toList());
 
+        //Creado para ver si arranca la BD
+
+        LocalDatabase db = new LocalDatabase(this,"",null,1);
 
     }
 
