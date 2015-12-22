@@ -33,6 +33,8 @@ dependencies {
     compile 'com.journeyapps:zxing-android-embedded:3.0.3@aar'
     compile 'com.google.zxing:core:3.2.1'
     compile files('lib/commons-net-3.4.jar')
+    compile 'com.android.support:recyclerview-v7:22.2.1'
+
 }
 
 buildscript {
