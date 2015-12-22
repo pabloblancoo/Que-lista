@@ -49,7 +49,7 @@ public class MainActivity extends ActionBarActivity {
         recycler.setAdapter(new SimpleAdapter(this, products));
 
         //Creado para ver si arranca la BD
-        LocalDatabase db = new LocalDatabase(this,"",null,1);
+       // LocalDatabase db = new LocalDatabase(this,"",null,1);
     }
 
     @Override

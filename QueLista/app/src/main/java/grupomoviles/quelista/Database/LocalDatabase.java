@@ -16,19 +16,19 @@ public class LocalDatabase extends SQLiteOpenHelper {
     /*
     Columnas de la base de datos
      */
-    private static final String COLUMN_BARCODE = "barcode";
-    private static final String COLUMN_DESCRIPTION = "description";
-    private static final String COLUMN_BRAND = "brand";
-    private static final String COLUMN_NETVALUE = "netvalue";
-    private static final String COLUMN_CATEGORY = "category";
-    private static final String COLUMN_SUBCATEGORY = "subcategory";
-    private static final String COLUMN_STOCK = "stock";
-    private static final String COLUMN_MINSTOCK = "minstock";
-    private static final String COLUMN_LASTUPDATE = "lastupdate";
-    private static final String COLUMN_CONSUMECYCLE = "consumecycle";
-    private static final String COLUMN_CONSUMEUNITS = "consumeunits";
-    private static final String COLUMN_SHOPPINGLISTUNITS = "shoppinglistunits";
-    private static final String COLUMN_CARTUNITS = "cartunits";
+    public static final String COLUMN_BARCODE = "barcode";
+    public static final String COLUMN_DESCRIPTION = "description";
+    public static final String COLUMN_BRAND = "brand";
+    public static final String COLUMN_NETVALUE = "netvalue";
+    public static final String COLUMN_CATEGORY = "category";
+    public static final String COLUMN_SUBCATEGORY = "subcategory";
+    public static final String COLUMN_STOCK = "stock";
+    public static final String COLUMN_MINSTOCK = "minstock";
+    public static final String COLUMN_LASTUPDATE = "lastupdate";
+    public static final String COLUMN_CONSUMECYCLE = "consumecycle";
+    public static final String COLUMN_CONSUMEUNITS = "consumeunits";
+    public static final String COLUMN_SHOPPINGLISTUNITS = "shoppinglistunits";
+    public static final String COLUMN_CARTUNITS = "cartunits";
 
     /*
     Nombre y version de la BD
