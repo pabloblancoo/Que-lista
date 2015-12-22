@@ -4,6 +4,8 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +33,20 @@ public class MainActivity extends ActionBarActivity {
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        RecyclerView recycler = (RecyclerView) findViewById(R.id.recyclerView);
+        recycler.setHasFixedSize(true);
+        // Usar un administrador para LinearLayout
+        recycler.setLayoutManager(new LinearLayoutManager(this));
+
+        List<Product> products = new ArrayList<>();
+
+        products.add(new Product("0", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
+        products.add(new Product("1", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
+        products.add(new Product("2", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
+        products.add(new Product("3", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
+
+        recycler.setAdapter(new SimpleAdapter(this, products));
 
         //Creado para ver si arranca la BD
         LocalDatabase db = new LocalDatabase(this,"",null,1);

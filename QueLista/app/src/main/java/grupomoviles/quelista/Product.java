@@ -18,7 +18,7 @@ public class Product {
     private String category;
     private String subcategory;
 
-    private int stock = NOT_IN_PANTRY;		// (-1 == no)
+    private int stock = 0;		// (-1 == no)
     private int minStock;
     private int unitsToAdd;	//Unidades a añadir a la lista de la compra automáticamente (Def: 1)
 
@@ -46,5 +46,21 @@ public class Product {
         this.category = category;
         this.subcategory = subcategory;
         this.units = units;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public String getNetValue() {
+        return netValue;
+    }
+
+    public int getStock() {
+        return stock;
     }
 }
