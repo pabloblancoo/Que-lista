@@ -39,34 +39,8 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
             netValue = (TextView) v.findViewById(R.id.txNetValue);
             units = (TextView) v.findViewById(R.id.txUnits);
 
-            v.findViewById(R.id.btnPlus).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    units.setText(String.valueOf(product.increaseUnits()));
-                }
-            });
-
-            v.findViewById(R.id.btnMinus).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (product.getStock() > 0)
-                        units.setText(String.valueOf(product.decreaseUnits()));
-                    else {
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(view.getContext());
-                        dialog.setTitle("¿Desea eliminar este producto de la despensa?");
-                        dialog.setNegativeButton("Cancelar", null);
-                        dialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                product.decreaseUnits();
-                                simpleAdapter.items.remove(product);
-                                simpleAdapter.notifyDataSetChanged();
-                            }
-                        });
-                        dialog.show();
-                    }
-                }
-            });
+            v.findViewById(R.id.btnPlus).setOnClickListener(this);
+            v.findViewById(R.id.btnMinus).setOnClickListener(this);
 
             this.simpleAdapter= simpleAdapter;
             v.setOnClickListener(this);
@@ -74,7 +48,28 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
 
         @Override
         public void onClick(View v) {
-            simpleAdapter.onItemClick(v, getAdapterPosition());
+            if (v.equals(v.findViewById(R.id.btnPlus)))
+                units.setText(String.valueOf(product.increaseUnits()));
+            else if (v.equals(v.findViewById(R.id.btnMinus))) {
+                if (product.getStock() > 0)
+                    units.setText(String.valueOf(product.decreaseUnits()));
+                else {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
+                    dialog.setTitle("¿Desea eliminar este producto de la despensa?");
+                    dialog.setNegativeButton("Cancelar", null);
+                    dialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            product.decreaseUnits();
+                            simpleAdapter.items.remove(product);
+                            simpleAdapter.notifyDataSetChanged();
+                        }
+                    });
+                    dialog.show();
+                }
+            }
+            else
+                simpleAdapter.onItemClick(v, getAdapterPosition());
         }
 
         public ItemClickListener getListener() {
