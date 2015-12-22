@@ -30,7 +30,6 @@ public class LocalDatabase extends SQLiteOpenHelper {
     private static final String COLUMN_SHOPPINGLISTUNITS = "shoppinglistunits";
     private static final String COLUMN_CARTUNITS = "cartunits";
 
-
     /*
     Nombre y version de la BD
      */

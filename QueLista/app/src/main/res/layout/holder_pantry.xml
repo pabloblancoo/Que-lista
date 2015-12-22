@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="12dp">
+
+    <ImageView
+        android:layout_width="84dp"
+        android:layout_height="84dp"
+        android:id="@+id/imageView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/cereales_miel_pops"
+        android:scaleType="centerInside" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txDescription"
+        android:layout_alignParentTop="true"
+        android:text="Cereales Miel Pops"
+        android:textSize="16dp"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_toStartOf="@+id/txUnits"
+        android:layout_marginTop="4dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kellogg&apos;s"
+        android:id="@+id/txBrand"
+        android:layout_below="@+id/txDescription"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_toStartOf="@+id/txUnits"
+        android:layout_marginTop="4dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Caja de 375 g"
+        android:id="@+id/txNetValue"
+        android:layout_below="@+id/txBrand"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_toStartOf="@+id/txUnits"
+        android:layout_marginTop="4dp" />
+
+    <ImageButton
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:id="@+id/btnPlus"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/icon_button_plus"
+        android:nestedScrollingEnabled="false"
+        android:scaleType="centerCrop"
+        android:background="@null"
+        android:layout_marginBottom="12dp" />
+
+    <ImageButton
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:id="@+id/btnMinus"
+        android:layout_below="@+id/btnPlus"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/icon_button_minus"
+        android:scaleType="centerCrop"
+        android:background="@null" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:id="@+id/txUnits"
+        android:layout_toStartOf="@+id/btnPlus"
+        android:layout_alignBottom="@+id/btnMinus"
+        android:layout_alignTop="@+id/btnPlus"
+        android:textStyle="bold"
+        android:textSize="22dp"
+        android:gravity="center_vertical"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp" />
+
+
+</RelativeLayout>
