@@ -8,24 +8,25 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class ProductDataSource {
 
+    //NO TOCAR AUN, FALTA POR HACER
     private LocalDatabase helper;
     private SQLiteDatabase database;
 
     private final String[] allColumns = {
-            LocalDatabase.COLUMN_BARCODE,
-            LocalDatabase.COLUMN_BARCODE,
-            LocalDatabase.COLUMN_DESCRIPTION,
-            LocalDatabase.COLUMN_BRAND,
-            LocalDatabase.COLUMN_NETVALUE,
-            LocalDatabase.COLUMN_CATEGORY,
-            LocalDatabase.COLUMN_SUBCATEGORY,
-            LocalDatabase.COLUMN_STOCK,
-            LocalDatabase.COLUMN_MINSTOCK,
-            LocalDatabase.COLUMN_LASTUPDATE,
-            LocalDatabase.COLUMN_CONSUMECYCLE,
-            LocalDatabase.COLUMN_CONSUMEUNITS,
-            LocalDatabase.COLUMN_SHOPPINGLISTUNITS,
-            LocalDatabase.COLUMN_CARTUNITS
+            LocalDatabase.PRODUCT_COLUMN_BARCODE,
+            LocalDatabase.PRODUCT_COLUMN_BARCODE,
+            LocalDatabase.PRODUCT_COLUMN_DESCRIPTION,
+            LocalDatabase.PRODUCT_COLUMN_BRAND,
+            LocalDatabase.PRODUCT_COLUMN_NETVALUE,
+            LocalDatabase.PRODUCT_COLUMN_CATEGORY,
+            LocalDatabase.PRODUCT_COLUMN_SUBCATEGORY,
+            LocalDatabase.PRODUCT_COLUMN_STOCK,
+            LocalDatabase.PRODUCT_COLUMN_MINSTOCK,
+            LocalDatabase.PRODUCT_COLUMN_LASTUPDATE,
+            LocalDatabase.PRODUCT_COLUMN_CONSUMECYCLE,
+            LocalDatabase.PRODUCT_COLUMN_CONSUMEUNITS,
+            LocalDatabase.PRODUCT_COLUMN_SHOPPINGLISTUNITS,
+            LocalDatabase.PRODUCT_COLUMN_CARTUNITS
     };
 
     public ProductDataSource(Context context) {
@@ -40,5 +41,5 @@ public class ProductDataSource {
         helper.close();
     }
 
-    
+
 }
