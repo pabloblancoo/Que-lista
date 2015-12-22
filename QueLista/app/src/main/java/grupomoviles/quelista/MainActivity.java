@@ -13,47 +13,23 @@ import android.widget.TextView;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
+import com.google.zxing.BarcodeFormat;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import grupomoviles.quelista.Database.LocalDatabase;
+import grupomoviles.quelista.captureCodes.IntentCaptureActivity;
 
 public class MainActivity extends ActionBarActivity {
-
-    TextView tx;
-    List<String> lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tx = (TextView) findViewById(R.id.titulo);
-
-        lista = new ArrayList<String>();
-
-        lista.add("Hola");
-        lista.add("Hol");
-        lista.add("Hoa");
-        lista.add("ola");
-        lista.add("Hoasla");
-        lista.add("333");
-
-        //Ejemplo de Stream y funcion lambda
-        Stream.of(lista).filter(s -> s.isEmpty());
-
-        //Linea de prueba para dani
-
-        //Linea de prueba
-        Stream.of(lista).filter(s -> s.length() == 3);
-
-        //Retornar la lista (.collect())
-        lista = Stream.of(lista).filter(s -> s.length() == 3).collect(Collectors.toList());
 
         //Creado para ver si arranca la BD
-
         LocalDatabase db = new LocalDatabase(this,"",null,1);
-
     }
 
     @Override
@@ -78,37 +54,19 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    public void prueba(View view){
-//
-//        //Prueba de boton que ejecuta una funcion lambda
-//
-//        //Por alguna razon no muestra el contenido de cada elemento del array, solamente el ultimo
-//
-//        tx.setText("");
-//
-//        Stream.of(lista).forEach((s) -> {
-//
-//                    RelativeLayout layout2 = (RelativeLayout) findViewById(R.id.layoutPrincipal);
-//                    TextView tx2 = new TextView(this);
-//                    tx2.setLayoutParams(new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//
-//                    tx2.setText(s);
-//                    layout2.addView(tx2);
-//
-//
-//                    tx.setText(s);
-//
-//                    //tx.setText(tx.getText() + s + "\n");
-//                }
-//        );
-//
-//
-//       // Intent intent = new Intent(MainActivity.this,ActivityPruebas.class);
-//       //startActivity(intent);
-//    }
-
     public void prueba(View view) {
         Intent intent = new Intent(MainActivity.this,ActivityPruebas.class);
         startActivity(intent);
+    }
+
+    public void scan(View view) {
+        IntentCaptureActivity ica = new IntentCaptureActivity();
+
+        //Desactiva la opción de menú reverese camera
+        ica.setReverseCamera(false);
+        //Desactiva el sonido al escanear (por defecto está activado
+        //ica.setBeep(false);
+
+        ica.initScan(this);
     }
 }
