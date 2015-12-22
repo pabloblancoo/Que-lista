@@ -1,10 +1,13 @@
 package grupomoviles.quelista;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,14 +22,15 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
     public static class SimpleViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-        public ImageView image;
-        public TextView descripction;
-        public TextView brand;
-        public TextView netValue;
-        public TextView units;
-        public ItemClickListener listener;
+        private Product product;
+        private ImageView image;
+        private TextView descripction;
+        private TextView brand;
+        private TextView netValue;
+        private TextView units;
+        private SimpleAdapter simpleAdapter;
 
-        public SimpleViewHolder(View v, ItemClickListener listener) {
+        public SimpleViewHolder(View v, SimpleAdapter simpleAdapter) {
             super(v);
 
             image = (ImageView) v.findViewById(R.id.imageView);
@@ -35,13 +39,46 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
             netValue = (TextView) v.findViewById(R.id.txNetValue);
             units = (TextView) v.findViewById(R.id.txUnits);
 
-            this.listener = listener;
+            v.findViewById(R.id.btnPlus).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    units.setText(String.valueOf(product.increaseUnits()));
+                }
+            });
+
+            v.findViewById(R.id.btnMinus).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (product.getStock() > 0)
+                        units.setText(String.valueOf(product.decreaseUnits()));
+                    else {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(view.getContext());
+                        dialog.setTitle("¿Desea eliminar este producto de la despensa?");
+                        dialog.setNegativeButton("Cancelar", null);
+                        dialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                product.decreaseUnits();
+                                simpleAdapter.items.remove(product);
+                                simpleAdapter.notifyDataSetChanged();
+                            }
+                        });
+                        dialog.show();
+                    }
+                }
+            });
+
+            this.simpleAdapter= simpleAdapter;
             v.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            listener.onItemClick(v, getAdapterPosition());
+            simpleAdapter.onItemClick(v, getAdapterPosition());
+        }
+
+        public ItemClickListener getListener() {
+            return simpleAdapter;
         }
     }
 
@@ -66,6 +103,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
     public void onBindViewHolder(SimpleViewHolder viewHolder, int i) {
         Product currentItem = items.get(i);
 
+        viewHolder.product = currentItem;
         viewHolder.descripction.setText(currentItem.getDescription());
         viewHolder.brand.setText(currentItem.getBrand());
         viewHolder.netValue.setText(currentItem.getNetValue());

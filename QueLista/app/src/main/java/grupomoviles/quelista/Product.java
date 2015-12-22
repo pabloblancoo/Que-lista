@@ -63,4 +63,14 @@ public class Product {
     public int getStock() {
         return stock;
     }
+
+    public int increaseUnits() {
+        stock++;
+        return stock;
+    }
+
+    public int decreaseUnits() {
+        stock--;
+        return stock;
+    }
 }
