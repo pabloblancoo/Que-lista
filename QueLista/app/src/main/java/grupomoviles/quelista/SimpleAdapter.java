@@ -32,6 +32,7 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
         private TextView netValue;
         private TextView units;
         private SimpleAdapter simpleAdapter;
+        private BlurLayout blurLayout;
 
         public SimpleViewHolder(View v, SimpleAdapter simpleAdapter) {
             super(v);
@@ -42,6 +43,7 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
             netValue = (TextView) v.findViewById(R.id.txNetValue);
             units = (TextView) v.findViewById(R.id.txUnits);
 
+            blurLayout = (BlurLayout) v.findViewById(R.id.blurLayout);
             v.findViewById(R.id.btnPlus).setOnClickListener(this);
             v.findViewById(R.id.btnMinus).setOnClickListener(this);
             v.findViewById(R.id.btnDelete).setOnClickListener(this);
@@ -70,15 +72,15 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
                     dialog.show();
                 }
             }
-            else if (v.equals(v.findViewById(R.id.btnDelete)))
+            else if (v.equals(v.findViewById(R.id.btnDelete))) {
                 removeProduct();
-
+            }
         }
 
         private void removeProduct() {
             product.setStock(Product.NOT_IN_PANTRY);
-            simpleAdapter.items.remove(product);
             simpleAdapter.closeAllItems();
+            simpleAdapter.items.remove(product);
             simpleAdapter.notifyDataSetChanged();
         }
     }
@@ -118,6 +120,7 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
         viewHolder.brand.setText(currentItem.getBrand());
         viewHolder.netValue.setText(currentItem.getNetValue());
         viewHolder.units.setText(String.valueOf(currentItem.getStock()));
+        viewHolder.blurLayout.dismissHover();
 
         mItemManger.bindView(viewHolder.itemView, i);
     }

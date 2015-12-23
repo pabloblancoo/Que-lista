@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F3ffffff">
+    android:background="#F3ffffff"
+    android:id="@+id/hover_layout">
 
     <ImageButton
         android:layout_width="36dp"
