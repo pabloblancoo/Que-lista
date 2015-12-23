@@ -12,10 +12,12 @@ import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidviewhover.BlurLayout;
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 
 import java.util.List;
 
-public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleViewHolder> {
+public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleViewHolder> {
 
     private final Context context;
     private List<Product> items;
@@ -42,6 +44,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
 
             v.findViewById(R.id.btnPlus).setOnClickListener(this);
             v.findViewById(R.id.btnMinus).setOnClickListener(this);
+            v.findViewById(R.id.btnDelete).setOnClickListener(this);
 
             this.simpleAdapter = simpleAdapter;
             v.setOnClickListener(this);
@@ -61,14 +64,22 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
                     dialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            product.decreaseUnits();
-                            simpleAdapter.items.remove(product);
-                            simpleAdapter.notifyDataSetChanged();
+                            removeProduct();
                         }
                     });
                     dialog.show();
                 }
             }
+            else if (v.equals(v.findViewById(R.id.btnDelete)))
+                removeProduct();
+
+        }
+
+        private void removeProduct() {
+            product.setStock(Product.NOT_IN_PANTRY);
+            simpleAdapter.items.remove(product);
+            simpleAdapter.closeAllItems();
+            simpleAdapter.notifyDataSetChanged();
         }
     }
 
@@ -87,10 +98,13 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.holder_pantry, viewGroup, false);
 
+        View blur = v.findViewById(R.id.blurLayout);
         View hover = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.hover_holder_pantry, null);
-        ((BlurLayout)v).setHoverView(hover);
-        ((BlurLayout)v).addChildAppearAnimator(hover, R.id.btnCart, Techniques.ZoomIn);
-        ((BlurLayout)v).addChildDisappearAnimator(hover, R.id.btnCart, Techniques.ZoomOut);
+        ((BlurLayout)blur).setHoverView(hover);
+        ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.btnCart, Techniques.ZoomIn);
+        ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.btnCart, Techniques.ZoomOut);
+        ((SwipeLayout)v).setShowMode(SwipeLayout.ShowMode.PullOut);
+        ((SwipeLayout)v).addDrag(SwipeLayout.DragEdge.Right, v.findViewById(R.id.layout_buttons));
 
         return new SimpleViewHolder(v, this);
     }
@@ -104,6 +118,12 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
         viewHolder.brand.setText(currentItem.getBrand());
         viewHolder.netValue.setText(currentItem.getNetValue());
         viewHolder.units.setText(String.valueOf(currentItem.getStock()));
+
+        mItemManger.bindView(viewHolder.itemView, i);
     }
 
+    @Override
+    public int getSwipeLayoutResourceId(int i) {
+        return R.id.swipeLayout;
+    }
 }

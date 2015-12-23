@@ -31,7 +31,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.annimon:stream:1.0.5'
     compile 'com.android.support:design:22.2.1'
-    compile files('lib/AndroidSwipeLayout-v1.1.8.jar')
+    compile "com.daimajia.swipelayout:library:1.2.0@aar"
     compile 'com.journeyapps:zxing-android-embedded:3.0.3@aar'
     compile 'com.google.zxing:core:3.2.1'
     compile files('lib/commons-net-3.4.jar')

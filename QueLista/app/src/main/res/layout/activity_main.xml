@@ -46,7 +46,9 @@
         android:scaleType="centerCrop"
         android:onClick="scan"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="12dp" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="wrap_content"

@@ -1,27 +1,18 @@
 package grupomoviles.quelista;
 
-import android.app.ActionBar;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import com.annimon.stream.Collectors;
-import com.annimon.stream.Stream;
-import com.google.zxing.BarcodeFormat;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import grupomoviles.quelista.Database.LocalDatabase;
 import grupomoviles.quelista.captureCodes.IntentCaptureActivity;
 
 public class MainActivity extends ActionBarActivity {
