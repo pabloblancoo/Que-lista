@@ -7,14 +7,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidviewhover.BlurLayout;
+
 import java.util.List;
 
-public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleViewHolder>
-        implements ItemClickListener {
+public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleViewHolder> {
 
     private final Context context;
     private List<Product> items;
@@ -42,7 +43,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
             v.findViewById(R.id.btnPlus).setOnClickListener(this);
             v.findViewById(R.id.btnMinus).setOnClickListener(this);
 
-            this.simpleAdapter= simpleAdapter;
+            this.simpleAdapter = simpleAdapter;
             v.setOnClickListener(this);
         }
 
@@ -68,12 +69,6 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
                     dialog.show();
                 }
             }
-            else
-                simpleAdapter.onItemClick(v, getAdapterPosition());
-        }
-
-        public ItemClickListener getListener() {
-            return simpleAdapter;
         }
     }
 
@@ -91,6 +86,12 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
     public SimpleViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.holder_pantry, viewGroup, false);
+
+        View hover = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.hover_holder_pantry, null);
+        ((BlurLayout)v).setHoverView(hover);
+        ((BlurLayout)v).addChildAppearAnimator(hover, R.id.btnCart, Techniques.ZoomIn);
+        ((BlurLayout)v).addChildDisappearAnimator(hover, R.id.btnCart, Techniques.ZoomOut);
+
         return new SimpleViewHolder(v, this);
     }
 
@@ -105,20 +106,4 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
         viewHolder.units.setText(String.valueOf(currentItem.getStock()));
     }
 
-    /**
-     * Sobrescritura del método de la interfaz {@link ItemClickListener}
-     *
-     * @param view     item actual
-     * @param position posición del item actual
-     */
-    @Override
-    public void onItemClick(View view, int position) {
-
-    }
-
-
-}
-
-interface ItemClickListener {
-    void onItemClick(View view, int position);
 }
