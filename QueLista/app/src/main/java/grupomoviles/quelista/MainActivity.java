@@ -2,6 +2,8 @@ package grupomoviles.quelista;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,7 +18,7 @@ import java.util.List;
 
 import grupomoviles.quelista.captureCodes.IntentCaptureActivity;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOffsetChangedListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,5 +96,26 @@ public class MainActivity extends ActionBarActivity {
         //ica.setBeep(false);
 
         ica.initScan(this);
+    }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        if (verticalOffset == 0) {
+            findViewById(R.id.swipeRefresh).setEnabled(true);
+        } else {
+            findViewById(R.id.swipeRefresh).setEnabled(false);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ((AppBarLayout)findViewById(R.id.appBarLayout)).addOnOffsetChangedListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ((AppBarLayout)findViewById(R.id.appBarLayout)).removeOnOffsetChangedListener(this);
     }
 }
