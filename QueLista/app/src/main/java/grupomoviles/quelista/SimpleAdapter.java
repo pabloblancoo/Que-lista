@@ -2,11 +2,13 @@ package grupomoviles.quelista;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,7 +21,7 @@ import java.util.List;
 
 public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleViewHolder> {
 
-    private final Context context;
+    private static Context context;
     private List<Product> items;
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder
@@ -33,8 +35,9 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
         private TextView units;
         private SimpleAdapter simpleAdapter;
         private BlurLayout blurLayout;
+        private ImageButton btnCart;
 
-        public SimpleViewHolder(View v, SimpleAdapter simpleAdapter) {
+        public SimpleViewHolder(View v, SimpleAdapter simpleAdapter, View hover) {
             super(v);
 
             image = (ImageView) v.findViewById(R.id.imageView);
@@ -47,6 +50,7 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
             v.findViewById(R.id.btnPlus).setOnClickListener(this);
             v.findViewById(R.id.btnMinus).setOnClickListener(this);
             v.findViewById(R.id.btnDelete).setOnClickListener(this);
+            btnCart = (ImageButton) hover.findViewById(R.id.btnCart);
 
             this.simpleAdapter = simpleAdapter;
             v.setOnClickListener(this);
@@ -104,11 +108,13 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
         View hover = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.hover_holder_pantry, null);
         ((BlurLayout)blur).setHoverView(hover);
         ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.btnCart, Techniques.ZoomIn);
+        ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.textView, Techniques.SlideInDown);
         ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.btnCart, Techniques.ZoomOut);
+        ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.textView, Techniques.SlideOutUp);
         ((SwipeLayout)v).setShowMode(SwipeLayout.ShowMode.PullOut);
         ((SwipeLayout)v).addDrag(SwipeLayout.DragEdge.Right, v.findViewById(R.id.layout_buttons));
 
-        return new SimpleViewHolder(v, this);
+        return new SimpleViewHolder(v, this, hover);
     }
 
     @Override
