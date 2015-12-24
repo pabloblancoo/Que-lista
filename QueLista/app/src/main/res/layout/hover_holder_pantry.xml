@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3ffffff"
+    android:id="@+id/hover_layout">
+
+    <ImageButton
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:id="@+id/btnCart"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="@null"
+        android:src="@drawable/icon_button_cart"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:id="@+id/textView"
+        android:background="@drawable/circle_red"
+        android:paddingLeft="6dp"
+        android:paddingRight="5dp"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:layout_marginStart="26dp"
+        android:gravity="center_horizontal"
+        android:layout_alignBottom="@+id/btnCart"
+        android:layout_alignStart="@+id/btnCart"
+        android:layout_marginBottom="22dp" />
+</RelativeLayout>
