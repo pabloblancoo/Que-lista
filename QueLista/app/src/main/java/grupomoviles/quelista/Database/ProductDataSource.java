@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.text.SimpleDateFormat;
+
 import grupomoviles.quelista.Product;
 
 /**
@@ -55,7 +57,7 @@ public class ProductDataSource {
         values.put(LocalDatabase.PRODUCT_COLUMN_SUBCATEGORY, product.getSubcategory());
         values.put(LocalDatabase.PRODUCT_COLUMN_STOCK, product.getStock());
         values.put(LocalDatabase.PRODUCT_COLUMN_MINSTOCK, product.getMinStock());
-        values.put(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE, product.getLastUpdate());
+        values.put(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(product.getLastUpdate()));
         values.put(LocalDatabase.PRODUCT_COLUMN_CONSUMECYCLE, product.getConsumeCycle());
         values.put(LocalDatabase.PRODUCT_COLUMN_CONSUMEUNITS, product.getConsumeUnits());
         values.put(LocalDatabase.PRODUCT_COLUMN_SHOPPINGLISTUNITS, product.getShoppingListUnits());
