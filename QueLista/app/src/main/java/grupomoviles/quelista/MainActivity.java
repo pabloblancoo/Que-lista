@@ -2,6 +2,9 @@ package grupomoviles.quelista;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,9 +23,13 @@ import grupomoviles.quelista.Database.LocalDatabase;
 import grupomoviles.quelista.Database.ProductDataSource;
 import grupomoviles.quelista.captureCodes.IntentCaptureActivity;
 
+<<<<<<< HEAD
 import static android.widget.Toast.LENGTH_LONG;
 
 public class MainActivity extends ActionBarActivity {
+=======
+public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOffsetChangedListener{
+>>>>>>> 6a7e4a9c7ffb6fea9f4d760bd170e3fc9f30ca72
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +54,7 @@ public class MainActivity extends ActionBarActivity {
         recycler.setAdapter(new SimpleAdapter(this, products));
 
         //Creado para ver si arranca la BD
+<<<<<<< HEAD
         ProductDataSource productDataSource = new ProductDataSource(getApplicationContext());
         productDataSource.openDatabase();
 
@@ -55,6 +63,23 @@ public class MainActivity extends ActionBarActivity {
         productDataSource.close();
 
 
+=======
+       // LocalDatabase db = new LocalDatabase(this,"",null,1);
+
+        SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
+        refreshLayout.setColorSchemeResources(R.color.color_rojo_app);
+
+        // Iniciar la tarea asíncrona al revelar el indicador
+        refreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        new RefreshRecyclerTask().execute((SimpleAdapter)recycler.getAdapter());
+                        refreshLayout.setRefreshing(false);
+                    }
+                }
+        );
+>>>>>>> 6a7e4a9c7ffb6fea9f4d760bd170e3fc9f30ca72
     }
 
     @Override
@@ -93,5 +118,26 @@ public class MainActivity extends ActionBarActivity {
         //ica.setBeep(false);
 
         ica.initScan(this);
+    }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        if (verticalOffset == 0) {
+            findViewById(R.id.swipeRefresh).setEnabled(true);
+        } else {
+            findViewById(R.id.swipeRefresh).setEnabled(false);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ((AppBarLayout)findViewById(R.id.appBarLayout)).addOnOffsetChangedListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ((AppBarLayout)findViewById(R.id.appBarLayout)).removeOnOffsetChangedListener(this);
     }
 }

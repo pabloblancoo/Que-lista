@@ -7,34 +7,39 @@
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/appBarLayout">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="#EF5350"
+                android:background="@color/color_rojo_app"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:layout_scrollFlags="scroll|enterAlways"/>
 
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v7.widget.RecyclerView
+        <android.support.v4.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/recyclerView"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:background="#ffffff"
-            android:paddingBottom="12dp">
-
-        </android.support.v7.widget.RecyclerView>
+            android:id="@+id/swipeRefresh">
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/recyclerView"
+                android:background="#ffffff"
+                android:paddingBottom="12dp">
+            </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/fabScan"
-            app:backgroundTint="#EF5350"
+            app:backgroundTint="@color/color_rojo_app"
             app:elevation="4dp"
             android:src="@drawable/barcode"
             android:scaleType="centerCrop"

@@ -24,6 +24,11 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
     private static Context context;
     private List<Product> items;
 
+    public void swipeList(List<Product> products) {
+        items = products;
+        notifyDataSetChanged();
+    }
+
     public static class SimpleViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
@@ -84,6 +89,7 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
         private void removeProduct() {
             product.setStock(Product.NOT_IN_PANTRY);
             simpleAdapter.items.remove(product);
+            simpleAdapter.closeItem(getAdapterPosition());
             simpleAdapter.notifyItemRemoved(getAdapterPosition());
         }
     }
@@ -133,5 +139,11 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
     @Override
     public int getSwipeLayoutResourceId(int i) {
         return R.id.swipeLayout;
+    }
+
+    @Override
+    public void onViewRecycled(SimpleViewHolder holder) {
+        holder.blurLayout.dismissHover();
+        super.onViewRecycled(holder);
     }
 }
