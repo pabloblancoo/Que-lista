@@ -15,6 +15,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
     public static final String PRODUCT_TABLE_NAME = "products";
     public  static final String CATEGORY_TABLE_NAME = "category";
     public  static final String SUBCATEGORY_TABLE_NAME = "subcategory";
+    public  static final String BRAND_TABLE_NAME = "subcategory";
 
     /*
         Columnas de la TABLA PRODUCT
@@ -23,8 +24,8 @@ public class LocalDatabase extends SQLiteOpenHelper {
     public static final String PRODUCT_COLUMN_DESCRIPTION = "description";
     public static final String PRODUCT_COLUMN_BRAND = "brand";
     public static final String PRODUCT_COLUMN_NETVALUE = "netvalue";
-    public static final String PRODUCT_COLUMN_CATEGORY = "category";
-    public static final String PRODUCT_COLUMN_SUBCATEGORY = "subcategory";
+    public static final String PRODUCT_COLUMN_CATEGORY = "IDcategory";
+    public static final String PRODUCT_COLUMN_SUBCATEGORY = "IDsubcategory";
     public static final String PRODUCT_COLUMN_STOCK = "stock";
     public static final String PRODUCT_COLUMN_MINSTOCK = "minstock";
     public static final String PRODUCT_COLUMN_LASTUPDATE = "lastupdate";
@@ -41,6 +42,11 @@ public class LocalDatabase extends SQLiteOpenHelper {
     public static final String CATEGORY_COLUMN_NAME = "name";
 
     /*
+        Columnas de la tabla CATEGORY
+    */
+    public static final String BRAND_COLUMN_ID = "id";
+    public static final String BRAND_COLUMN_NAME = "name";
+    /*
         Columnas de la tabla SUBCATEGORY
      */
     public static final String SUBCATEGORY_COLUMN_ID_CATEGORY = "id_category";
@@ -54,6 +60,16 @@ public class LocalDatabase extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
 
+    /*
+        Crear la tabla brand
+     */
+    private static String BRAND_CREATE_TABLE =
+            "create table " + BRAND_TABLE_NAME +
+                    "(" +
+                    BRAND_COLUMN_ID + "INTEGER NOT NULL PRIMARY KEY," +
+                    BRAND_COLUMN_NAME + "TEXT NOT NULL," +
+                    ")";
+    /*
     /*
         Crear la tabla category
      */
@@ -90,20 +106,21 @@ public class LocalDatabase extends SQLiteOpenHelper {
                     PRODUCT_COLUMN_SUBCATEGORY + "INT NOT NULL," +
                     PRODUCT_COLUMN_STOCK + "INTEGER NOT NULL," +
                     PRODUCT_COLUMN_MINSTOCK + "INTEGER NOT NULL," +
-                    PRODUCT_COLUMN_LASTUPDATE + "DATE NOT NULL," +
+                    PRODUCT_COLUMN_LASTUPDATE + "DATE," +
                     PRODUCT_COLUMN_CONSUMECYCLE + "INTEGER NOT NULL," +
                     PRODUCT_COLUMN_CONSUMEUNITS + "INTEGER NOT NULL," +
                     PRODUCT_COLUMN_SHOPPINGLISTUNITS + "INTEGER NOT NULL," +
                     PRODUCT_COLUMN_CARTUNITS + "INTEGER NOT NULL " +
-            "FOREIGN KEY " + PRODUCT_COLUMN_CATEGORY + "REFERENCES (" + SUBCATEGORY_TABLE_NAME + "." + SUBCATEGORY_COLUMN_ID_CATEGORY + ")" +
-            "FOREIGN KEY " + PRODUCT_COLUMN_SUBCATEGORY + "REFERENCES (" + SUBCATEGORY_TABLE_NAME + "." + SUBCATEGORY_COLUMN_ID + ")" +
-            ")";
+                    "FOREIGN KEY " + PRODUCT_COLUMN_BRAND + "REFERENCES (" + BRAND_TABLE_NAME + "." + BRAND_COLUMN_ID + ")" +
+                    "FOREIGN KEY " + PRODUCT_COLUMN_CATEGORY + "REFERENCES (" + SUBCATEGORY_TABLE_NAME + "." + SUBCATEGORY_COLUMN_ID_CATEGORY + ")" +
+                    "FOREIGN KEY " + PRODUCT_COLUMN_SUBCATEGORY + "REFERENCES (" + SUBCATEGORY_TABLE_NAME + "." + SUBCATEGORY_COLUMN_ID + ")" +
+                    ")";
 
     private static final String DATABASE_DROP = "drop table if existe" + PRODUCT_TABLE_NAME;
     /*
         Sript para crear la BD
          */
-    private static final String DATABASE_CREATE = CATEGORY_CREATE_TABLE + "\n" + SUBCATEGORY_CREATE_TABLE + "\n" + PRODUCT_CREATE_TABLE;
+    private static final String DATABASE_CREATE = BRAND_CREATE_TABLE + "\n" + CATEGORY_CREATE_TABLE + "\n" + SUBCATEGORY_CREATE_TABLE + "\n" + PRODUCT_CREATE_TABLE;
 
     public LocalDatabase(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
