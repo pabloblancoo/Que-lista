@@ -2,6 +2,7 @@ package grupomoviles.quelista;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,6 +42,20 @@ public class MainActivity extends ActionBarActivity {
 
         //Creado para ver si arranca la BD
        // LocalDatabase db = new LocalDatabase(this,"",null,1);
+
+        SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
+        refreshLayout.setColorSchemeResources(R.color.color_rojo_app);
+
+        // Iniciar la tarea asíncrona al revelar el indicador
+        refreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        new RefreshRecyclerTask().execute((SimpleAdapter)recycler.getAdapter());
+                        refreshLayout.setRefreshing(false);
+                    }
+                }
+        );
     }
 
     @Override
