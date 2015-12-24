@@ -43,11 +43,31 @@ public class ProductDataSource {
         helper.close();
     }
 
-    public long createProduct(final Product product){
-        final ContentValues values = new ContentValues();
+    public long insertProduct(final Product product) {
 
-        final long barcode = database.insert(LocalDatabase.PRODUCT_TABLE_NAME, null, values);
-       return barcode;
+        final ContentValues values = new ContentValues();
+        values.put(LocalDatabase.PRODUCT_COLUMN_BARCODE, product.getCode());
+
+        values.put(LocalDatabase.PRODUCT_COLUMN_DESCRIPTION, product.getDescription());
+        values.put(LocalDatabase.PRODUCT_COLUMN_BRAND, product.getBrand());
+        values.put(LocalDatabase.PRODUCT_COLUMN_NETVALUE, product.getNetValue());
+        values.put(LocalDatabase.PRODUCT_COLUMN_CATEGORY, product.getCategory());
+        values.put(LocalDatabase.PRODUCT_COLUMN_SUBCATEGORY, product.getSubcategory());
+        values.put(LocalDatabase.PRODUCT_COLUMN_STOCK, product.getStock());
+        values.put(LocalDatabase.PRODUCT_COLUMN_MINSTOCK, product.getMinStock());
+        values.put(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE, product.getLastUpdate());
+        values.put(LocalDatabase.PRODUCT_COLUMN_CONSUMECYCLE, product.getConsumeCycle());
+        values.put(LocalDatabase.PRODUCT_COLUMN_CONSUMEUNITS, product.getConsumeUnits());
+        values.put(LocalDatabase.PRODUCT_COLUMN_SHOPPINGLISTUNITS, product.getShoppingListUnits());
+        values.put(LocalDatabase.PRODUCT_COLUMN_CARTUNITS, product.getCartUnits());
+
+        // Insertamos la valoracion
+        try {
+            database.insert(LocalDatabase.PRODUCT_TABLE_NAME, null, values);
+        } catch (Exception e) {
+            return -1;
+        }
+        return 1;
     }
 
 

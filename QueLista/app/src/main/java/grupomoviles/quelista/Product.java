@@ -48,6 +48,7 @@ public class Product {
         this.units = units;
     }
 
+    //GETTERS and SETTERS
     public String getDescription() {
         return description;
     }
@@ -64,6 +65,112 @@ public class Product {
         return stock;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public void setNetValue(String netValue) {
+        this.netValue = netValue;
+    }
+
+    public int getUnits() {
+        return units;
+    }
+
+    public void setUnits(int units) {
+        this.units = units;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getSubcategory() {
+        return subcategory;
+    }
+
+    public void setSubcategory(String subcategory) {
+        this.subcategory = subcategory;
+    }
+
+    public int getMinStock() {
+        return minStock;
+    }
+
+    public void setMinStock(int minStock) {
+        this.minStock = minStock;
+    }
+
+    public int getUnitsToAdd() {
+        return unitsToAdd;
+    }
+
+    public void setUnitsToAdd(int unitsToAdd) {
+        this.unitsToAdd = unitsToAdd;
+    }
+
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public int getConsumeCycle() {
+        return consumeCycle;
+    }
+
+    public void setConsumeCycle(int consumeCycle) {
+        this.consumeCycle = consumeCycle;
+    }
+
+    public int getConsumeUnits() {
+        return consumeUnits;
+    }
+
+    public void setConsumeUnits(int consumeUnits) {
+        this.consumeUnits = consumeUnits;
+    }
+
+    public int getShoppingListUnits() {
+        return shoppingListUnits;
+    }
+
+    public void setShoppingListUnits(int shoppingListUnits) {
+        this.shoppingListUnits = shoppingListUnits;
+    }
+
+    public int getCartUnits() {
+        return cartUnits;
+    }
+
+    public void setCartUnits(int cartUnits) {
+        this.cartUnits = cartUnits;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+
+    //Metodos de logica
     public int increaseUnits() {
         stock++;
         return stock;
@@ -74,7 +181,5 @@ public class Product {
         return stock;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
+
 }
