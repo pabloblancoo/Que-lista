@@ -29,6 +29,7 @@ public class Product {
     private int shoppingListUnits;	//Unidades en la lista de la compra (0 == no)
     private int cartUnits;		//Unidades en el carrito (0 == no)
 
+
     public Product(String code, String description, String brand, String netValue, String category, String subcategory) {
         this.code = code;
         this.description = description;

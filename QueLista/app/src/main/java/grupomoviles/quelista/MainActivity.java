@@ -9,11 +9,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
+import com.annimon.stream.Stream;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import grupomoviles.quelista.Database.LocalDatabase;
+import grupomoviles.quelista.Database.ProductDataSource;
 import grupomoviles.quelista.captureCodes.IntentCaptureActivity;
+
+import static android.widget.Toast.LENGTH_LONG;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -40,7 +47,14 @@ public class MainActivity extends ActionBarActivity {
         recycler.setAdapter(new SimpleAdapter(this, products));
 
         //Creado para ver si arranca la BD
-       // LocalDatabase db = new LocalDatabase(this,"",null,1);
+        ProductDataSource productDataSource = new ProductDataSource(getApplicationContext());
+        productDataSource.openDatabase();
+
+        Stream.of(products).forEach(p -> productDataSource.insertProduct(p));
+
+        productDataSource.close();
+
+
     }
 
     @Override

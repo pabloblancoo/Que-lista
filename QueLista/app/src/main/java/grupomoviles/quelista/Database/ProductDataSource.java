@@ -2,9 +2,12 @@ package grupomoviles.quelista.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import grupomoviles.quelista.Product;
 
@@ -57,7 +60,9 @@ public class ProductDataSource {
         values.put(LocalDatabase.PRODUCT_COLUMN_SUBCATEGORY, product.getSubcategory());
         values.put(LocalDatabase.PRODUCT_COLUMN_STOCK, product.getStock());
         values.put(LocalDatabase.PRODUCT_COLUMN_MINSTOCK, product.getMinStock());
-        values.put(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(product.getLastUpdate()));
+        //values.put(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(product.getLastUpdate()));
+        values.put(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE, new String(""));
+
         values.put(LocalDatabase.PRODUCT_COLUMN_CONSUMECYCLE, product.getConsumeCycle());
         values.put(LocalDatabase.PRODUCT_COLUMN_CONSUMEUNITS, product.getConsumeUnits());
         values.put(LocalDatabase.PRODUCT_COLUMN_SHOPPINGLISTUNITS, product.getShoppingListUnits());
@@ -72,5 +77,32 @@ public class ProductDataSource {
         return 1;
     }
 
+    //METODO PARA PROBAR; HAY QUE ELIMINAR
+    //METODO PARA PROBAR; HAY QUE ELIMINAR
+    //METODO PARA PROBAR; HAY QUE ELIMINAR
+
+    /**
+     * Obtiene todas las valoraciones andadidas por los usuarios.
+     *
+     * @return Lista de objetos de tipo Valoration
+     */
+    public List<Product> getAllProducts() {
+        // Lista que almacenara el resultado
+        List<Product> valorationList = new ArrayList<Product>();
+        Cursor cursor = database.query(LocalDatabase.PRODUCT_TABLE_NAME, allColumns, null, null, null, null, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            //String code, String description, String brand, String netValue, String category, String subcategory
+            final Product product = new Product(cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
+
+            valorationList.add(product);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        // Una vez obtenidos todos los datos y cerrado el cursor, devolvemos la
+        // lista.
+        return valorationList;
+    }
 
 }
