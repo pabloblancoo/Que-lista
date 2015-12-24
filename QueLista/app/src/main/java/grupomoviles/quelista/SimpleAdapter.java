@@ -83,9 +83,8 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
 
         private void removeProduct() {
             product.setStock(Product.NOT_IN_PANTRY);
-            simpleAdapter.closeAllItems();
             simpleAdapter.items.remove(product);
-            simpleAdapter.notifyDataSetChanged();
+            simpleAdapter.notifyItemRemoved(getAdapterPosition());
         }
     }
 
