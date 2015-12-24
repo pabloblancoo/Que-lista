@@ -1,7 +1,10 @@
 package grupomoviles.quelista.Database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import grupomoviles.quelista.Product;
 
 /**
  * Created by Pablo on 22/12/2015.
@@ -13,7 +16,6 @@ public class ProductDataSource {
     private SQLiteDatabase database;
 
     private final String[] allColumns = {
-            LocalDatabase.PRODUCT_COLUMN_BARCODE,
             LocalDatabase.PRODUCT_COLUMN_BARCODE,
             LocalDatabase.PRODUCT_COLUMN_DESCRIPTION,
             LocalDatabase.PRODUCT_COLUMN_BRAND,
@@ -39,6 +41,13 @@ public class ProductDataSource {
 
     public void close() {
         helper.close();
+    }
+
+    public long createProduct(final Product product){
+        final ContentValues values = new ContentValues();
+
+        final long barcode = database.insert(LocalDatabase.PRODUCT_TABLE_NAME, null, values);
+       return barcode;
     }
 
 

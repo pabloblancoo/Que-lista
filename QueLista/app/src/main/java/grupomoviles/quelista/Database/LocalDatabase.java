@@ -12,9 +12,9 @@ public class LocalDatabase extends SQLiteOpenHelper {
     /*
     Nombre de laS TABLAS
      */
-    private static final String PRODUCT_TABLE_NAME = "products";
-    private static final String CATEGORY_TABLE_NAME = "category";
-    private static final String SUBCATEGORY_TABLE_NAME = "subcategory";
+    public static final String PRODUCT_TABLE_NAME = "products";
+    public  static final String CATEGORY_TABLE_NAME = "category";
+    public  static final String SUBCATEGORY_TABLE_NAME = "subcategory";
 
     /*
         Columnas de la TABLA PRODUCT
