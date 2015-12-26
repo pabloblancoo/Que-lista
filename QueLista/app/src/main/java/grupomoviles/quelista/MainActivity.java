@@ -24,14 +24,7 @@ import grupomoviles.quelista.captureCodes.IntentCaptureActivity;
 
 public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOffsetChangedListener{
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     Fragment fragmentPantry;
-=======
->>>>>>> cb63712bd25df30c37fb374823ac0f1f09bfca39
->>>>>>> 5b2e6713aa5eb151ef88de8b72b9c9129d6dcf1b
-=======
->>>>>>> 5897295238d07b8257df9c268fe6fdee5478c3d6
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,21 +66,6 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
 
         //Stream.of(productosEnLaBD).forEach(p -> System.out.println(p.getCode() + " " + p.getCategory()));
 
-
-
-        SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
-        refreshLayout.setColorSchemeResources(R.color.color_rojo_app);
-
-        // Iniciar la tarea asíncrona al revelar el indicador
-        refreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        new RefreshRecyclerTask().execute((SimpleAdapter)recycler.getAdapter());
-                        refreshLayout.setRefreshing(false);
-                    }
-                }
-        );
         // LocalDatabase db = new LocalDatabase(this,"",null,1);
 
     }
