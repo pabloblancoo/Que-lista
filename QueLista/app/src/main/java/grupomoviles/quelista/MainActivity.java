@@ -1,5 +1,6 @@
 package grupomoviles.quelista;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -22,6 +23,7 @@ import grupomoviles.quelista.captureCodes.IntentCaptureActivity;
 
 public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOffsetChangedListener{
 
+    Fragment fragmentPantry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +68,10 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_pantry) {
+            fragmentPantry = new FragmentPantry();
             getFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.relativeLayout, new FragmentPantry())
+                    .replace(R.id.relativeLayout, fragmentPantry)
                     .commit();
             return true;
         }
@@ -94,11 +97,13 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        //if (verticalOffset == 0) {
-        //    findViewById(R.id.swipeRefresh).setEnabled(true);
-        //} else {
-        //    findViewById(R.id.swipeRefresh).setEnabled(false);
-        //}
+        if (fragmentPantry != null) {
+            if (verticalOffset == 0) {
+                findViewById(R.id.swipeRefresh).setEnabled(true);
+            } else {
+                findViewById(R.id.swipeRefresh).setEnabled(false);
+            }
+        }
     }
 
     @Override
