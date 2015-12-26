@@ -36,11 +36,15 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
 
         List<Product> products = new ArrayList<>();
 
-        products.add(new Product("0", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
-        products.add(new Product("1", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
-        products.add(new Product("2", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
-        products.add(new Product("3", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
+//        products.add(new Product("0", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
+//        products.add(new Product("1", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
+//        products.add(new Product("2", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
+//        products.add(new Product("3", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
 
+        products.add(new Product("5"));
+        products.add(new Product("6"));
+        products.add(new Product("7"));
+        products.add(new Product("8"));
         //Creado para ver si arranca la BD
         ProductDataSource productDataSource = new ProductDataSource(getApplicationContext());
         productDataSource.openDatabase();
@@ -52,24 +56,7 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
         List<Product> productosEnLaBD = productDataSource.getAllProducts();
         productDataSource.close();
 
-        Stream.of(productosEnLaBD).forEach(p -> System.out.println(p.getCode() + " " + p.getCategory()));
-
-
-        productDataSource.openDatabase();
-        Product pro = new Product("3", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Proeducto modificado");
-        productDataSource.update(pro);
-        productosEnLaBD = productDataSource.getAllProducts();
-        productDataSource.close();
-
-        Stream.of(productosEnLaBD).forEach(p -> System.out.println(p.getCode() + " " + p.getCategory()));
-
-        productDataSource.openDatabase();
-        pro.setSubcategory("modificado 2 vez");
-        productDataSource.update(pro);
-        productosEnLaBD = productDataSource.getAllProducts();
-        productDataSource.close();
-
-        Stream.of(productosEnLaBD).forEach(p -> System.out.println(p.getCode() + " " + p.getCategory()));
+        Stream.of(productosEnLaBD).forEach(p -> System.out.println("Barcode: " + p.getCode() + " categoria: " + p.getCategory() + " fecha: "+ p.getLastUpdate()));
 
 
     }

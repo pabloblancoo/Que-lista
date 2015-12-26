@@ -29,10 +29,12 @@ public class LocalDatabase extends SQLiteOpenHelper {
     public static final String PRODUCT_COLUMN_DESCRIPTION = "description";
     public static final String PRODUCT_COLUMN_BRAND = "brand";
     public static final String PRODUCT_COLUMN_NETVALUE = "netvalue";
+    public static final String PRODUCT_COLUMN_UNITS = "units";
     public static final String PRODUCT_COLUMN_CATEGORY = "IDcategory";
     public static final String PRODUCT_COLUMN_SUBCATEGORY = "IDsubcategory";
     public static final String PRODUCT_COLUMN_STOCK = "stock";
     public static final String PRODUCT_COLUMN_MINSTOCK = "minstock";
+    public static final String PRODUCT_COLUMN_UNITSTOADD = "unitstoadd";
     public static final String PRODUCT_COLUMN_LASTUPDATE = "lastupdate";
     public static final String PRODUCT_COLUMN_CONSUMECYCLE = "consumecycle";
     public static final String PRODUCT_COLUMN_CONSUMEUNITS = "consumeunits";
@@ -62,7 +64,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
         Nombre y version de la BD
      */
     private static final String DATABASE_NAME = "storeDatabase.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 8;
 
 
     /*
@@ -83,8 +85,8 @@ public class LocalDatabase extends SQLiteOpenHelper {
     private static String CATEGORY_CREATE_TABLE =
             "create table if not exists " + CATEGORY_TABLE_NAME +
             "(" +
-            SUBCATEGORY_COLUMN_ID + " INTEGER PRIMARY KEY, " +
-            SUBCATEGORY_COLUMN_NAME + " TEXT NOT NULL " +
+            CATEGORY_COLUMN_ID + " INTEGER PRIMARY KEY, " +
+            CATEGORY_COLUMN_NAME + " TEXT NOT NULL " +
             ")";
     /*
     Crear la tabla subcategory
@@ -109,10 +111,12 @@ public class LocalDatabase extends SQLiteOpenHelper {
                     PRODUCT_COLUMN_DESCRIPTION + " TEXT NOT NULL," +
                     PRODUCT_COLUMN_BRAND + " INTEGER NOT NULL," +
                     PRODUCT_COLUMN_NETVALUE + " TEXT NOT NULL," +
+                    PRODUCT_COLUMN_UNITS + " INTEGER NOT NULL," +
                     PRODUCT_COLUMN_CATEGORY + " INTEGER NOT NULL," +
                     PRODUCT_COLUMN_SUBCATEGORY + " INTEGER NOT NULL," +
                     PRODUCT_COLUMN_STOCK + " INTEGER NOT NULL," +
                     PRODUCT_COLUMN_MINSTOCK + " INTEGER NOT NULL," +
+                    PRODUCT_COLUMN_UNITSTOADD + " INTEGER NOT NULL," +
                     PRODUCT_COLUMN_LASTUPDATE + " DATE," +
                     PRODUCT_COLUMN_CONSUMECYCLE + " INTEGER NOT NULL," +
                     PRODUCT_COLUMN_CONSUMEUNITS + " INTEGER NOT NULL," +

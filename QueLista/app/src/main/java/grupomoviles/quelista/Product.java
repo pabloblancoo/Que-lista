@@ -44,13 +44,49 @@ public class Product {
         minStock=0;
         unitsToAdd=1;	//Unidades a añadir a la lista de la compra automáticamente (Def: 1)
 
-        lastUpdate=null;	// (null == no añadir automáticamente)
+        lastUpdate = new Date();	// (null == no añadir automáticamente)
         consumeCycle=2;
         consumeUnits=1;
 
         shoppingListUnits=1;
         cartUnits=1;
 
+    }
+
+    /**
+     * Constructor con todos los parametros
+     * @param code
+     * @param description
+     * @param brand
+     * @param netValue
+     * @param units
+     * @param category
+     * @param subcategory
+     * @param stock
+     * @param minStock
+     * @param unitsToAdd
+     * @param lastUpdate
+     * @param consumeCycle
+     * @param consumeUnits
+     * @param shoppingListUnits
+     * @param cartUnits
+     */
+    public Product(String code, String description, String brand, String netValue, int units, String category, String subcategory, int stock, int minStock, int unitsToAdd, Date lastUpdate, int consumeCycle, int consumeUnits, int shoppingListUnits, int cartUnits) {
+        this.code = code;
+        this.description = description;
+        this.brand = brand;
+        this.netValue = netValue;
+        this.units = units;
+        this.category = category;
+        this.subcategory = subcategory;
+        this.stock = stock;
+        this.minStock = minStock;
+        this.unitsToAdd = unitsToAdd;
+        this.lastUpdate = lastUpdate;
+        this.consumeCycle = consumeCycle;
+        this.consumeUnits = consumeUnits;
+        this.shoppingListUnits = shoppingListUnits;
+        this.cartUnits = cartUnits;
     }
 
     public Product(String code, String description, String brand, String netValue, String category, String subcategory) {

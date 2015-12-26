@@ -5,7 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +28,12 @@ public class ProductDataSource {
             LocalDatabase.PRODUCT_COLUMN_DESCRIPTION,
             LocalDatabase.PRODUCT_COLUMN_BRAND,
             LocalDatabase.PRODUCT_COLUMN_NETVALUE,
+            LocalDatabase.PRODUCT_COLUMN_UNITS,
             LocalDatabase.PRODUCT_COLUMN_CATEGORY,
             LocalDatabase.PRODUCT_COLUMN_SUBCATEGORY,
             LocalDatabase.PRODUCT_COLUMN_STOCK,
             LocalDatabase.PRODUCT_COLUMN_MINSTOCK,
+            LocalDatabase.PRODUCT_COLUMN_UNITSTOADD,
             LocalDatabase.PRODUCT_COLUMN_LASTUPDATE,
             LocalDatabase.PRODUCT_COLUMN_CONSUMECYCLE,
             LocalDatabase.PRODUCT_COLUMN_CONSUMEUNITS,
@@ -56,30 +60,14 @@ public class ProductDataSource {
      * @return
      */
     public void insertProduct(Product product) {
-
-        final ContentValues values = new ContentValues();
-        values.put(LocalDatabase.PRODUCT_COLUMN_BARCODE, product.getCode());
-
-        values.put(LocalDatabase.PRODUCT_COLUMN_DESCRIPTION, product.getDescription());
-        values.put(LocalDatabase.PRODUCT_COLUMN_BRAND, product.getBrand());
-        values.put(LocalDatabase.PRODUCT_COLUMN_NETVALUE, product.getNetValue());
-        values.put(LocalDatabase.PRODUCT_COLUMN_CATEGORY, product.getCategory());
-        values.put(LocalDatabase.PRODUCT_COLUMN_SUBCATEGORY, product.getSubcategory());
-        values.put(LocalDatabase.PRODUCT_COLUMN_STOCK, product.getStock());
-        values.put(LocalDatabase.PRODUCT_COLUMN_MINSTOCK, product.getMinStock());
-        //values.put(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(product.getLastUpdate()));
-        values.put(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE, new String(""));
-
-        values.put(LocalDatabase.PRODUCT_COLUMN_CONSUMECYCLE, product.getConsumeCycle());
-        values.put(LocalDatabase.PRODUCT_COLUMN_CONSUMEUNITS, product.getConsumeUnits());
-        values.put(LocalDatabase.PRODUCT_COLUMN_SHOPPINGLISTUNITS, product.getShoppingListUnits());
-        values.put(LocalDatabase.PRODUCT_COLUMN_CARTUNITS, product.getCartUnits());
+        ContentValues values = getContentValues(product);
 
         // Insertamos la valoracion
         try {
             database.insertOrThrow(LocalDatabase.PRODUCT_TABLE_NAME, null, values);
         } catch (SQLiteConstraintException e) {
-            System.out.println("Ya esta insertado el elemento con barcode: " + product.getCode());
+            e.printStackTrace();
+//            System.out.println("Ya esta insertado el elemento con barcode: " + product.getCode());
         }
     }
 
@@ -94,26 +82,32 @@ public class ProductDataSource {
     }
 
     public void update(Product product){
-        final ContentValues values = new ContentValues();
-        values.put(LocalDatabase.PRODUCT_COLUMN_BARCODE, product.getCode());
+        ContentValues values = getContentValues(product);
 
+        database.update(LocalDatabase.PRODUCT_TABLE_NAME,values,LocalDatabase.PRODUCT_COLUMN_BARCODE + "=" + product.getCode(),null);
+    }
+
+    @NonNull
+    private ContentValues getContentValues(Product product) {
+        ContentValues values = new ContentValues();
+        values.put(LocalDatabase.PRODUCT_COLUMN_BARCODE, product.getCode());
         values.put(LocalDatabase.PRODUCT_COLUMN_DESCRIPTION, product.getDescription());
         values.put(LocalDatabase.PRODUCT_COLUMN_BRAND, product.getBrand());
         values.put(LocalDatabase.PRODUCT_COLUMN_NETVALUE, product.getNetValue());
+        values.put(LocalDatabase.PRODUCT_COLUMN_UNITS, product.getUnits());
         values.put(LocalDatabase.PRODUCT_COLUMN_CATEGORY, product.getCategory());
         values.put(LocalDatabase.PRODUCT_COLUMN_SUBCATEGORY, product.getSubcategory());
         values.put(LocalDatabase.PRODUCT_COLUMN_STOCK, product.getStock());
         values.put(LocalDatabase.PRODUCT_COLUMN_MINSTOCK, product.getMinStock());
-        //values.put(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(product.getLastUpdate()));
-        values.put(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE, new String(""));
-
+        values.put(LocalDatabase.PRODUCT_COLUMN_UNITSTOADD, product.getUnitsToAdd());
+        values.put(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(product.getLastUpdate()));
         values.put(LocalDatabase.PRODUCT_COLUMN_CONSUMECYCLE, product.getConsumeCycle());
         values.put(LocalDatabase.PRODUCT_COLUMN_CONSUMEUNITS, product.getConsumeUnits());
         values.put(LocalDatabase.PRODUCT_COLUMN_SHOPPINGLISTUNITS, product.getShoppingListUnits());
         values.put(LocalDatabase.PRODUCT_COLUMN_CARTUNITS, product.getCartUnits());
-
-        database.update(LocalDatabase.PRODUCT_TABLE_NAME,values,LocalDatabase.PRODUCT_COLUMN_BARCODE + "=" + product.getCode(),null);
+        return values;
     }
+
     /**
      * Obtiene todas las valoraciones andadidas por los usuarios.
      *
@@ -125,8 +119,31 @@ public class ProductDataSource {
         Cursor cursor = database.query(LocalDatabase.PRODUCT_TABLE_NAME, allColumns, null, null, null, null, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            //String code, String description, String brand, String netValue, String category, String subcategory
-            final Product product = new Product(cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_BARCODE)), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6));
+
+            Product product = null;
+            try {
+                product = new Product(
+                        cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_BARCODE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_DESCRIPTION)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_BRAND)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_NETVALUE)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_UNITS)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_CATEGORY)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_SUBCATEGORY)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_STOCK)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_MINSTOCK)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_UNITSTOADD)),
+                        new SimpleDateFormat("yyyy-MM-dd").parse(cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE))),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_CONSUMECYCLE)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_CONSUMEUNITS)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_SHOPPINGLISTUNITS)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_CARTUNITS)));
+            } catch (ParseException e) {
+                System.out.println("Error en la fecha");
+            }
+
+
+
 
             valorationList.add(product);
             cursor.moveToNext();
