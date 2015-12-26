@@ -48,18 +48,29 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
         productDataSource.close();
 
 
-       productDataSource.openDatabase();
-       List<Product> productosEnLaBD = productDataSource.getAllProducts();
-       productDataSource.close();
+        productDataSource.openDatabase();
+        List<Product> productosEnLaBD = productDataSource.getAllProducts();
+        productDataSource.close();
 
-       Stream.of(productosEnLaBD).forEach(p -> System.out.println(p.getCode() + " " + p.getCategory()));
+        Stream.of(productosEnLaBD).forEach(p -> System.out.println(p.getCode() + " " + p.getCategory()));
+
 
         productDataSource.openDatabase();
-       productDataSource.deleteProduct("3");
-
+        Product pro = new Product("3", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Proeducto modificado");
+        productDataSource.update(pro);
         productosEnLaBD = productDataSource.getAllProducts();
         productDataSource.close();
+
         Stream.of(productosEnLaBD).forEach(p -> System.out.println(p.getCode() + " " + p.getCategory()));
+
+        productDataSource.openDatabase();
+        pro.setSubcategory("modificado 2 vez");
+        productDataSource.update(pro);
+        productosEnLaBD = productDataSource.getAllProducts();
+        productDataSource.close();
+
+        Stream.of(productosEnLaBD).forEach(p -> System.out.println(p.getCode() + " " + p.getCategory()));
+
 
     }
 

@@ -89,15 +89,31 @@ public class ProductDataSource {
      * @param barcode Codigo del elemento a borrar
      */
     public void deleteProduct(String barcode) {
-        try {
-            database.delete(LocalDatabase.PRODUCT_TABLE_NAME, LocalDatabase.PRODUCT_COLUMN_BARCODE + "=" + barcode, null);
-        }
-        catch (SQLiteConstraintException e){
-            System.out.println("No existe " );
+        database.delete(LocalDatabase.PRODUCT_TABLE_NAME, LocalDatabase.PRODUCT_COLUMN_BARCODE + "=" + barcode, null);
 
-        }
     }
 
+    public void update(Product product){
+        final ContentValues values = new ContentValues();
+        values.put(LocalDatabase.PRODUCT_COLUMN_BARCODE, product.getCode());
+
+        values.put(LocalDatabase.PRODUCT_COLUMN_DESCRIPTION, product.getDescription());
+        values.put(LocalDatabase.PRODUCT_COLUMN_BRAND, product.getBrand());
+        values.put(LocalDatabase.PRODUCT_COLUMN_NETVALUE, product.getNetValue());
+        values.put(LocalDatabase.PRODUCT_COLUMN_CATEGORY, product.getCategory());
+        values.put(LocalDatabase.PRODUCT_COLUMN_SUBCATEGORY, product.getSubcategory());
+        values.put(LocalDatabase.PRODUCT_COLUMN_STOCK, product.getStock());
+        values.put(LocalDatabase.PRODUCT_COLUMN_MINSTOCK, product.getMinStock());
+        //values.put(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(product.getLastUpdate()));
+        values.put(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE, new String(""));
+
+        values.put(LocalDatabase.PRODUCT_COLUMN_CONSUMECYCLE, product.getConsumeCycle());
+        values.put(LocalDatabase.PRODUCT_COLUMN_CONSUMEUNITS, product.getConsumeUnits());
+        values.put(LocalDatabase.PRODUCT_COLUMN_SHOPPINGLISTUNITS, product.getShoppingListUnits());
+        values.put(LocalDatabase.PRODUCT_COLUMN_CARTUNITS, product.getCartUnits());
+
+        database.update(LocalDatabase.PRODUCT_TABLE_NAME,values,LocalDatabase.PRODUCT_COLUMN_BARCODE + "=" + product.getCode(),null);
+    }
     /**
      * Obtiene todas las valoraciones andadidas por los usuarios.
      *
