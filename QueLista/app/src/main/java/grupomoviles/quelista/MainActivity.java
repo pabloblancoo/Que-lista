@@ -94,11 +94,11 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        if (verticalOffset == 0) {
-            findViewById(R.id.swipeRefresh).setEnabled(true);
-        } else {
-            findViewById(R.id.swipeRefresh).setEnabled(false);
-        }
+        //if (verticalOffset == 0) {
+        //    findViewById(R.id.swipeRefresh).setEnabled(true);
+        //} else {
+        //    findViewById(R.id.swipeRefresh).setEnabled(false);
+        //}
     }
 
     @Override
