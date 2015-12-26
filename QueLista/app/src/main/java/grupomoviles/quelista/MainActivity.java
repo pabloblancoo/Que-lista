@@ -44,29 +44,22 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
         //Creado para ver si arranca la BD
         ProductDataSource productDataSource = new ProductDataSource(getApplicationContext());
         productDataSource.openDatabase();
+        Stream.of(products).forEach(p -> productDataSource.insertProduct(p));
+        productDataSource.close();
 
-        //Stream.of(products).forEach(p -> productDataSource.insertProduct(p));
-        productDataSource.insertProduct(new Product("1"));
-        productDataSource.insertProduct(new Product("2"));
-        productDataSource.insertProduct(new Product("3"));
-        productDataSource.insertProduct(new Product("4"));
 
-        //ProductDataSource productDataSource = new ProductDataSource(getApplicationContext());
-        //productDataSource.openDatabase();
+       productDataSource.openDatabase();
+       List<Product> productosEnLaBD = productDataSource.getAllProducts();
+       productDataSource.close();
 
-        //Stream.of(products).forEach(p -> productDataSource.insertProduct(p));
+       Stream.of(productosEnLaBD).forEach(p -> System.out.println(p.getCode() + " " + p.getCategory()));
 
-        //productDataSource.close();
+        productDataSource.openDatabase();
+       productDataSource.deleteProduct("3");
 
-       // productDataSource.openDatabase();
-
-       // List<Product> productosEnLaBD = productDataSource.getAllProducts();
-
-        //productDataSource.close();
-
-        //Stream.of(productosEnLaBD).forEach(p -> System.out.println(p.getCode() + " " + p.getCategory()));
-
-        // LocalDatabase db = new LocalDatabase(this,"",null,1);
+        productosEnLaBD = productDataSource.getAllProducts();
+        productDataSource.close();
+        Stream.of(productosEnLaBD).forEach(p -> System.out.println(p.getCode() + " " + p.getCategory()));
 
     }
 

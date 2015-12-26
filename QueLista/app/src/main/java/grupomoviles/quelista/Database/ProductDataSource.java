@@ -3,6 +3,7 @@ package grupomoviles.quelista.Database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.text.SimpleDateFormat;
@@ -48,7 +49,13 @@ public class ProductDataSource {
         helper.close();
     }
 
-    public long insertProduct(final Product product) {
+    /**
+     * Añadir un producto a la base de datos
+     *
+     * @param product
+     * @return
+     */
+    public void insertProduct(Product product) {
 
         final ContentValues values = new ContentValues();
         values.put(LocalDatabase.PRODUCT_COLUMN_BARCODE, product.getCode());
@@ -70,21 +77,31 @@ public class ProductDataSource {
 
         // Insertamos la valoracion
         try {
-            database.insert(LocalDatabase.PRODUCT_TABLE_NAME, null, values);
-        } catch (Exception e) {
-            return -1;
+            database.insertOrThrow(LocalDatabase.PRODUCT_TABLE_NAME, null, values);
+        } catch (SQLiteConstraintException e) {
+            System.out.println("Ya esta insertado el elemento con barcode: " + product.getCode());
         }
-        return 1;
     }
 
-    //METODO PARA PROBAR; HAY QUE ELIMINAR
-    //METODO PARA PROBAR; HAY QUE ELIMINAR
-    //METODO PARA PROBAR; HAY QUE ELIMINAR
+
+    /**
+     * Elimina un producto de la BD local
+     * @param barcode Codigo del elemento a borrar
+     */
+    public void deleteProduct(String barcode) {
+        try {
+            database.delete(LocalDatabase.PRODUCT_TABLE_NAME, LocalDatabase.PRODUCT_COLUMN_BARCODE + "=" + barcode, null);
+        }
+        catch (SQLiteConstraintException e){
+            System.out.println("No existe " );
+
+        }
+    }
 
     /**
      * Obtiene todas las valoraciones andadidas por los usuarios.
      *
-     * @return Lista de objetos de tipo Valoration
+     * @return Lista de objetos de tipo Product
      */
     public List<Product> getAllProducts() {
         // Lista que almacenara el resultado
@@ -93,7 +110,7 @@ public class ProductDataSource {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             //String code, String description, String brand, String netValue, String category, String subcategory
-            final Product product = new Product(cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
+            final Product product = new Product(cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_BARCODE)), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6));
 
             valorationList.add(product);
             cursor.moveToNext();
