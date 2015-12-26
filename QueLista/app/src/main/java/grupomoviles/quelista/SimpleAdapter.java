@@ -88,8 +88,9 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
 
         private void removeProduct() {
             product.setStock(Product.NOT_IN_PANTRY);
+            ((SwipeLayout)itemView).close(false);
+            blurLayout.dismissHover();
             simpleAdapter.items.remove(product);
-            simpleAdapter.closeItem(getAdapterPosition());
             simpleAdapter.notifyItemRemoved(getAdapterPosition());
         }
     }
@@ -113,9 +114,13 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
         View hover = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.hover_holder_pantry, null);
         ((BlurLayout)blur).setHoverView(hover);
         ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.btnCart, Techniques.ZoomIn);
-        ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.textView, Techniques.SlideInDown);
+        ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.btnShoppingList, Techniques.ZoomIn);
+        ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.txCart, Techniques.SlideInDown);
+        ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.txShoppingList, Techniques.SlideInDown);
         ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.btnCart, Techniques.ZoomOut);
-        ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.textView, Techniques.SlideOutUp);
+        ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.btnShoppingList, Techniques.ZoomOut);
+        ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.txCart, Techniques.SlideOutUp);
+        ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.txShoppingList, Techniques.SlideOutUp);
         ((SwipeLayout)v).setShowMode(SwipeLayout.ShowMode.PullOut);
         ((SwipeLayout)v).addDrag(SwipeLayout.DragEdge.Right, v.findViewById(R.id.layout_buttons));
 
@@ -126,12 +131,12 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
     public void onBindViewHolder(SimpleViewHolder viewHolder, int i) {
         Product currentItem = items.get(i);
 
+        viewHolder.blurLayout.dismissHover();
         viewHolder.product = currentItem;
         viewHolder.descripction.setText(currentItem.getDescription());
         viewHolder.brand.setText(currentItem.getBrand());
         viewHolder.netValue.setText(currentItem.getNetValue());
         viewHolder.units.setText(String.valueOf(currentItem.getStock()));
-        viewHolder.blurLayout.dismissHover();
 
         mItemManger.bindView(viewHolder.itemView, i);
     }
@@ -141,9 +146,4 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
         return R.id.swipeLayout;
     }
 
-    @Override
-    public void onViewRecycled(SimpleViewHolder holder) {
-        holder.blurLayout.dismissHover();
-        super.onViewRecycled(holder);
-    }
 }

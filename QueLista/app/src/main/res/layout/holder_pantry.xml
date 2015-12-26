@@ -80,7 +80,7 @@
         android:nestedScrollingEnabled="false"
         android:scaleType="centerCrop"
         android:background="@null"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="6dp"
         android:layout_marginRight="12dp"
         android:layout_marginTop="6dp"/>
 
@@ -93,7 +93,8 @@
         android:src="@drawable/icon_button_minus"
         android:scaleType="centerCrop"
         android:background="@null"
-        android:layout_marginRight="12dp"/>
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="6dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -103,11 +104,11 @@
         android:layout_toStartOf="@+id/btnPlus"
         android:layout_alignBottom="@+id/btnMinus"
         android:layout_alignTop="@+id/btnPlus"
-        android:textStyle="bold"
-        android:textSize="22dp"
         android:gravity="center_vertical"
         android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp" />
+        android:layout_marginLeft="8dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:textColor="#000000"/>
 
     <View
         android:layout_width="match_parent"
