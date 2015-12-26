@@ -21,9 +21,18 @@ import java.util.List;
 import grupomoviles.quelista.Database.ProductDataSource;
 import grupomoviles.quelista.captureCodes.IntentCaptureActivity;
 
+<<<<<<< HEAD
+import static android.widget.Toast.LENGTH_LONG;
+
+public class MainActivity extends ActionBarActivity implements  AppBarLayout.OnOffsetChangedListener{
+=======
 public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOffsetChangedListener{
 
+<<<<<<< HEAD
     Fragment fragmentPantry;
+=======
+>>>>>>> cb63712bd25df30c37fb374823ac0f1f09bfca39
+>>>>>>> 5b2e6713aa5eb151ef88de8b72b9c9129d6dcf1b
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +50,53 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
         products.add(new Product("3", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
 
         //Creado para ver si arranca la BD
+<<<<<<< HEAD
+        ProductDataSource productDataSource = new ProductDataSource(getApplicationContext());
+        productDataSource.openDatabase();
+
+        //Stream.of(products).forEach(p -> productDataSource.insertProduct(p));
+        productDataSource.insertProduct(new Product("1"));
+        productDataSource.insertProduct(new Product("2"));
+        productDataSource.insertProduct(new Product("3"));
+        productDataSource.insertProduct(new Product("4"));
+
+=======
         //ProductDataSource productDataSource = new ProductDataSource(getApplicationContext());
         //productDataSource.openDatabase();
 
         //Stream.of(products).forEach(p -> productDataSource.insertProduct(p));
+>>>>>>> cb63712bd25df30c37fb374823ac0f1f09bfca39
 
         //productDataSource.close();
 
+<<<<<<< HEAD
+       // productDataSource.openDatabase();
+
+       // List<Product> productosEnLaBD = productDataSource.getAllProducts();
+
+        //productDataSource.close();
+
+        //Stream.of(productosEnLaBD).forEach(p -> System.out.println(p.getCode() + " " + p.getCategory()));
+
+
+
+        SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
+        refreshLayout.setColorSchemeResources(R.color.color_rojo_app);
+
+        // Iniciar la tarea asíncrona al revelar el indicador
+        refreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        new RefreshRecyclerTask().execute((SimpleAdapter)recycler.getAdapter());
+                        refreshLayout.setRefreshing(false);
+                    }
+                }
+        );
+=======
         // LocalDatabase db = new LocalDatabase(this,"",null,1);
 
+>>>>>>> cb63712bd25df30c37fb374823ac0f1f09bfca39
     }
 
     @Override
