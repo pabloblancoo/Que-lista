@@ -21,18 +21,17 @@ import java.util.List;
 import grupomoviles.quelista.Database.ProductDataSource;
 import grupomoviles.quelista.captureCodes.IntentCaptureActivity;
 
-<<<<<<< HEAD
-import static android.widget.Toast.LENGTH_LONG;
 
-public class MainActivity extends ActionBarActivity implements  AppBarLayout.OnOffsetChangedListener{
-=======
 public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOffsetChangedListener{
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     Fragment fragmentPantry;
 =======
 >>>>>>> cb63712bd25df30c37fb374823ac0f1f09bfca39
 >>>>>>> 5b2e6713aa5eb151ef88de8b72b9c9129d6dcf1b
+=======
+>>>>>>> 5897295238d07b8257df9c268fe6fdee5478c3d6
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +49,6 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
         products.add(new Product("3", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
 
         //Creado para ver si arranca la BD
-<<<<<<< HEAD
         ProductDataSource productDataSource = new ProductDataSource(getApplicationContext());
         productDataSource.openDatabase();
 
@@ -60,16 +58,13 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
         productDataSource.insertProduct(new Product("3"));
         productDataSource.insertProduct(new Product("4"));
 
-=======
         //ProductDataSource productDataSource = new ProductDataSource(getApplicationContext());
         //productDataSource.openDatabase();
 
         //Stream.of(products).forEach(p -> productDataSource.insertProduct(p));
->>>>>>> cb63712bd25df30c37fb374823ac0f1f09bfca39
 
         //productDataSource.close();
 
-<<<<<<< HEAD
        // productDataSource.openDatabase();
 
        // List<Product> productosEnLaBD = productDataSource.getAllProducts();
@@ -93,10 +88,8 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
                     }
                 }
         );
-=======
         // LocalDatabase db = new LocalDatabase(this,"",null,1);
 
->>>>>>> cb63712bd25df30c37fb374823ac0f1f09bfca39
     }
 
     @Override
