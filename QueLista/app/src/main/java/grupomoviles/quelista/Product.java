@@ -30,6 +30,29 @@ public class Product {
     private int cartUnits;		//Unidades en el carrito (0 == no)
 
 
+    //Constructor con todos los valores inicializados, hay que borrarlo
+    public  Product(String code){
+        this.code = code;
+        description = "";
+        brand = "";
+        netValue="";
+        units = 1;  //(por ejemplo, la caja de yogures contiene 8 unidades. Por defecto 1)
+
+        category="";
+        subcategory="";
+        stock = 0;		// (-1 == no)
+        minStock=0;
+        unitsToAdd=1;	//Unidades a añadir a la lista de la compra automáticamente (Def: 1)
+
+        lastUpdate=null;	// (null == no añadir automáticamente)
+        consumeCycle=2;
+        consumeUnits=1;
+
+        shoppingListUnits=1;
+        cartUnits=1;
+
+    }
+
     public Product(String code, String description, String brand, String netValue, String category, String subcategory) {
         this.code = code;
         this.description = description;

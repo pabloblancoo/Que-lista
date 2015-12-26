@@ -62,14 +62,14 @@ public class LocalDatabase extends SQLiteOpenHelper {
         Nombre y version de la BD
      */
     private static final String DATABASE_NAME = "storeDatabase.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 5;
 
 
     /*
         Crear la tabla brand
      */
     private static String BRAND_CREATE_TABLE =
-            "create table " + BRAND_TABLE_NAME +
+            "create table if not exists " + BRAND_TABLE_NAME +
                     "(" +
                     BRAND_COLUMN_ID + " INTEGER PRIMARY KEY, " +
                     BRAND_COLUMN_NAME + " TEXT NOT NULL " +
@@ -81,7 +81,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
         Crear la tabla category
      */
     private static String CATEGORY_CREATE_TABLE =
-            "create table " + CATEGORY_TABLE_NAME +
+            "create table if not exists " + CATEGORY_TABLE_NAME +
             "(" +
             SUBCATEGORY_COLUMN_ID + " INTEGER PRIMARY KEY, " +
             SUBCATEGORY_COLUMN_NAME + " TEXT NOT NULL " +
@@ -91,19 +91,19 @@ public class LocalDatabase extends SQLiteOpenHelper {
      */
 
     private static String SUBCATEGORY_CREATE_TABLE =
-            "create table " + SUBCATEGORY_TABLE_NAME +
+            "create table if not exists " + SUBCATEGORY_TABLE_NAME +
             "(" +
             SUBCATEGORY_COLUMN_ID + " INTEGER PRIMARY KEY, " +
             SUBCATEGORY_COLUMN_ID_CATEGORY + " INTEGER NOT NULL, " +
             SUBCATEGORY_COLUMN_NAME + " TEXT NOT NULL, " +
-            " FOREIGN KEY " + SUBCATEGORY_COLUMN_ID_CATEGORY + " REFERENCES (" + CATEGORY_TABLE_NAME + "." + CATEGORY_COLUMN_ID + ") " +
+            " FOREIGN KEY (" + SUBCATEGORY_COLUMN_ID_CATEGORY + ") REFERENCES " + CATEGORY_TABLE_NAME + "(" + CATEGORY_COLUMN_ID + ") " +
             ")";
     /*
     Crear la tabla product
      */
 
     private static String PRODUCT_CREATE_TABLE =
-            "create table " + PRODUCT_TABLE_NAME +
+            "create table if not exists " + PRODUCT_TABLE_NAME +
             " (" +
                     PRODUCT_COLUMN_BARCODE + " TEXT PRIMARY KEY," +
                     PRODUCT_COLUMN_DESCRIPTION + " TEXT NOT NULL," +
@@ -118,9 +118,9 @@ public class LocalDatabase extends SQLiteOpenHelper {
                     PRODUCT_COLUMN_CONSUMEUNITS + " INTEGER NOT NULL," +
                     PRODUCT_COLUMN_SHOPPINGLISTUNITS + " INTEGER NOT NULL," +
                     PRODUCT_COLUMN_CARTUNITS + " INTEGER NOT NULL, " +
-                    "FOREIGN KEY " + PRODUCT_COLUMN_BRAND + " REFERENCES (" + BRAND_TABLE_NAME + "." + BRAND_COLUMN_ID + "), " +
-                    "FOREIGN KEY " + PRODUCT_COLUMN_CATEGORY + " REFERENCES (" + SUBCATEGORY_TABLE_NAME + "." + SUBCATEGORY_COLUMN_ID_CATEGORY + "), " +
-                    "FOREIGN KEY " + PRODUCT_COLUMN_SUBCATEGORY + " REFERENCES (" + SUBCATEGORY_TABLE_NAME + "." + SUBCATEGORY_COLUMN_ID + ") " +
+                    "FOREIGN KEY (" + PRODUCT_COLUMN_BRAND + ") REFERENCES " + BRAND_TABLE_NAME + "(" + BRAND_COLUMN_ID + "), " +
+                    "FOREIGN KEY (" + PRODUCT_COLUMN_CATEGORY + ") REFERENCES " + SUBCATEGORY_TABLE_NAME + "(" + SUBCATEGORY_COLUMN_ID_CATEGORY + "), " +
+                    "FOREIGN KEY (" + PRODUCT_COLUMN_SUBCATEGORY + ") REFERENCES " + SUBCATEGORY_TABLE_NAME + "(" + SUBCATEGORY_COLUMN_ID + ") " +
                     ")";
 
     private static final String DATABASE_DROP = "drop table if exists " + PRODUCT_TABLE_NAME;

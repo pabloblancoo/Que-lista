@@ -23,13 +23,9 @@ import grupomoviles.quelista.Database.LocalDatabase;
 import grupomoviles.quelista.Database.ProductDataSource;
 import grupomoviles.quelista.captureCodes.IntentCaptureActivity;
 
-<<<<<<< HEAD
 import static android.widget.Toast.LENGTH_LONG;
 
-public class MainActivity extends ActionBarActivity {
-=======
-public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOffsetChangedListener{
->>>>>>> 6a7e4a9c7ffb6fea9f4d760bd170e3fc9f30ca72
+public class MainActivity extends ActionBarActivity implements  AppBarLayout.OnOffsetChangedListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,17 +50,27 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
         recycler.setAdapter(new SimpleAdapter(this, products));
 
         //Creado para ver si arranca la BD
-<<<<<<< HEAD
         ProductDataSource productDataSource = new ProductDataSource(getApplicationContext());
         productDataSource.openDatabase();
 
-        Stream.of(products).forEach(p -> productDataSource.insertProduct(p));
+        //Stream.of(products).forEach(p -> productDataSource.insertProduct(p));
+        productDataSource.insertProduct(new Product("1"));
+        productDataSource.insertProduct(new Product("2"));
+        productDataSource.insertProduct(new Product("3"));
+        productDataSource.insertProduct(new Product("4"));
+
 
         productDataSource.close();
 
+       // productDataSource.openDatabase();
 
-=======
-       // LocalDatabase db = new LocalDatabase(this,"",null,1);
+       // List<Product> productosEnLaBD = productDataSource.getAllProducts();
+
+        //productDataSource.close();
+
+        //Stream.of(productosEnLaBD).forEach(p -> System.out.println(p.getCode() + " " + p.getCategory()));
+
+
 
         SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         refreshLayout.setColorSchemeResources(R.color.color_rojo_app);
@@ -79,7 +85,6 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
                     }
                 }
         );
->>>>>>> 6a7e4a9c7ffb6fea9f4d760bd170e3fc9f30ca72
     }
 
     @Override
