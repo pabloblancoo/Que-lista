@@ -74,7 +74,7 @@
     <ImageButton
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:id="@+id/btnPlus"
+        android:id="@+id/btnPlusStock"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:src="@drawable/icon_button_plus"
@@ -88,8 +88,8 @@
     <ImageButton
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:id="@+id/btnMinus"
-        android:layout_below="@+id/btnPlus"
+        android:id="@+id/btnMinusStock"
+        android:layout_below="@+id/btnPlusStock"
         android:layout_alignParentEnd="true"
         android:src="@drawable/icon_button_minus"
         android:scaleType="centerCrop"
@@ -102,9 +102,9 @@
         android:layout_height="wrap_content"
         android:text="1"
         android:id="@+id/txUnits"
-        android:layout_toStartOf="@+id/btnPlus"
-        android:layout_alignBottom="@+id/btnMinus"
-        android:layout_alignTop="@+id/btnPlus"
+        android:layout_toStartOf="@+id/btnPlusStock"
+        android:layout_alignBottom="@+id/btnMinusStock"
+        android:layout_alignTop="@+id/btnPlusStock"
         android:gravity="center_vertical"
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
@@ -114,7 +114,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="6dp"
-        android:layout_below="@+id/btnMinus" />
+        android:layout_below="@+id/btnMinusStock" />
 
 
 </com.daimajia.androidviewhover.BlurLayout>

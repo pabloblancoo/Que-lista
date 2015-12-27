@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -56,8 +55,8 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
             units = (TextView) v.findViewById(R.id.txUnits);
 
             blurLayout = (BlurLayout) v.findViewById(R.id.blurLayout);
-            v.findViewById(R.id.btnPlus).setOnClickListener(this);
-            v.findViewById(R.id.btnMinus).setOnClickListener(this);
+            v.findViewById(R.id.btnPlusStock).setOnClickListener(this);
+            v.findViewById(R.id.btnMinusStock).setOnClickListener(this);
             v.findViewById(R.id.btnDelete).setOnClickListener(this);
             btnCart = (ImageButton) hover.findViewById(R.id.btnCart);
 
@@ -67,9 +66,9 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
 
         @Override
         public void onClick(View v) {
-            if (v.equals(v.findViewById(R.id.btnPlus)))
+            if (v.equals(v.findViewById(R.id.btnPlusStock)))
                 units.setText(String.valueOf(product.increaseUnits()));
-            else if (v.equals(v.findViewById(R.id.btnMinus))) {
+            else if (v.equals(v.findViewById(R.id.btnMinusStock))) {
                 if (product.getStock() > 0)
                     units.setText(String.valueOf(product.decreaseUnits()));
                 else {
