@@ -241,5 +241,4 @@ public class Product {
         return stock;
     }
 
-
 }

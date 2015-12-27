@@ -1,7 +1,12 @@
 package grupomoviles.quelista;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,6 +20,14 @@ import android.view.View;
 
 import com.annimon.stream.Stream;
 
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,12 +47,12 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        List<Product> products = new ArrayList<>();
+        DownloadImageTask task;
+        task = new DownloadImageTask();
+        task.execute("5449000000996", "8410297112041", "8410297170058", "8410188012092",
+                "5449000009067", "8410000826937", "8410014307682", "8410014312495", "5000127281752");
 
-//        products.add(new Product("0", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
-//        products.add(new Product("1", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
-//        products.add(new Product("2", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
-//        products.add(new Product("3", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
+        List<Product> products = new ArrayList<>();
 
         products.add(new Product("5"));
         products.add(new Product("6"));
@@ -57,7 +70,6 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
         productDataSource.close();
 
         Stream.of(productosEnLaBD).forEach(p -> System.out.println("Barcode: " + p.getCode() + " categoria: " + p.getCategory() + " fecha: "+ p.getLastUpdate()));
-
 
     }
 
@@ -125,5 +137,44 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
     protected void onPause() {
         super.onPause();
         ((AppBarLayout)findViewById(R.id.appBarLayout)).removeOnOffsetChangedListener(this);
+    }
+
+    class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+
+        protected Bitmap doInBackground(String... product) {
+            FTPClient f = new FTPClient();
+
+            try {
+                Bitmap bp;
+                ByteArrayOutputStream stream;
+                byte[] byteArray;
+                FileOutputStream outputStream;
+
+                for (String s:product) {
+                    f.connect("31.170.164.153", 21);
+                    f.login("u750524270.solocarpeta", "moviles2015");
+                    f.enterLocalActiveMode();
+                    f.setFileType(FTP.BINARY_FILE_TYPE);
+
+                    bp = BitmapFactory.decodeStream(f.retrieveFileStream("/" + s + ".png"));
+
+                    if (bp != null) {
+                        stream = new ByteArrayOutputStream();
+                        bp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        byteArray = stream.toByteArray();
+
+                        outputStream = getApplicationContext().openFileOutput(s + ".png", Context.MODE_PRIVATE);
+                        outputStream.write(byteArray);
+                        outputStream.close();
+                    }
+                    f.disconnect();
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
     }
 }

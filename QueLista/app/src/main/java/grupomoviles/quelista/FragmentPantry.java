@@ -2,7 +2,6 @@ package grupomoviles.quelista;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import grupomoviles.quelista.onlineDatabase.GestorBD;
 
 /**
  * Created by Nauce on 26/12/15.
@@ -44,12 +45,16 @@ public class FragmentPantry extends Fragment {
                 }
         );
 
-        List<Product> products = new ArrayList<>();
+        List<Product> products = null;
 
-        products.add(new Product("0", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
-        products.add(new Product("1", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
-        products.add(new Product("2", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
-        products.add(new Product("3", "Cereales Miel Pops", "Kellogg's", "Caja de 375 g", "Categoria", "Subcategoria"));
+        try {
+            products = GestorBD.FindProducts("5449000000996", "8410297112041", "8410297170058",
+                    "8410188012092", "5449000009067", "8410000826937", "8410014307682", "8410014312495", "5000127281752");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         recycler.setAdapter(new SimpleAdapter(getActivity(), products));
 

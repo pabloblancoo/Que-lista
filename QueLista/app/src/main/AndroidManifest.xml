@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="grupomoviles.quelista">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         tools:replace="android:icon,android:theme"

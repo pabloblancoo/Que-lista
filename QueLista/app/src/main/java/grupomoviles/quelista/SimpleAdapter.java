@@ -2,6 +2,8 @@ package grupomoviles.quelista;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +19,8 @@ import com.daimajia.androidviewhover.BlurLayout;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 
 public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleViewHolder> {
@@ -133,6 +137,7 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
 
         viewHolder.blurLayout.dismissHover();
         viewHolder.product = currentItem;
+        viewHolder.image.setImageBitmap(getImage(currentItem.getCode()));
         viewHolder.descripction.setText(currentItem.getDescription());
         viewHolder.brand.setText(currentItem.getBrand());
         viewHolder.netValue.setText(currentItem.getNetValue());
@@ -146,4 +151,17 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
         return R.id.swipeLayout;
     }
 
+    private Bitmap getImage(String barcode) {
+        Bitmap bitmap = null;
+
+        try{
+            FileInputStream fileInputStream =
+                    new FileInputStream(context.getApplicationContext().getFilesDir().getPath()+ "/" + barcode + ".png");
+            bitmap = BitmapFactory.decodeStream(fileInputStream);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+
+        return bitmap;
+    }
 }
