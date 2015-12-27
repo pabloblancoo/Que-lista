@@ -25,7 +25,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:id="@+id/relativeLayout"/>
+            android:id="@+id/relativeLayout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/textNfc"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Leer NFC"
+                android:id="@+id/btLector"
+                android:layout_below="@+id/textNfc"
+                android:layout_centerHorizontal="true"
+                android:onClick="prueba" />
+
+        </RelativeLayout>
 
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
@@ -40,5 +59,9 @@
             app:layout_anchorGravity="bottom|right|end"
             android:layout_margin="12dp" />
 
+
+
 </android.support.design.widget.CoordinatorLayout>
+
+
 

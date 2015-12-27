@@ -6,6 +6,11 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.IsoDep;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -14,14 +19,19 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.annimon.stream.Stream;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -34,10 +44,15 @@ import java.util.List;
 import grupomoviles.quelista.Database.ProductDataSource;
 import grupomoviles.quelista.captureCodes.IntentCaptureActivity;
 
+import static android.nfc.NdefRecord.createTextRecord;
+
 
 public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOffsetChangedListener{
 
     Fragment fragmentPantry;
+    NfcAdapter nfcAdapter;
+    Button button;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,24 +67,17 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
         task.execute("5449000000996", "8410297112041", "8410297170058", "8410188012092",
                 "5449000009067", "8410000826937", "8410014307682", "8410014312495", "5000127281752");
 
-        List<Product> products = new ArrayList<>();
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        button = (Button) findViewById(R.id.btLector);
+        textView = (TextView) findViewById(R.id.textNfc);
 
-        products.add(new Product("5"));
-        products.add(new Product("6"));
-        products.add(new Product("7"));
-        products.add(new Product("8"));
-        //Creado para ver si arranca la BD
-        ProductDataSource productDataSource = new ProductDataSource(getApplicationContext());
-        productDataSource.openDatabase();
-        Stream.of(products).forEach(p -> productDataSource.insertProduct(p));
-        productDataSource.close();
+        if(nfcAdapter != null && nfcAdapter.isEnabled()){
+            Toast.makeText(this,"NFC available" , Toast.LENGTH_SHORT).show();
 
+        }else{
+            Toast.makeText(this,"NFC unavailable" , Toast.LENGTH_SHORT).show();
+        }
 
-        productDataSource.openDatabase();
-        List<Product> productosEnLaBD = productDataSource.getAllProducts();
-        productDataSource.close();
-
-        Stream.of(productosEnLaBD).forEach(p -> System.out.println("Barcode: " + p.getCode() + " categoria: " + p.getCategory() + " fecha: "+ p.getLastUpdate()));
 
     }
 
@@ -101,10 +109,10 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
     }
 
     public void prueba(View view) {
-        Intent intent = new Intent(MainActivity.this,ActivityPruebas.class);
-        startActivity(intent);
+            textView.setText("");
     }
 
+   
     public void scan(View view) {
         IntentCaptureActivity ica = new IntentCaptureActivity();
 
