@@ -2,14 +2,7 @@ package grupomoviles.quelista;
 
 import android.os.AsyncTask;
 
-import com.annimon.stream.Collectors;
-import com.annimon.stream.Stream;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import grupomoviles.quelista.onlineDatabase.GestorBD;
 
 /**
  * Created by Nauce on 24/12/15.
