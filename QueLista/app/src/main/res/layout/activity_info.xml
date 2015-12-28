@@ -60,7 +60,7 @@
     <ImageButton
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:id="@+id/imageButton3"
+        android:id="@+id/imgbMinusStock"
         android:layout_below="@+id/textView2"
         android:layout_alignParentStart="true"
         android:src="@drawable/icon_button_minus"
@@ -72,33 +72,77 @@
     <ImageButton
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:id="@+id/imageButton4"
+        android:id="@+id/imgbPlusStock"
         android:src="@drawable/icon_button_plus"
         android:background="@null"
         android:scaleType="centerCrop"
         android:layout_alignEnd="@+id/txtDescription"
-        android:layout_alignTop="@+id/imageButton3" />
+        android:layout_alignTop="@+id/imgbMinusStock" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/txMierda1"
-        android:layout_alignTop="@+id/imageButton3"
-        android:layout_alignBottom="@+id/imageButton3"
-        android:layout_toStartOf="@+id/textView4"
-        android:layout_toEndOf="@+id/imageButton3"
-        android:gravity="center_vertical|center_horizontal" />
+        android:text="Stock:"
+        android:id="@+id/txStock"
+        android:layout_alignTop="@+id/imgbMinusStock"
+        android:layout_alignBottom="@+id/imgbMinusStock"
+        android:layout_toStartOf="@+id/txUdStock"
+        android:layout_toEndOf="@+id/imgbMinusStock"
+        android:gravity="center_vertical|center_horizontal"
+        android:textSize="20dp" />
 
     <TextView
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:text="1"
-        android:id="@+id/textView4"
-        android:layout_alignTop="@+id/imageButton4"
-        android:layout_alignBottom="@+id/imageButton4"
-        android:layout_toStartOf="@+id/imageButton4"
+        android:id="@+id/txUdStock"
+        android:layout_alignTop="@+id/imgbPlusStock"
+        android:layout_alignBottom="@+id/imgbPlusStock"
+        android:layout_toStartOf="@+id/imgbPlusStock"
         android:gravity="center_vertical|center_horizontal" />
+
+    <ImageButton
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:id="@+id/imgbMinusMinStock"
+        android:src="@drawable/icon_button_minus"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/imgbMinusStock"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stock:"
+        android:id="@+id/txMinStock"
+        android:gravity="center_vertical|center_horizontal"
+        android:textSize="20dp"
+        android:layout_alignTop="@+id/imgbMinusMinStock"
+        android:layout_alignStart="@+id/txStock"
+        android:layout_alignBottom="@+id/imgbMinusMinStock"
+        android:layout_alignEnd="@+id/txStock" />
+
+    <ImageButton
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:id="@+id/imgbPlusMaxStock"
+        android:src="@drawable/icon_button_plus"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        android:layout_alignTop="@+id/txMinStock"
+        android:layout_toEndOf="@+id/txUdStock" />
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:id="@+id/txUdMinStock"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_alignTop="@+id/imgbPlusMaxStock"
+        android:layout_toStartOf="@+id/imgbPlusMaxStock"
+        android:layout_alignBottom="@+id/imgbPlusMaxStock" />
 
 
 </RelativeLayout>
