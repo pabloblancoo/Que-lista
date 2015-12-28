@@ -11,7 +11,7 @@
         android:id="@+id/btnShoppingList"
         android:layout_alignTop="@+id/btnCart"
         android:layout_toStartOf="@+id/btnCart"
-        android:layout_marginEnd="47dp"
+        android:layout_marginEnd="32dp"
         android:background="@null"
         android:src="@drawable/icon_button_shopping_list"
         android:scaleType="centerCrop" />
@@ -62,10 +62,10 @@
         android:layout_height="36dp"
         android:id="@+id/btnMore"
         android:background="@null"
-        android:layout_marginStart="45dp"
+        android:layout_marginStart="32dp"
         android:src="@drawable/icon_button_more"
         android:scaleType="centerCrop"
         android:layout_alignTop="@+id/btnCart"
-        android:layout_toEndOf="@+id/txCart" />
+        android:layout_toEndOf="@+id/btnCart" />
 
 </RelativeLayout>

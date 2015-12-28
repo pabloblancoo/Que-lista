@@ -48,7 +48,7 @@
         android:textSize="16dp"
         android:layout_toEndOf="@+id/imageView"
         android:layout_toStartOf="@+id/txUnits"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="8dp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
 
     <TextView
@@ -59,7 +59,7 @@
         android:layout_below="@+id/txDescription"
         android:layout_toEndOf="@+id/imageView"
         android:layout_toStartOf="@+id/txUnits"
-        android:layout_marginTop="3dp" />
+        android:textSize="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -69,7 +69,7 @@
         android:layout_below="@+id/txBrand"
         android:layout_toEndOf="@+id/imageView"
         android:layout_toStartOf="@+id/txUnits"
-        android:layout_marginTop="3dp" />
+        android:textSize="15dp" />
 
     <ImageButton
         android:layout_width="36dp"
