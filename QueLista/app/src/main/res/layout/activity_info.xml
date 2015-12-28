@@ -60,74 +60,133 @@
     <ImageButton
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:id="@+id/btnPlusStock"
-        android:src="@drawable/icon_button_plus"
-        android:scaleType="centerCrop"
-        android:background="@null"
+        android:id="@+id/imgbMinusStock"
         android:layout_below="@+id/textView2"
-        android:layout_alignStart="@+id/btnMinusStock"
-        android:layout_marginTop="24dp" />
+        android:layout_alignParentStart="true"
+        android:src="@drawable/icon_button_minus"
+        android:background="@null"
+android:layout_marginLeft="20dp"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="20dp" />
 
     <ImageButton
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:id="@+id/btnMinusStock"
-        android:src="@drawable/icon_button_minus"
-        android:scaleType="centerCrop"
+        android:id="@+id/imgbPlusStock"
+        android:src="@drawable/icon_button_plus"
         android:background="@null"
-        android:layout_below="@+id/btnPlusStock"
-        android:layout_toEndOf="@+id/textView2" />
+        android:scaleType="centerCrop"
+        android:layout_alignEnd="@+id/txtDescription"
+        android:layout_marginRight="20dp"
+        android:layout_alignTop="@+id/imgbMinusStock" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Despensa"
-        android:id="@+id/txtStock"
-        android:layout_alignTop="@+id/btnPlusStock"
-        android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/btnMinusStock"
-        android:layout_alignEnd="@+id/textView"
-        android:gravity="center_vertical|center_horizontal" />
+        android:text="Stock:"
+        android:id="@+id/txStock"
+        android:layout_alignTop="@+id/imgbMinusStock"
+        android:layout_alignBottom="@+id/imgbMinusStock"
+        android:layout_toStartOf="@+id/txUdStock"
+        android:layout_toEndOf="@+id/imgbMinusStock"
+        android:gravity="center_vertical|center_horizontal"
+        android:textSize="20dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:text="1"
-        android:id="@+id/valueStock"
-        android:layout_alignTop="@+id/txtStock"
-        android:layout_alignBottom="@+id/txtStock"
-        android:layout_alignEnd="@+id/textView2"
-        android:layout_toEndOf="@+id/txtStock"
+        android:id="@+id/txUdStock"
+        android:layout_alignTop="@+id/imgbPlusStock"
+        android:layout_alignBottom="@+id/imgbPlusStock"
+        android:layout_toStartOf="@+id/imgbPlusStock"
         android:gravity="center_vertical|center_horizontal" />
+
+    <ImageButton
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:id="@+id/imgbMinusMinStock"
+        android:src="@drawable/icon_button_minus"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/imgbMinusStock"
+        android:layout_alignStart="@+id/imgbMinusStock" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Despensa"
-        android:id="@+id/textView5"
+        android:text="Unidades minimas:"
+        android:id="@+id/txMinStock"
         android:gravity="center_vertical|center_horizontal"
-        android:layout_below="@+id/txtStock"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/txtStock" />
+        android:textSize="20dp"
+        android:layout_alignTop="@+id/imgbMinusMinStock"
+        android:layout_alignStart="@+id/txStock"
+        android:layout_alignBottom="@+id/imgbMinusMinStock"
+        android:layout_alignEnd="@+id/txStock" />
 
     <ImageButton
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:id="@+id/imageButton"
+        android:id="@+id/imgbPlusMaxStock"
         android:src="@drawable/icon_button_plus"
-        android:scaleType="centerCrop"
         android:background="@null"
-        android:layout_alignTop="@+id/textView5"
-        android:layout_toEndOf="@+id/valueStock" />
+        android:scaleType="centerCrop"
+        android:layout_alignTop="@+id/txMinStock"
+        android:layout_toEndOf="@+id/txUdStock" />
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:id="@+id/txUdMinStock"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_alignTop="@+id/imgbPlusMaxStock"
+        android:layout_toStartOf="@+id/imgbPlusMaxStock"
+        android:layout_alignBottom="@+id/imgbPlusMaxStock" />
 
     <ImageButton
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:id="@+id/imageButton2"
+        android:id="@+id/imageButton3"
         android:src="@drawable/icon_button_minus"
-        android:scaleType="centerCrop"
         android:background="@null"
-        android:layout_below="@+id/imageButton"
-        android:layout_toEndOf="@+id/textView2" />
+        android:scaleType="centerCrop"
+        android:layout_marginTop="36dp"
+        android:layout_below="@+id/imgbMinusMinStock"
+        android:layout_alignStart="@+id/imgbMinusMinStock" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Periodo de consumo:"
+        android:id="@+id/textView3"
+        android:gravity="center_vertical|center_horizontal"
+        android:textSize="20dp"
+        android:layout_alignTop="@+id/imageButton3"
+        android:layout_alignStart="@+id/txMinStock"
+        android:layout_alignBottom="@+id/imageButton3"
+        android:layout_toStartOf="@+id/textView4" />
+
+    <ImageButton
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:id="@+id/imageButton4"
+        android:src="@drawable/icon_button_plus"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        android:layout_alignTop="@+id/textView3"
+        android:layout_toEndOf="@+id/txUdMinStock" />
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:id="@+id/textView4"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_alignTop="@+id/imageButton4"
+        android:layout_toEndOf="@+id/txMinStock"
+        android:layout_alignBottom="@+id/imageButton4" />
+
 
 </RelativeLayout>

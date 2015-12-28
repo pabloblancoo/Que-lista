@@ -41,23 +41,32 @@ public class ProductDataSource {
             LocalDatabase.PRODUCT_COLUMN_CARTUNITS
     };
 
+    /**
+     * Constructor
+     * @param context
+     */
     public ProductDataSource(Context context) {
         helper = new LocalDatabase(context, null, null, 0);
     }
 
+    /**
+     * Abre la conexion a la base de datos local
+     */
     public void openDatabase() {
         database = helper.getWritableDatabase();
     }
 
+    /**
+     * Cierra la conexion a la base de datos local
+     */
     public void close() {
         helper.close();
     }
 
     /**
-     * Añadir un producto a la base de datos
+     * Añadir un producto a la base de datos local, si ya existe, lo actualiza
      *
      * @param product
-     * @return
      */
     public void insertProduct(Product product) {
         ContentValues values = getContentValues(product);
@@ -66,14 +75,13 @@ public class ProductDataSource {
         try {
             database.insertOrThrow(LocalDatabase.PRODUCT_TABLE_NAME, null, values);
         } catch (SQLiteConstraintException e) {
-            e.printStackTrace();
-//            System.out.println("Ya esta insertado el elemento con barcode: " + product.getCode());
+            update(product);
         }
     }
 
 
     /**
-     * Elimina un producto de la BD local
+     * Elimina un producto de la base de datos local
      * @param barcode Codigo del elemento a borrar
      */
     public void deleteProduct(String barcode) {
@@ -81,10 +89,14 @@ public class ProductDataSource {
 
     }
 
+    /**
+     * Actualiza un producto en la base de datos local
+     * @param product
+     */
     public void update(Product product){
         ContentValues values = getContentValues(product);
 
-        database.update(LocalDatabase.PRODUCT_TABLE_NAME,values,LocalDatabase.PRODUCT_COLUMN_BARCODE + "=" + product.getCode(),null);
+        database.update(LocalDatabase.PRODUCT_TABLE_NAME, values, LocalDatabase.PRODUCT_COLUMN_BARCODE + "=" + product.getCode(), null);
     }
 
     @NonNull
@@ -100,7 +112,12 @@ public class ProductDataSource {
         values.put(LocalDatabase.PRODUCT_COLUMN_STOCK, product.getStock());
         values.put(LocalDatabase.PRODUCT_COLUMN_MINSTOCK, product.getMinStock());
         values.put(LocalDatabase.PRODUCT_COLUMN_UNITSTOADD, product.getUnitsToAdd());
-        values.put(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(product.getLastUpdate()));
+
+        if(product.getLastUpdate() == null)
+            values.put(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE, (byte[]) null);
+        else
+            values.put(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(product.getLastUpdate()));
+
         values.put(LocalDatabase.PRODUCT_COLUMN_CONSUMECYCLE, product.getConsumeCycle());
         values.put(LocalDatabase.PRODUCT_COLUMN_CONSUMEUNITS, product.getConsumeUnits());
         values.put(LocalDatabase.PRODUCT_COLUMN_SHOPPINGLISTUNITS, product.getShoppingListUnits());
@@ -122,22 +139,10 @@ public class ProductDataSource {
 
             Product product = null;
             try {
-                product = new Product(
-                        cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_BARCODE)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_DESCRIPTION)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_BRAND)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_NETVALUE)),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_UNITS)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_CATEGORY)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_SUBCATEGORY)),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_STOCK)),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_MINSTOCK)),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_UNITSTOADD)),
-                        new SimpleDateFormat("yyyy-MM-dd").parse(cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE))),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_CONSUMECYCLE)),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_CONSUMEUNITS)),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_SHOPPINGLISTUNITS)),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_CARTUNITS)));
+                if(cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE)) == null || cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE)) == "")
+                    product = getProductWithoutDate(cursor);
+                else
+                    product = getProductWithDate(cursor);
             } catch (ParseException e) {
                 System.out.println("Error en la fecha");
             }
@@ -153,6 +158,46 @@ public class ProductDataSource {
         // Una vez obtenidos todos los datos y cerrado el cursor, devolvemos la
         // lista.
         return valorationList;
+    }
+
+    private Product getProductWithoutDate(Cursor cursor) {
+        return new Product(
+                cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_BARCODE)),
+                cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_DESCRIPTION)),
+                cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_BRAND)),
+                cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_NETVALUE)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_UNITS)),
+                cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_CATEGORY)),
+                cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_SUBCATEGORY)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_STOCK)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_MINSTOCK)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_UNITSTOADD)),
+                null, //Valor de la fecha
+                cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_CONSUMECYCLE)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_CONSUMEUNITS)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_SHOPPINGLISTUNITS)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_CARTUNITS)));
+
+    }
+
+    @NonNull
+    private Product getProductWithDate(Cursor cursor) throws ParseException {
+        return new Product(
+                cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_BARCODE)),
+                cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_DESCRIPTION)),
+                cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_BRAND)),
+                cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_NETVALUE)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_UNITS)),
+                cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_CATEGORY)),
+                cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_SUBCATEGORY)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_STOCK)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_MINSTOCK)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_UNITSTOADD)),
+                new SimpleDateFormat("yyyy-MM-dd").parse(cursor.getString(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_LASTUPDATE))),
+                cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_CONSUMECYCLE)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_CONSUMEUNITS)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_SHOPPINGLISTUNITS)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(LocalDatabase.PRODUCT_COLUMN_CARTUNITS)));
     }
 
 }
