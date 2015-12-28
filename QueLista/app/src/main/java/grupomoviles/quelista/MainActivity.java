@@ -39,6 +39,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import grupomoviles.quelista.Database.ProductDataSource;
@@ -47,12 +48,10 @@ import grupomoviles.quelista.captureCodes.IntentCaptureActivity;
 import static android.nfc.NdefRecord.createTextRecord;
 
 
-public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOffsetChangedListener{
+public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOffsetChangedListener {
 
     Fragment fragmentPantry;
     NfcAdapter nfcAdapter;
-    Button button;
-    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,16 +67,34 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
                 "5449000009067", "8410000826937", "8410014307682", "8410014312495", "5000127281752");
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        button = (Button) findViewById(R.id.btLector);
-        textView = (TextView) findViewById(R.id.textNfc);
 
-        if(nfcAdapter != null && nfcAdapter.isEnabled()){
-            Toast.makeText(this,"NFC available" , Toast.LENGTH_SHORT).show();
+        ProductDataSource productDataSource = new ProductDataSource(this);
 
-        }else{
-            Toast.makeText(this,"NFC unavailable" , Toast.LENGTH_SHORT).show();
-        }
+        productDataSource.openDatabase();
+        List<Product> products = productDataSource.getAllProducts();
+//        private String code;
+//        private String description;
+//        private String brand;
+//        private String netValue;
+//        private int units = 1;  //(por ejemplo, la caja de yogures contiene 8 unidades. Por defecto 1)
+//
+//        private String category;
+//        private String subcategory;
+//
+//        private int stock = 0;		// (-1 == no)
+//        private int minStock;
+//        private int unitsToAdd;	//Unidades a añadir a la lista de la compra automáticamente (Def: 1)
+//
+//        private Date lastUpdate;	// (null == no añadir automáticamente)
+//        private int consumeCycle;  //Período (a definir si van a ser días enteros)
+//        private int consumeUnits;  //Unidades a descontar cada período
+//
+//        private int shoppingListUnits;	//Unidades en la lista de la compra (0 == no)
+//        private int cartUnits;		//Unidades en el carrito (0 == no)
+        //productDataSource.insertProduct(new Product("1", "cereales miel", "kelloks","caja 25", 4,"chocolate","salado",2,1,1,null,5,2,3,2));
+        productDataSource.close();
 
+        Stream.of(products).forEach(p -> System.out.println(p.getCode() + " " + p.getCategory() + " " + p.getSubcategory()));
 
     }
 
@@ -108,11 +125,7 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
         return super.onOptionsItemSelected(item);
     }
 
-    public void prueba(View view) {
-            textView.setText("");
-    }
 
-   
     public void scan(View view) {
         IntentCaptureActivity ica = new IntentCaptureActivity();
 
@@ -138,13 +151,13 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
     @Override
     protected void onResume() {
         super.onResume();
-        ((AppBarLayout)findViewById(R.id.appBarLayout)).addOnOffsetChangedListener(this);
+        ((AppBarLayout) findViewById(R.id.appBarLayout)).addOnOffsetChangedListener(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        ((AppBarLayout)findViewById(R.id.appBarLayout)).removeOnOffsetChangedListener(this);
+        ((AppBarLayout) findViewById(R.id.appBarLayout)).removeOnOffsetChangedListener(this);
     }
 
     class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -158,7 +171,7 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
                 byte[] byteArray;
                 FileOutputStream outputStream;
 
-                for (String s:product) {
+                for (String s : product) {
                     f.connect("31.170.164.153", 21);
                     f.login("u750524270.solocarpeta", "moviles2015");
                     f.enterLocalActiveMode();
