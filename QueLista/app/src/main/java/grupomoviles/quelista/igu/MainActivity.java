@@ -1,51 +1,33 @@
-package grupomoviles.quelista;
+package grupomoviles.quelista.igu;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.content.ContextWrapper;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
-import android.nfc.Tag;
-import android.nfc.tech.IsoDep;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.annimon.stream.Stream;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
-import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import grupomoviles.quelista.Database.ProductDataSource;
+import grupomoviles.quelista.R;
+import grupomoviles.quelista.localDatabase.ProductDataSource;
 import grupomoviles.quelista.captureCodes.IntentCaptureActivity;
-
-import static android.nfc.NdefRecord.createTextRecord;
+import grupomoviles.quelista.logic.Product;
 
 
 public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOffsetChangedListener {

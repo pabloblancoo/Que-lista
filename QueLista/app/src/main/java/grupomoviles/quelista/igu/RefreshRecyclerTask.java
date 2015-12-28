@@ -1,8 +1,10 @@
-package grupomoviles.quelista;
+package grupomoviles.quelista.igu;
 
 import android.os.AsyncTask;
 
 import java.util.List;
+
+import grupomoviles.quelista.logic.Product;
 
 /**
  * Created by Nauce on 24/12/15.

@@ -1,4 +1,4 @@
-package grupomoviles.quelista.Database;
+package grupomoviles.quelista.localDatabase;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import grupomoviles.quelista.Product;
+import grupomoviles.quelista.logic.Product;
 
 /**
  * Created by Pablo on 22/12/2015.

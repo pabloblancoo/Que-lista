@@ -1,4 +1,4 @@
-package grupomoviles.quelista;
+package grupomoviles.quelista.igu;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import grupomoviles.quelista.R;
+import grupomoviles.quelista.logic.Product;
 import grupomoviles.quelista.onlineDatabase.GestorBD;
 
 /**

@@ -1,4 +1,4 @@
-package grupomoviles.quelista;
+package grupomoviles.quelista.igu;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,7 +13,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.annimon.stream.Stream;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.androidviewhover.BlurLayout;
@@ -22,8 +21,10 @@ import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+
+import grupomoviles.quelista.R;
+import grupomoviles.quelista.logic.Product;
 
 public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleViewHolder> {
 
@@ -70,10 +71,10 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
         public void onClick(View v) {
             YoYo.with(Techniques.Pulse).duration(100).playOn(v);
             if (v.equals(v.findViewById(R.id.btnPlusStock)))
-                units.setText(String.valueOf(product.increaseUnits()));
+                units.setText(String.valueOf(product.increaseStock()));
             else if (v.equals(v.findViewById(R.id.btnMinusStock))) {
                 if (product.getStock() > 0)
-                    units.setText(String.valueOf(product.decreaseUnits()));
+                    units.setText(String.valueOf(product.decreaseStock()));
                 else {
                     AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
                     dialog.setTitle("¿Desea eliminar este producto de la despensa?");

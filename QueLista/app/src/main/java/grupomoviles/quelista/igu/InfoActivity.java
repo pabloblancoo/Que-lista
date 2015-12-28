@@ -1,7 +1,9 @@
-package grupomoviles.quelista;
+package grupomoviles.quelista.igu;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import grupomoviles.quelista.R;
 
 public class InfoActivity extends AppCompatActivity {
 
