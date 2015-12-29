@@ -34,7 +34,7 @@
 
             <!-- android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" -->
         </activity>
-        <activity android:name=".igu.ProductInfoActivity"></activity>
+        <activity android:name=".igu.ProductInfoActivity" />
     </application>
 
 </manifest>
