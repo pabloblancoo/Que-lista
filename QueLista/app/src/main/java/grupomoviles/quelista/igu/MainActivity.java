@@ -2,17 +2,28 @@ package grupomoviles.quelista.igu;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.nfc.NfcAdapter;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPropertyAnimatorListener;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 
 import com.annimon.stream.Stream;
 
@@ -122,6 +133,10 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
     protected void onPause() {
         super.onPause();
         ((AppBarLayout) findViewById(R.id.appBarLayout)).removeOnOffsetChangedListener(this);
+    }
+
+    public void lanza(View view) {
+        startActivity(new Intent(MainActivity.this, ProductInfoActivity.class));
     }
 
     class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
