@@ -72,6 +72,25 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
 
         productDataSource.openDatabase();
         List<Product> products = productDataSource.getAllProducts();
+//        private String code;
+//        private String description;
+//        private String brand;
+//        private String netValue;
+//        private int units = 1;  //(por ejemplo, la caja de yogures contiene 8 unidades. Por defecto 1)
+//
+//        private String category;
+//        private String subcategory;
+//
+//        private int stock = 0;		// (-1 == no)
+//        private int minStock;
+//        private int unitsToAdd;	//Unidades a añadir a la lista de la compra automáticamente (Def: 1)
+//
+//        private Date lastUpdate;	// (null == no añadir automáticamente)
+//        private int consumeCycle;  //Período (a definir si van a ser días enteros)
+//        private int consumeUnits;  //Unidades a descontar cada período
+//
+//        private int shoppingListUnits;	//Unidades en la lista de la compra (0 == no)
+//        private int cartUnits;		//Unidades en el carrito (0 == no)
         //productDataSource.insertProduct(new Product("1", "cereales miel", "kelloks","caja 25", 4,"chocolate","salado",2,1,1,null,5,2,3,2));
         productDataSource.close();
 
