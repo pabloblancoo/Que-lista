@@ -1,4 +1,4 @@
-package grupomoviles.quelista;
+package grupomoviles.quelista.logic;
 
 import java.util.Date;
 
@@ -231,12 +231,12 @@ public class Product {
 
 
     //Metodos de logica
-    public int increaseUnits() {
+    public int increaseStock() {
         stock++;
         return stock;
     }
 
-    public int decreaseUnits() {
+    public int decreaseStock() {
         stock--;
         return stock;
     }

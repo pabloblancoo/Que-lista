@@ -8,7 +8,7 @@ import com.mongodb.DBObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import grupomoviles.quelista.Product;
+import grupomoviles.quelista.logic.Product;
 
 /**
  * Created by Nauce on 18/11/15.

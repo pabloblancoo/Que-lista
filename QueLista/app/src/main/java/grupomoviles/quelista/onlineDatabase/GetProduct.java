@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 import com.mongodb.BasicDBList;
 import com.mongodb.DBObject;
 
-import grupomoviles.quelista.Product;
+import grupomoviles.quelista.logic.Product;
 
 /**
  * Created by Nauce on 18/11/15.

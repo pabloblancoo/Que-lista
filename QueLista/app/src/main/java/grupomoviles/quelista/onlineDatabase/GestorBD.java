@@ -3,7 +3,7 @@ package grupomoviles.quelista.onlineDatabase;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import grupomoviles.quelista.Product;
+import grupomoviles.quelista.logic.Product;
 
 
 /**

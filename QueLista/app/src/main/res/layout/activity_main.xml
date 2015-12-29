@@ -27,6 +27,14 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:id="@+id/relativeLayout">
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LANZA"
+                android:id="@+id/button"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:onClick="lanza" />
         </RelativeLayout>
 
         <android.support.design.widget.FloatingActionButton
@@ -40,7 +48,8 @@
             android:onClick="scan"
             android:layout_gravity="bottom|right"
             app:layout_anchorGravity="bottom|right|end"
-            android:layout_margin="12dp" />
+            android:layout_margin="12dp"
+            app:layout_behavior="grupomoviles.quelista.igu.ScrollAwareFABBehavior"/>
 
 
 

@@ -1,51 +1,44 @@
-package grupomoviles.quelista;
+package grupomoviles.quelista.igu;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
-import android.nfc.Tag;
-import android.nfc.tech.IsoDep;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPropertyAnimatorListener;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 
 import com.annimon.stream.Stream;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
-import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import grupomoviles.quelista.Database.ProductDataSource;
+import grupomoviles.quelista.R;
+import grupomoviles.quelista.localDatabase.ProductDataSource;
 import grupomoviles.quelista.captureCodes.IntentCaptureActivity;
-
-import static android.nfc.NdefRecord.createTextRecord;
+import grupomoviles.quelista.logic.Product;
 
 
 public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOffsetChangedListener {
@@ -72,25 +65,7 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
 
         productDataSource.openDatabase();
         List<Product> products = productDataSource.getAllProducts();
-//        private String code;
-//        private String description;
-//        private String brand;
-//        private String netValue;
-//        private int units = 1;  //(por ejemplo, la caja de yogures contiene 8 unidades. Por defecto 1)
-//
-//        private String category;
-//        private String subcategory;
-//
-//        private int stock = 0;		// (-1 == no)
-//        private int minStock;
-//        private int unitsToAdd;	//Unidades a añadir a la lista de la compra automáticamente (Def: 1)
-//
-//        private Date lastUpdate;	// (null == no añadir automáticamente)
-//        private int consumeCycle;  //Período (a definir si van a ser días enteros)
-//        private int consumeUnits;  //Unidades a descontar cada período
-//
-//        private int shoppingListUnits;	//Unidades en la lista de la compra (0 == no)
-//        private int cartUnits;		//Unidades en el carrito (0 == no)
+
         //productDataSource.insertProduct(new Product("1", "cereales miel", "kelloks","caja 25", 4,"chocolate","salado",2,1,1,null,5,2,3,2));
         productDataSource.close();
 
@@ -158,6 +133,10 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
     protected void onPause() {
         super.onPause();
         ((AppBarLayout) findViewById(R.id.appBarLayout)).removeOnOffsetChangedListener(this);
+    }
+
+    public void lanza(View view) {
+        startActivity(new Intent(MainActivity.this, ProductInfoActivity.class));
     }
 
     class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {

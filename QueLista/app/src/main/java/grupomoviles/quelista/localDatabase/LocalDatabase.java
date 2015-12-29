@@ -1,13 +1,8 @@
-package grupomoviles.quelista.Database;
+package grupomoviles.quelista.localDatabase;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
-
-import grupomoviles.quelista.MainActivity;
-
-import static android.widget.Toast.LENGTH_LONG;
 
 /**
  * Created by Pablo on 21/12/2015.
