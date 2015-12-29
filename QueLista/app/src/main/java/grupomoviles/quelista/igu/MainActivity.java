@@ -39,6 +39,7 @@ import grupomoviles.quelista.R;
 import grupomoviles.quelista.localDatabase.ProductDataSource;
 import grupomoviles.quelista.captureCodes.IntentCaptureActivity;
 import grupomoviles.quelista.logic.Product;
+import grupomoviles.quelista.logic.TicketReader;
 
 
 public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOffsetChangedListener {
@@ -61,16 +62,12 @@ public class MainActivity extends ActionBarActivity implements AppBarLayout.OnOf
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        ProductDataSource productDataSource = new ProductDataSource(this);
-
-        productDataSource.openDatabase();
-        List<Product> products = productDataSource.getAllProducts();
-
-        //productDataSource.insertProduct(new Product("1", "cereales miel", "kelloks","caja 25", 4,"chocolate","salado",2,1,1,null,5,2,3,2));
-        productDataSource.close();
-
-        Stream.of(products).forEach(p -> System.out.println(p.getCode() + " " + p.getCategory() + " " + p.getSubcategory()));
-
+        TicketReader ticketReader = new TicketReader();
+        try {
+            ticketReader.leer("");
+        } catch (IOException e) {
+            System.out.print("No existe");
+        }
     }
 
     @Override
