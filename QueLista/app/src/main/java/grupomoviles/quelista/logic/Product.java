@@ -1,11 +1,12 @@
 package grupomoviles.quelista.logic;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Nauce on 22/12/15.
  */
-public class Product {
+public class Product implements Serializable {
 
     public static int NOT_IN_PANTRY = -1;
 

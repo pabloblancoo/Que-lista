@@ -19,6 +19,8 @@ import grupomoviles.quelista.logic.Product;
 
 public class ProductInfoActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
+    public static final String PRODUCT = "PRODUCT";
+
     TextView unitsPantry;
     TextView unitsLista;
     TextView unitsCarrito;
@@ -38,6 +40,7 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
     Button buttonPlusAddWhenHave;
     Button buttonMinusAddWhenHave;
 
+    Product product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,8 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar_info));
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        product = (Product) getIntent().getExtras().get(PRODUCT);
 
         unitsPantry = (TextView) findViewById(R.id.txUnitsPantry);
         unitsLista = (TextView) findViewById(R.id.txUnitsShoppingList);
@@ -216,13 +221,13 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        if (compoundButton == switchCompatTakeUnits)
+        if (compoundButton.getId() == switchCompatTakeUnits.getId())
             if (b)
                 findViewById(R.id.layoutTakeUnitsSwitch).setVisibility(View.VISIBLE);
             else
                 findViewById(R.id.layoutTakeUnitsSwitch).setVisibility(View.GONE);
 
-        else if (compoundButton == switchCompatAddToShoppingList)
+        else if (compoundButton.getId() == switchCompatAddToShoppingList.getId())
             if (b)
                 findViewById(R.id.layoutAddToShoppingListSwitch).setVisibility(View.VISIBLE);
             else

@@ -112,16 +112,4 @@ public class MainActivity extends AppCompatActivity {
         ica.initScan(this);
     }
 
-    public void lanzar(View view) {
-        startActivity(new Intent(MainActivity.this, ProductInfoActivity.class));
-
-//        Intent intent = new Intent(MainActivity.this, ProductInfoActivity.class);
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable("product",lista.get(seleccionado));
-//
-
-    }
-
-
-
 }

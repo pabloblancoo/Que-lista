@@ -2,6 +2,7 @@ package grupomoviles.quelista.igu;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AlertDialog;
@@ -61,6 +62,7 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
             v.findViewById(R.id.btnPlusStock).setOnClickListener(this);
             v.findViewById(R.id.btnMinusStock).setOnClickListener(this);
             v.findViewById(R.id.btnDelete).setOnClickListener(this);
+            hover.findViewById(R.id.btnMore).setOnClickListener(this);
             btnCart = (ImageButton) hover.findViewById(R.id.btnCart);
 
             this.simpleAdapter = simpleAdapter;
@@ -70,9 +72,9 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
         @Override
         public void onClick(View v) {
             YoYo.with(Techniques.Pulse).duration(100).playOn(v);
-            if (v.equals(v.findViewById(R.id.btnPlusStock)))
+            if (v.getId() == R.id.btnPlusStock)
                 units.setText(String.valueOf(product.increaseStock()));
-            else if (v.equals(v.findViewById(R.id.btnMinusStock))) {
+            else if (v.getId() == R.id.btnMinusStock) {
                 if (product.getStock() > 0)
                     units.setText(String.valueOf(product.decreaseStock()));
                 else {
@@ -88,8 +90,13 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
                     dialog.show();
                 }
             }
-            else if (v.equals(v.findViewById(R.id.btnDelete))) {
+            else if (v.getId() == R.id.btnDelete) {
                 removeProduct();
+            }
+            else if (v.getId() == R.id.btnMore) {
+                Intent i = new Intent(context, ProductInfoActivity.class);
+                i.putExtra(ProductInfoActivity.PRODUCT, product);
+                context.startActivity(i);
             }
         }
 
