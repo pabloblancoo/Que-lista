@@ -51,7 +51,7 @@ public class SimpleAdapter extends RecyclerSwipeAdapter<SimpleAdapter.SimpleView
         public SimpleViewHolder(View v, SimpleAdapter simpleAdapter, View hover) {
             super(v);
 
-            image = (ImageView) v.findViewById(R.id.imageView);
+            image = (ImageView) v.findViewById(R.id.imgProduct);
             descripction = (TextView) v.findViewById(R.id.txDescription);
             brand = (TextView) v.findViewById(R.id.txBrand);
             netValue = (TextView) v.findViewById(R.id.txNetValue);
