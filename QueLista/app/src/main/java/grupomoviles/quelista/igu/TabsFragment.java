@@ -1,5 +1,6 @@
 package grupomoviles.quelista.igu;
 
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -7,16 +8,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import grupomoviles.quelista.R;
 
-/**
- * Created by Alperi on 30/12/2015
- */
 
-public class TabFragment extends Fragment {
+/**
+ * Created by Nauce on 30/12/15.
+ */
+public class TabsFragment extends Fragment {
 
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
@@ -28,36 +33,41 @@ public class TabFragment extends Fragment {
         /**
          * Inflamos fragment_tab y adjuntamos Views.
          */
-            View x =  inflater.inflate(R.layout.fragment_tab,null);
-            tabLayout = (TabLayout) x.findViewById(R.id.tabs);
-            viewPager = (ViewPager) x.findViewById(R.id.viewpager);
+        View v =  inflater.inflate(R.layout.fragment_tabs,null);
+        tabLayout = (TabLayout) v.findViewById(R.id.tab_layout);
+        viewPager = (ViewPager) v.findViewById(R.id.viewpager);
 
         /**
          * Establecemos un Adapter para el ViewPager
          */
         viewPager.setAdapter(new MyAdapter(getChildFragmentManager()));
 
-        /**
-         * Now , this is a workaround ,
-         * The setupWithViewPager dose't works without the runnable .
-         * Maybe a Support Library Bug .
-         */
+        tabLayout.setupWithViewPager(viewPager);
 
         tabLayout.post(new Runnable() {
             @Override
             public void run() {
-                    tabLayout.setupWithViewPager(viewPager);
-                   }
+                tabLayout.setupWithViewPager(viewPager);
+            }
         });
 
-        return x;
+        /**
+         * Configuramos el ActionBarDrawerToggle
+         */
+        Toolbar toolbar = (Toolbar) v.findViewById(R.id.toolbar);
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(getActivity(), ((MainActivity)getActivity()).mDrawerLayout,
+                toolbar, R.string.open_drawer, R.string.close_drawer);
+        ((MainActivity)getActivity()).mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
+
+        return v;
 
     }
 
-    class MyAdapter extends FragmentPagerAdapter{
+    class MyAdapter extends FragmentPagerAdapter {
 
-        public MyAdapter(FragmentManager fm) {
-            super(fm);
+        public MyAdapter(FragmentManager childFragmentManager) {
+            super(childFragmentManager);
         }
 
         /**
@@ -65,14 +75,14 @@ public class TabFragment extends Fragment {
          */
 
         @Override
-        public Fragment getItem(int position)
+        public android.support.v4.app.Fragment getItem(int position)
         {
-          switch (position){
-              case 0 : return new DespensaFragment();
-              case 1 : return new ListaCompraFragment();
-              case 2 : return new CarritoFragment();
-          }
-        return null;
+            switch (position){
+                case 0 : return new DespensaFragment();
+                case 1 : return new ListaCompraFragment();
+                case 2 : return new CarritoFragment();
+            }
+            return null;
         }
 
         @Override
@@ -97,8 +107,7 @@ public class TabFragment extends Fragment {
                 case 2 :
                     return "Carrito";
             }
-                return null;
+            return null;
         }
     }
-
 }

@@ -1,10 +1,17 @@
 package grupomoviles.quelista.igu;
 
+import android.content.Context;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 
 import android.os.Bundle;
 
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.io.IOException;
@@ -70,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         mFragmentManager = getSupportFragmentManager();
         if (savedInstanceState == null) {
             mFragmentTransaction = mFragmentManager.beginTransaction();
-            mFragmentTransaction.replace(R.id.containerView, new TabFragment()).commit();
+            mFragmentTransaction.replace(R.id.fragment_container, new TabsFragment()).commit();
         }
 
         /**
@@ -78,27 +85,20 @@ public class MainActivity extends AppCompatActivity {
          */
 
         mNavigationView.setNavigationItemSelectedListener(menuItem -> {
-            mDrawerLayout.closeDrawers();
             FragmentTransaction fragmentTransaction;
+            mDrawerLayout.closeDrawers();
             if (menuItem.getItemId() == R.id.nav_item_settings) {
                 fragmentTransaction = mFragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.containerView, new OpcionesFragment()).commit();
+                fragmentTransaction.replace(R.id.fragment_container, new OpcionesFragment()).commit();
             } else if (menuItem.getItemId() == R.id.nav_item_inicio) {
                 fragmentTransaction = mFragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.containerView, new TabFragment()).commit();
+                fragmentTransaction.replace(R.id.fragment_container, new TabsFragment()).commit();
+
             }
 
             return false;
         });
 
-        /**
-         * Configuramos el ActionBarDrawerToggle
-         */
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                toolbar, R.string.open_drawer, R.string.close_drawer);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        mDrawerToggle.syncState();
     }
 
     public void scan(View view) {
@@ -115,5 +115,7 @@ public class MainActivity extends AppCompatActivity {
     public void lanzar(View view) {
         startActivity(new Intent(MainActivity.this, ProductInfoActivity.class));
     }
+
+
 
 }
