@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     tools:context=".igu.ProductInfoActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -21,260 +22,454 @@
 
     </android.support.design.widget.AppBarLayout>
 
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="false"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <ScrollView android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:focusable="false">
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:id="@+id/imageView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:src="@drawable/cereales_miel_pops"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="12dp"/>
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                card_view:contentPadding="12dp"
+                card_view:cardCornerRadius="0dp"
+                card_view:cardElevation="1dp"
+                card_view:cardPreventCornerOverlap="true"
+                card_view:cardUseCompatPadding="true"
+                android:elevation="0dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="125dp"
+                        android:layout_height="125dp"
+                        android:id="@+id/imageView"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/cereales_miel_pops" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cereales Miel Pops"
-        android:id="@+id/txDescription"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        android:layout_marginRight="12dp"
-        android:layout_alignTop="@+id/imageView"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/imageView"
-        android:textSize="18dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cereales Miel Pops"
+                        android:id="@+id/txDescription"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                        android:layout_alignTop="@+id/imageView"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@+id/imageView"
+                        android:textSize="18dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Kellog&apos;s"
-        android:id="@+id/txBrand"
-        android:layout_alignEnd="@+id/txDescription"
-        android:layout_below="@+id/txDescription"
-        android:layout_toEndOf="@+id/imageView" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kellog&apos;s"
+                        android:id="@+id/txBrand"
+                        android:layout_alignEnd="@+id/txDescription"
+                        android:layout_below="@+id/txDescription"
+                        android:layout_toEndOf="@+id/imageView" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Caja de 375 g"
-        android:id="@+id/txNetValue"
-        android:layout_alignEnd="@+id/txBrand"
-        android:layout_below="@+id/txBrand"
-        android:layout_toEndOf="@+id/imageView"
-        android:layout_alignStart="@+id/txDescription" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Caja de 375 g"
+                        android:id="@+id/txNetValue"
+                        android:layout_alignEnd="@+id/txBrand"
+                        android:layout_below="@+id/txBrand"
+                        android:layout_toEndOf="@+id/imageView"
+                        android:layout_alignStart="@+id/txDescription" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
 
 
-    <View
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="18dp"
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_below="@+id/imageView"
-        android:background="#bdbdbd"
-        android:id="@+id/separator1" />
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                card_view:contentPadding="12dp"
+                card_view:contentPaddingTop="6dp"
+                card_view:cardCornerRadius="0dp"
+                card_view:cardElevation="1dp"
+                card_view:cardPreventCornerOverlap="true"
+                card_view:cardUseCompatPadding="true"
+                android:elevation="0dp">
 
-    <ImageView
-        android:layout_width="46dp"
-        android:layout_height="46dp"
-        android:id="@+id/imgPantry"
-        android:src="@drawable/icon_button_home"
-        android:layout_marginLeft="16dp"
-        android:layout_alignTop="@+id/imgShppingList"
-        android:layout_alignStart="@+id/imageView" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="46dp"
-        android:layout_height="46dp"
-        android:id="@+id/imgShppingList"
-        android:layout_below="@+id/separator1"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/icon_button_shopping_list"
-        android:layout_marginBottom="5dp" />
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/imgPantry"
+                        android:src="@drawable/icon_button_home"
+                        android:layout_marginLeft="20dp"
+                        android:layout_alignTop="@+id/imgShppingList" />
 
-    <ImageView
-        android:layout_width="46dp"
-        android:layout_height="46dp"
-        android:id="@+id/imgCart"
-        android:src="@drawable/icon_button_cart"
-        android:layout_alignTop="@+id/imgShppingList"
-        android:layout_alignEnd="@+id/txNetValue"
-        android:layout_marginRight="16dp"/>
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/imgShppingList"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/icon_button_shopping_list"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="9dp"/>
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="36dp"
-        android:layout_below="@+id/imgPantry"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/space" />
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/imgCart"
+                        android:src="@drawable/icon_button_cart"
+                        android:layout_marginRight="20dp"
+                        android:layout_alignTop="@+id/imgShppingList"
+                        android:layout_alignParentEnd="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3"
-        android:id="@+id/txShoppingList"
-        android:background="@drawable/circle_red"
-        android:paddingLeft="6dp"
-        android:paddingRight="5dp"
-        android:textAlignment="center"
-        android:textColor="#ffffff"
-        android:gravity="center_horizontal"
-        android:layout_alignTop="@+id/imgShppingList"
-        android:layout_alignEnd="@+id/imgShppingList"
-        android:layout_marginTop="-9dp"
-        android:layout_marginRight="-9dp"/>
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_below="@+id/imgPantry"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/space" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3"
-        android:id="@+id/txPantry"
-        android:background="@drawable/circle_red"
-        android:paddingLeft="6dp"
-        android:paddingRight="5dp"
-        android:textAlignment="center"
-        android:textColor="#ffffff"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="-9dp"
-        android:layout_marginRight="-9dp"
-        android:layout_alignTop="@+id/imgPantry"
-        android:layout_alignEnd="@+id/imgPantry" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3"
+                        android:id="@+id/txShoppingList"
+                        android:background="@drawable/circle_red"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#ffffff"
+                        android:gravity="center_horizontal"
+                        android:layout_alignTop="@+id/imgShppingList"
+                        android:layout_alignEnd="@+id/imgShppingList"
+                        android:layout_marginTop="-9dp"
+                        android:layout_marginRight="-9dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3"
-        android:id="@+id/txCart"
-        android:background="@drawable/circle_red"
-        android:paddingLeft="6dp"
-        android:paddingRight="5dp"
-        android:textAlignment="center"
-        android:textColor="#ffffff"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="-9dp"
-        android:layout_marginRight="-9dp"
-        android:layout_alignTop="@+id/imgCart"
-        android:layout_alignEnd="@+id/imgCart" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3"
+                        android:id="@+id/txPantry"
+                        android:background="@drawable/circle_red"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#ffffff"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="-9dp"
+                        android:layout_marginRight="-9dp"
+                        android:layout_alignTop="@+id/imgPantry"
+                        android:layout_alignEnd="@+id/imgPantry" />
 
-    <ImageButton
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:id="@+id/imageButton"
-        android:layout_below="@+id/imgShppingList"
-        android:layout_toStartOf="@+id/space"
-        android:background="@null"
-        android:src="@drawable/icon_button_minus"
-        android:scaleType="centerCrop"
-        android:layout_alignBottom="@+id/imageButton4"
-        android:layout_marginRight="2dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3"
+                        android:id="@+id/txCart"
+                        android:background="@drawable/circle_red"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="5dp"
+                        android:textAlignment="center"
+                        android:textColor="#ffffff"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="-9dp"
+                        android:layout_marginRight="-9dp"
+                        android:layout_alignTop="@+id/imgCart"
+                        android:layout_alignEnd="@+id/imgCart" />
 
-    <ImageButton
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:id="@+id/imageButton2"
-        android:background="@null"
-        android:layout_alignTop="@+id/imageButton"
-        android:layout_toEndOf="@+id/imageButton"
-        android:src="@drawable/icon_button_plus"
-        android:scaleType="centerCrop"
-        android:layout_alignBottom="@+id/imageButton6"
-        android:layout_marginLeft="2dp" />
+                    <ImageButton
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:id="@+id/imageButton"
+                        android:layout_below="@+id/imgShppingList"
+                        android:layout_toStartOf="@+id/space"
+                        android:background="@null"
+                        android:src="@drawable/icon_minus_singlee"
+                        android:scaleType="centerCrop"
+                        android:layout_alignBottom="@+id/imageButton4"
+                        android:layout_marginRight="2dp" />
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="36dp"
-        android:layout_below="@+id/imgPantry"
-        android:layout_alignStart="@id/imageView"
-        android:layout_marginLeft="39dp"
-        android:id="@+id/space2" />
+                    <ImageButton
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:id="@+id/imageButton2"
+                        android:background="@null"
+                        android:layout_alignTop="@+id/imageButton"
+                        android:layout_toEndOf="@+id/imageButton"
+                        android:src="@drawable/icon_plus_singlee"
+                        android:scaleType="centerCrop"
+                        android:layout_alignBottom="@+id/imageButton6"
+                        android:layout_marginLeft="2dp" />
 
-    <ImageButton
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:id="@+id/imageButton3"
-        android:background="@null"
-        android:src="@drawable/icon_minus_single"
-        android:scaleType="centerCrop"
-        android:layout_below="@+id/imgShppingList"
-        android:layout_alignEnd="@+id/space2" />
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_below="@+id/imgPantry"
+                        android:layout_marginLeft="39dp"
+                        android:id="@+id/space2" />
 
-    <ImageButton
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:id="@+id/imageButton4"
-        android:background="@null"
-        android:src="@drawable/icon_plus_single"
-        android:scaleType="centerCrop"
-        android:layout_alignTop="@+id/imageButton3"
-        android:layout_alignStart="@+id/space2" />
+                    <ImageButton
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:id="@+id/imageButton3"
+                        android:background="@null"
+                        android:src="@drawable/icon_minus_singlee"
+                        android:scaleType="centerCrop"
+                        android:layout_below="@+id/imgShppingList"
+                        android:layout_alignEnd="@+id/space2" />
 
-    <Space
-        android:layout_width="0px"
-        android:layout_height="36dp"
-        android:layout_marginRight="39dp"
-        android:id="@+id/space3"
-        android:layout_alignBottom="@+id/imageButton2"
-        android:layout_alignTop="@+id/imageButton2"
-        android:layout_alignEnd="@id/txDescription"/>
+                    <ImageButton
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:id="@+id/imageButton4"
+                        android:background="@null"
+                        android:src="@drawable/icon_plus_singlee"
+                        android:scaleType="centerCrop"
+                        android:layout_alignTop="@+id/imageButton3"
+                        android:layout_alignStart="@+id/space2" />
 
-    <ImageButton
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:id="@+id/imageButton5"
-        android:background="@null"
-        android:src="@drawable/icon_plus_singlee"
-        android:scaleType="centerCrop"
-        android:layout_below="@+id/imgShppingList"
-        android:layout_alignStart="@+id/space3"
-        android:layout_marginLeft="2dp" />
+                    <Space
+                        android:layout_width="0px"
+                        android:layout_height="36dp"
+                        android:layout_marginRight="39dp"
+                        android:id="@+id/space3"
+                        android:layout_alignTop="@+id/imageButton5"
+                        android:layout_alignEnd="@+id/imageButton5" />
 
-    <ImageButton
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:id="@+id/imageButton6"
-        android:background="@null"
-        android:src="@drawable/icon_minus_singlee"
-        android:scaleType="centerCrop"
-        android:layout_below="@+id/imgShppingList"
-        android:layout_alignEnd="@+id/space3"
-        android:layout_marginRight="2dp" />
+                    <ImageButton
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:id="@+id/imageButton5"
+                        android:background="@null"
+                        android:src="@drawable/icon_plus_singlee"
+                        android:scaleType="centerCrop"
+                        android:layout_marginLeft="2dp"
+                        android:layout_below="@+id/imgShppingList"
+                        android:layout_alignParentEnd="true" />
 
-    <View
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp"
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_below="@+id/imageButton6"
-        android:background="#bdbdbd"
-        android:id="@+id/separator2" />
+                    <ImageButton
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:id="@+id/imageButton6"
+                        android:background="@null"
+                        android:src="@drawable/icon_minus_singlee"
+                        android:scaleType="centerCrop"
+                        android:layout_below="@+id/imgShppingList"
+                        android:layout_alignEnd="@+id/space3"
+                        android:layout_marginRight="2dp" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.SwitchCompat
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/switchTakeUnits"
-        android:layout_below="@+id/separator2"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="12dp"
-        android:checked="false" />
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                card_view:contentPadding="12dp"
+                card_view:cardCornerRadius="0dp"
+                card_view:cardElevation="1dp"
+                card_view:cardPreventCornerOverlap="true"
+                card_view:cardUseCompatPadding="true"
+                android:elevation="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Descontar unidades"
-        android:id="@+id/txTakeUnits"
-        android:layout_below="@+id/separator2"
-        android:layout_alignStart="@+id/imageButton3"
-        android:layout_alignEnd="@+id/space3"
-        android:layout_alignBottom="@id/switchTakeUnits"
-        android:gravity="center_vertical" />
+                    <android.support.v7.widget.SwitchCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/switchTakeUnits"
+                    android:checked="false"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:text="Descontar unidades"
+                        android:layout_alignParentStart="true"
+                        android:singleLine="false" />
 
-</RelativeLayout>
-</ScrollView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="1 unidad"
+                            android:id="@+id/textView"
+                            android:layout_gravity="center"
+                            android:gravity="center_vertical" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <Button
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:id="@+id/button2"
+                                android:background="@drawable/arrow_up" />
+
+                            <Button
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:id="@+id/button3"
+                                android:background="@drawable/arrow_down" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="/"
+                            android:id="@+id/textView2"
+                            android:gravity="center_vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="1 día"
+                            android:id="@+id/textView3"
+                            android:gravity="center_vertical" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" >
+
+                            <Button
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:id="@+id/button4"
+                                android:background="@drawable/arrow_up" />
+
+                            <Button
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:id="@+id/button5"
+                                android:background="@drawable/arrow_down" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                card_view:contentPadding="12dp"
+                card_view:cardCornerRadius="0dp"
+                card_view:cardElevation="1dp"
+                card_view:cardPreventCornerOverlap="true"
+                card_view:cardUseCompatPadding="true"
+                android:elevation="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/view2"
+                        android:text="Añadir a la lista de la compra" />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cuando queden:"
+                            android:id="@+id/textView4"
+                            android:gravity="center_vertical"
+                            android:layout_alignTop="@+id/linearLayout"
+                            android:layout_alignBottom="@+id/linearLayout" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_alignParentRight="true"
+                            android:id="@+id/linearLayout"
+                            android:layout_marginBottom="6dp">
+
+                            <Button
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:id="@+id/button6"
+                                android:background="@drawable/arrow_up" />
+
+                            <Button
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:id="@+id/button7"
+                                android:background="@drawable/arrow_down" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 unidades"
+                            android:id="@+id/textView5"
+                            android:layout_toStartOf="@+id/linearLayout"
+                            android:gravity="center_vertical"
+                            android:layout_alignTop="@+id/linearLayout"
+                            android:layout_alignBottom="@+id/linearLayout" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Añadir:"
+                            android:id="@+id/textView6"
+                            android:layout_alignBottom="@+id/linearLayout2"
+                            android:layout_alignTop="@+id/linearLayout2"
+                            android:gravity="center_vertical" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1 unidad"
+                            android:id="@+id/textView7"
+                            android:gravity="center_vertical"
+                            android:layout_alignTop="@+id/linearLayout2"
+                            android:layout_toStartOf="@+id/linearLayout2"
+                            android:layout_alignBottom="@+id/linearLayout2" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:id="@+id/linearLayout2"
+                            android:layout_below="@+id/linearLayout"
+                            android:layout_alignParentRight="true">
+
+                            <Button
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:id="@+id/button8"
+                                android:background="@drawable/arrow_up" />
+
+                            <Button
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:id="@+id/button9"
+                                android:background="@drawable/arrow_down" />
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
 </android.support.design.widget.CoordinatorLayout>

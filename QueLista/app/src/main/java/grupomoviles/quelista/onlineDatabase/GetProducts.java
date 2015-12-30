@@ -2,6 +2,7 @@ package grupomoviles.quelista.onlineDatabase;
 
 import android.os.AsyncTask;
 
+import com.annimon.stream.Stream;
 import com.mongodb.BasicDBList;
 import com.mongodb.DBObject;
 
@@ -20,35 +21,23 @@ public class GetProducts extends AsyncTask<String, Void, List<Product>> {
     protected List<Product> doInBackground(String... barcodes) {
         QueryBuilder qb = new QueryBuilder(DOCUMENT);
 
-        BasicDBList list =  new GetMongoLab(qb.findPostURL(qb.findAllProducts())).peticion();
+        BasicDBList list =  new GetMongoLab(qb.findPostURL(qb.findProducts(barcodes))).peticion();
 
         if (list == null)
             return null;
 
         List<Product> products = new ArrayList<>();
 
-        int unidades = 1;
-        String subcategoria = "";
-
-        for (String barcode:barcodes) {
-            for (int i = 0; i < list.size(); i++) {
-                if (((DBObject) list.get(i)).get("codigo").toString().equals(barcode)) {
-                    if (((DBObject) list.get(i)).get("unidades") != null)
-                        unidades = Integer.parseInt(((DBObject) list.get(i)).get("unidades").toString());
-
-                    if (((DBObject) list.get(i)).get("subcategoria") != null)
-                        subcategoria = ((DBObject) list.get(i)).get("subcategoria").toString();
-
-                    products.add(new Product(((DBObject) list.get(i)).get("codigo").toString(),
-                            ((DBObject) list.get(i)).get("descripcion").toString(),
-                            ((DBObject) list.get(i)).get("marca").toString(),
-                            ((DBObject) list.get(i)).get("cantidadneta").toString(),
-                            ((DBObject) list.get(i)).get("categoria").toString(), subcategoria, unidades));
-                    list.remove(i);
-                    break;
-                }
-            }
-        }
+        Stream.of(list).forEach(o -> {
+            products.add(new Product(((DBObject) o).get("codigo").toString(),
+                    ((DBObject) o).get("descripcion").toString(),
+                    ((DBObject) o).get("marca").toString(),
+                    ((DBObject) o).get("cantidadneta").toString(),
+                    ((DBObject) o).get("categoria").toString(),
+                    ((DBObject) o).get("subcategoria") != null ? ((DBObject) o).get("subcategoria").toString():"",
+                    ((DBObject) o).get("unidades") != null ? Integer.parseInt(((DBObject) o).get("unidades").toString()):1
+                    ));
+        });
 
         return products;
     }

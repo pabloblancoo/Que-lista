@@ -1,17 +1,22 @@
 package grupomoviles.quelista.onlineDatabase;
 
 
+import com.annimon.stream.Stream;
+
 public class QueryBuilder {
 
     private String document;
-
 
     public String findProduct(String codigo) {
         return "q={\"codigo\":\"" + codigo + "\"}";
     }
 
-    public String findAllProducts() {
-        return "q={}";
+    public String findProducts(String... barcodes) {
+        StringBuilder sb = new StringBuilder("q={\"codigo\":{$in:[");
+
+        Stream.of(barcodes).forEach(s -> sb.append("\"").append(s).append("\","));
+
+        return sb.deleteCharAt(sb.length() - 1).append("]}}").append("&s={\"descripcion\":1}").toString();
     }
 
     public QueryBuilder(String document) {
