@@ -1,5 +1,7 @@
 package grupomoviles.quelista.igu;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
@@ -9,9 +11,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Date;
 
 import grupomoviles.quelista.R;
 import grupomoviles.quelista.localDatabase.ProductDataSource;
@@ -20,6 +27,13 @@ import grupomoviles.quelista.logic.Product;
 public class ProductInfoActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
     public static final String PRODUCT = "PRODUCT";
+
+    ImageView productImage;
+
+    TextView description;
+    TextView brand;
+    TextView netValue;
+    TextView category;
 
     TextView unitsPantry;
     TextView unitsLista;
@@ -53,21 +67,34 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
 
         product = (Product) getIntent().getExtras().get(PRODUCT);
 
+        productImage = (ImageView) findViewById(R.id.imgProduct);
+
+        description =  (TextView) findViewById(R.id.txDescription);
+        brand =  (TextView) findViewById(R.id.txBrand);
+        netValue =  (TextView) findViewById(R.id.txNetValue);
+        category =  (TextView) findViewById(R.id.txCategory);
+
         unitsPantry = (TextView) findViewById(R.id.txUnitsPantry);
         unitsLista = (TextView) findViewById(R.id.txUnitsShoppingList);
         unitsCarrito = (TextView) findViewById(R.id.txUnitsCart);
-        unitsDescontar = (TextView) findViewById(R.id.txUnitsTakes);
-        unitsDays = (TextView) findViewById(R.id.txDaysTakes);
-        unitsWhenHave = (TextView) findViewById(R.id.txUnitsWhenHave);
-        unitsAddWhenHave= (TextView) findViewById(R.id.txUnitsAddWhenHave);
+
         switchCompatTakeUnits = (SwitchCompat) findViewById(R.id.switchTakeUnits);
-        switchCompatAddToShoppingList = (SwitchCompat) findViewById(R.id.switchAddToShoppingList);
+
+        unitsDescontar = (TextView) findViewById(R.id.txUnitsTakes);
         buttonPlusDescontar = (Button) findViewById(R.id.btnPlusUnitsTakes);
         buttonMinusDescontar = (Button) findViewById(R.id.btnMinusUnitsTakes);
+
+        unitsDays = (TextView) findViewById(R.id.txDaysTakes);
         buttonPlusDays = (Button) findViewById(R.id.btnPlusDaysTakes);
         buttonMinusDays = (Button) findViewById(R.id.btnMinusDaysTakes);
+
+        switchCompatAddToShoppingList = (SwitchCompat) findViewById(R.id.switchAddToShoppingList);
+
+        unitsWhenHave = (TextView) findViewById(R.id.txUnitsWhenHave);
         buttonPlusWhenHave = (Button) findViewById(R.id.btnPlusWhenHave);
         buttonMinusWhenHave = (Button) findViewById(R.id.btnMinusWhenHave);
+
+        unitsAddWhenHave= (TextView) findViewById(R.id.txUnitsAddWhenHave);
         buttonPlusAddWhenHave = (Button) findViewById(R.id.btnPlusAddWhenHave);
         buttonMinusAddWhenHave = (Button) findViewById(R.id.btnMinusAddWhenHave);
 
@@ -75,7 +102,58 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         switchCompatTakeUnits.setOnCheckedChangeListener(this);
         switchCompatAddToShoppingList.setOnCheckedChangeListener(this);
 
-       //Product p = (Product) savedInstanceState.get("product");
+        showAllProductProperties(product);
+    }
+
+    private void showAllProductProperties(Product product) {
+
+        productImage.setImageBitmap(getImage(product.getCode()));
+
+        description.setText(product.getDescription());
+        brand.setText(product.getBrand());
+        netValue.setText(product.getNetValue());
+        category.setText(product.getCategory());
+
+
+        unitsPantry.setText(product.getStock()+"");
+        unitsLista.setText(product.getShoppingListUnits()+"");
+        unitsCarrito.setText(product.getCartUnits()+"");
+
+        Date date = product.getLastUpdate();
+        if(date == null) {
+            findViewById(R.id.layoutTakeUnitsSwitch).setVisibility(View.GONE);
+            switchCompatTakeUnits.setChecked(false);
+        }
+        else{
+            switchCompatTakeUnits.setChecked(true);
+            unitsDescontar.setText(product.getConsumeUnits()+" unidad");
+            unitsDays.setText(product.getConsumeCycle()+" día");
+        }
+
+        if(product.getMinStock() == -1){
+            findViewById(R.id.layoutAddToShoppingListSwitch).setVisibility(View.GONE);
+            switchCompatAddToShoppingList.setChecked(false);
+        }
+        else{
+            switchCompatAddToShoppingList.setChecked(true);
+            unitsWhenHave.setText(product.getMinStock() + " unidades");
+            unitsAddWhenHave.setText(product.getUnitsToAdd() + " unidad");
+        }
+
+    }
+
+    private Bitmap getImage(String barcode) {
+        Bitmap bitmap = null;
+
+        try{
+            FileInputStream fileInputStream =
+                    new FileInputStream(getApplicationContext().getFilesDir().getPath()+ "/" + barcode + ".png");
+            bitmap = BitmapFactory.decodeStream(fileInputStream);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+
+        return bitmap;
     }
 
     @Override
