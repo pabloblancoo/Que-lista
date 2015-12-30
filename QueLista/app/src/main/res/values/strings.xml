@@ -1,6 +1,9 @@
 <resources>
-    <string name="app_name">Que Lista</string>
+    <string name="app_name">QueLista</string>
 
-    <string name="que_lista">Que Lista, tu lista de la compra inteligente</string>
-    <string name="action_settings">Settings</string>
+    <string name="que_lista">QueLista, tu lista de la compra inteligente</string>
+    <string name="action_settings">Opciones</string>
+
+    <string name="open_drawer">Abrir Drawer</string>
+    <string name="close_drawer">Cerrar Drawer</string>
 </resources>
