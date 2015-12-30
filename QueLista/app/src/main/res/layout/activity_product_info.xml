@@ -174,7 +174,8 @@
                             android:scaleType="centerCrop"
                             android:layout_toEndOf="@id/txUnitsPantry"
                             android:layout_alignTop="@id/imgPantry"
-                            android:layout_marginLeft="9dp"/>
+                            android:layout_marginLeft="9dp"
+                            android:onClick="aumentarPantry" />
 
                         <ImageButton
                             android:layout_width="24dp"
@@ -184,7 +185,8 @@
                             android:src="@drawable/arrow_down"
                             android:layout_alignLeft="@id/btnPlusPantry"
                             android:layout_below="@id/btnPlusPantry"
-                            android:scaleType="centerCrop" />
+                            android:scaleType="centerCrop"
+                            android:onClick="disminuirPantry" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -224,7 +226,8 @@
                             android:scaleType="centerCrop"
                             android:layout_toEndOf="@id/txUnitsShoppingList"
                             android:layout_alignTop="@id/imgShoppingList"
-                            android:layout_marginLeft="9dp"/>
+                            android:layout_marginLeft="9dp"
+                            android:onClick="aumentarShoppingList" />
 
                         <ImageButton
                             android:layout_width="24dp"
@@ -234,7 +237,8 @@
                             android:src="@drawable/arrow_down"
                             android:scaleType="centerCrop"
                             android:layout_below="@+id/btnPlusShoppingList"
-                            android:layout_alignLeft="@+id/btnPlusShoppingList"/>
+                            android:layout_alignLeft="@+id/btnPlusShoppingList"
+                            android:onClick="disminuirShoppingList" />
 
                     </RelativeLayout>
 
@@ -275,7 +279,8 @@
                             android:scaleType="centerCrop"
                             android:layout_toEndOf="@id/txUnitsCart"
                             android:layout_alignTop="@id/imgCart"
-                            android:layout_marginLeft="9dp"/>
+                            android:layout_marginLeft="9dp"
+                            android:onClick="aumentarCartList" />
 
                         <ImageButton
                             android:layout_width="24dp"
@@ -285,7 +290,8 @@
                             android:src="@drawable/arrow_down"
                             android:scaleType="centerCrop"
                             android:layout_alignLeft="@id/btnPlusCart"
-                            android:layout_below="@id/btnPlusCart"/>
+                            android:layout_below="@id/btnPlusCart"
+                            android:onClick="disminuirCartList" />
 
                     </RelativeLayout>
                 </LinearLayout>
@@ -318,7 +324,8 @@
                         android:layout_alignParentEnd="true"
                         android:text="Descontar unidades"
                         android:layout_alignParentStart="true"
-                        android:singleLine="false" />
+                        android:singleLine="false"
+                        android:onClick="activarDesactivarTakeUnits" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -344,13 +351,15 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:id="@+id/btnPlusUnitsTakes"
-                                android:background="@drawable/arrow_up" />
+                                android:background="@drawable/arrow_up"
+                                android:onClick="aumentarUnitsDescontar" />
 
                             <Button
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:id="@+id/btnMinusUnitsTakes"
-                                android:background="@drawable/arrow_down" />
+                                android:background="@drawable/arrow_down"
+                                android:onClick="disminuirUnitsDescontar" />
                         </LinearLayout>
 
                         <TextView
@@ -379,13 +388,15 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:id="@+id/btnPlusDaysTakes"
-                                android:background="@drawable/arrow_up" />
+                                android:background="@drawable/arrow_up"
+                                android:onClick="aumentarDays" />
 
                             <Button
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:id="@+id/btnMinusDaysTakes"
-                                android:background="@drawable/arrow_down" />
+                                android:background="@drawable/arrow_down"
+                                android:onClick="disminuirDays" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -413,7 +424,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/switchAddToShoppingList"
-                        android:text="Añadir a la lista de la compra" />
+                        android:text="Añadir a la lista de la compra"
+                        android:onClick="activarDescativarWhenHave" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -443,13 +455,15 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:id="@+id/btnPlusWhenHave"
-                                android:background="@drawable/arrow_up" />
+                                android:background="@drawable/arrow_up"
+                                android:onClick="aumentarWhenHave" />
 
                             <Button
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:id="@+id/btnMinusWhenHave"
-                                android:background="@drawable/arrow_down" />
+                                android:background="@drawable/arrow_down"
+                                android:onClick="disminuirWhenHave" />
                         </LinearLayout>
 
                         <TextView
@@ -495,13 +509,15 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:id="@+id/btnPlusAddWhenHave"
-                                android:background="@drawable/arrow_up" />
+                                android:background="@drawable/arrow_up"
+                                android:onClick="aumentarAddWhenHave" />
 
                             <Button
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:id="@+id/btnMinusAddWhenHave"
-                                android:background="@drawable/arrow_down" />
+                                android:background="@drawable/arrow_down"
+                                android:onClick="disminuirAddWhenHave" />
                         </LinearLayout>
 
                     </RelativeLayout>
