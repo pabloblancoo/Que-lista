@@ -29,12 +29,15 @@
         <!-- Activity para escanear códigos -->
         <activity
             android:name=".captureCodes.CaptureActivity"
-            android:label=""
+            android:label="Escaner"
             android:screenOrientation="portrait">
 
             <!-- android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" -->
         </activity>
-        <activity android:name=".igu.ProductInfoActivity" />
+        <activity
+            android:name=".igu.ProductInfoActivity"
+            android:label="">
+        </activity>
     </application>
 
 </manifest>

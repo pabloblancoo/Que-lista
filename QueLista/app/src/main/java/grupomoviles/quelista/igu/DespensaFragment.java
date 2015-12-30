@@ -1,6 +1,6 @@
 package grupomoviles.quelista.igu;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,14 +19,14 @@ import grupomoviles.quelista.onlineDatabase.GestorBD;
 /**
  * Created by Nauce on 26/12/15.
  */
-public class FragmentPantry extends Fragment {
+public class DespensaFragment extends Fragment {
 
-    public FragmentPantry() {
+    public DespensaFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_pantry, container, false);
+        View view = inflater.inflate(R.layout.fragment_despensa, container, false);
 
         RecyclerView recycler = (RecyclerView) view.findViewById(R.id.recyclerView);
         recycler.setHasFixedSize(true);
