@@ -8,14 +8,16 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import grupomoviles.quelista.R;
 import grupomoviles.quelista.localDatabase.ProductDataSource;
 import grupomoviles.quelista.logic.Product;
 
-public class ProductInfoActivity extends AppCompatActivity {
+public class ProductInfoActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
     TextView unitsPantry;
     TextView unitsLista;
@@ -63,6 +65,10 @@ public class ProductInfoActivity extends AppCompatActivity {
         buttonMinusWhenHave = (Button) findViewById(R.id.btnMinusWhenHave);
         buttonPlusAddWhenHave = (Button) findViewById(R.id.btnPlusAddWhenHave);
         buttonMinusAddWhenHave = (Button) findViewById(R.id.btnMinusAddWhenHave);
+
+        //Eventos
+        switchCompatTakeUnits.setOnCheckedChangeListener(this);
+        switchCompatAddToShoppingList.setOnCheckedChangeListener(this);
 
        //Product p = (Product) savedInstanceState.get("product");
     }
@@ -126,36 +132,6 @@ public class ProductInfoActivity extends AppCompatActivity {
         if (units > 0)
             units--;
         unitsCarrito.setText(units + "");
-    }
-
-    public void activarDesactivarTakeUnits(View view) {
-        if (switchCompatTakeUnits.isChecked())
-
-            changeStateTakeUnits(true);
-        else
-            changeStateTakeUnits(false);
-    }
-
-    private void changeStateTakeUnits(Boolean value) {
-        buttonPlusDays.setEnabled(value);
-        buttonMinusDays.setEnabled(value);
-        buttonPlusDescontar.setEnabled(value);
-        buttonMinusDescontar.setEnabled(value);
-    }
-
-    public void activarDescativarWhenHave(View view){
-        if (switchCompatAddToShoppingList.isChecked())
-
-            changeStateWhenHave(true);
-        else
-            changeStateWhenHave(false);
-    }
-
-    private void changeStateWhenHave(Boolean value) {
-        buttonPlusWhenHave.setEnabled(value);
-        buttonMinusWhenHave.setEnabled(value);
-        buttonPlusAddWhenHave.setEnabled(value);
-        buttonMinusAddWhenHave.setEnabled(value);
     }
 
     public void aumentarUnitsDescontar(View view) {
@@ -236,5 +212,20 @@ public class ProductInfoActivity extends AppCompatActivity {
         database.openDatabase();
         //database.insertProduct(product);
         database.close();
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        if (compoundButton == switchCompatTakeUnits)
+            if (b)
+                findViewById(R.id.layoutTakeUnitsSwitch).setVisibility(View.VISIBLE);
+            else
+                findViewById(R.id.layoutTakeUnitsSwitch).setVisibility(View.GONE);
+
+        else if (compoundButton == switchCompatAddToShoppingList)
+            if (b)
+                findViewById(R.id.layoutAddToShoppingListSwitch).setVisibility(View.VISIBLE);
+            else
+                findViewById(R.id.layoutAddToShoppingListSwitch).setVisibility(View.GONE);
     }
 }
