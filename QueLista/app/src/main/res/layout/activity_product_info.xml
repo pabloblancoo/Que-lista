@@ -31,20 +31,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:focusable="false">
+            android:focusable="false"
+            android:background="#e0e0e0">
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 card_view:contentPadding="12dp"
                 card_view:cardCornerRadius="0dp"
-                card_view:cardElevation="1dp"
-                card_view:cardPreventCornerOverlap="true"
+                card_view:cardElevation="0dp"
                 card_view:cardUseCompatPadding="true"
-                android:elevation="0dp">
+                android:layout_marginBottom="-3dp"
+                android:layout_marginLeft="-1dp"
+                android:layout_marginTop="-1dp"
+                android:layout_marginRight="-1dp">
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <ImageView
                         android:layout_width="125dp"
                         android:layout_height="125dp"
@@ -101,10 +105,12 @@
                 card_view:contentPadding="12dp"
                 card_view:contentPaddingTop="6dp"
                 card_view:cardCornerRadius="0dp"
-                card_view:cardElevation="1dp"
-                card_view:cardPreventCornerOverlap="true"
+                card_view:cardElevation="0dp"
                 card_view:cardUseCompatPadding="true"
-                android:elevation="0dp">
+                android:layout_marginBottom="-3dp"
+                android:layout_marginLeft="-1dp"
+                android:layout_marginTop="-1dp"
+                android:layout_marginRight="-1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -158,7 +164,7 @@
                             android:layout_height="24dp"
                             android:id="@+id/btnPlusPantry"
                             android:background="@null"
-                            android:src="@drawable/icon_plus_singlee"
+                            android:src="@drawable/arrow_up"
                             android:scaleType="centerCrop"
                             android:layout_toEndOf="@id/txUnitsPantry"
                             android:layout_alignTop="@id/imgPantry"
@@ -169,10 +175,10 @@
                             android:layout_height="24dp"
                             android:id="@+id/btnMinusPantry"
                             android:background="@null"
-                            android:src="@drawable/icon_minus_singlee"
-                            android:scaleType="centerCrop"
+                            android:src="@drawable/arrow_down"
                             android:layout_alignLeft="@id/btnPlusPantry"
-                            android:layout_below="@id/btnPlusPantry" />
+                            android:layout_below="@id/btnPlusPantry"
+                            android:scaleType="centerCrop" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -208,7 +214,7 @@
                             android:layout_height="24dp"
                             android:id="@+id/btnPlusShoppingList"
                             android:background="@null"
-                            android:src="@drawable/icon_plus_singlee"
+                            android:src="@drawable/arrow_up"
                             android:scaleType="centerCrop"
                             android:layout_toEndOf="@id/txUnitsShoppingList"
                             android:layout_alignTop="@id/imgShoppingList"
@@ -219,7 +225,7 @@
                             android:layout_height="24dp"
                             android:id="@+id/btnMinusShoppingList"
                             android:background="@null"
-                            android:src="@drawable/icon_minus_singlee"
+                            android:src="@drawable/arrow_down"
                             android:scaleType="centerCrop"
                             android:layout_below="@+id/btnPlusShoppingList"
                             android:layout_alignLeft="@+id/btnPlusShoppingList"/>
@@ -259,7 +265,7 @@
                             android:layout_height="24dp"
                             android:id="@+id/btnPlusCart"
                             android:background="@null"
-                            android:src="@drawable/icon_plus_singlee"
+                            android:src="@drawable/arrow_up"
                             android:scaleType="centerCrop"
                             android:layout_toEndOf="@id/txUnitsCart"
                             android:layout_alignTop="@id/imgCart"
@@ -270,7 +276,7 @@
                             android:layout_height="24dp"
                             android:id="@+id/btnMinusCart"
                             android:background="@null"
-                            android:src="@drawable/icon_minus_singlee"
+                            android:src="@drawable/arrow_down"
                             android:scaleType="centerCrop"
                             android:layout_alignLeft="@id/btnPlusCart"
                             android:layout_below="@id/btnPlusCart"/>
@@ -285,10 +291,12 @@
                 android:layout_height="match_parent"
                 card_view:contentPadding="12dp"
                 card_view:cardCornerRadius="0dp"
-                card_view:cardElevation="1dp"
-                card_view:cardPreventCornerOverlap="true"
+                card_view:cardElevation="0dp"
                 card_view:cardUseCompatPadding="true"
-                android:elevation="0dp">
+                android:layout_marginBottom="-3dp"
+                android:layout_marginLeft="-1dp"
+                android:layout_marginTop="-1dp"
+                android:layout_marginRight="-1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -383,10 +391,12 @@
                 android:layout_height="match_parent"
                 card_view:contentPadding="12dp"
                 card_view:cardCornerRadius="0dp"
-                card_view:cardElevation="1dp"
-                card_view:cardPreventCornerOverlap="true"
+                card_view:cardElevation="0dp"
                 card_view:cardUseCompatPadding="true"
-                android:elevation="0dp">
+                android:layout_marginLeft="-1dp"
+                android:layout_marginTop="-1dp"
+                android:layout_marginRight="-1dp"
+                android:layout_marginBottom="-3dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
