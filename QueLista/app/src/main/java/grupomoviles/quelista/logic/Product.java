@@ -239,6 +239,7 @@ public class Product implements Serializable {
 
 
     //Metodos de logica
+
     public int increaseStock() {
         stock++;
         return stock;
@@ -247,6 +248,66 @@ public class Product implements Serializable {
     public int decreaseStock() {
         stock--;
         return stock;
+    }
+
+    public int increaseShoppingListUnits(){
+        shoppingListUnits++;
+        return  shoppingListUnits;
+    }
+
+    public int decreaseShoppingListUnits(){
+        shoppingListUnits--;
+        return  shoppingListUnits;
+    }
+
+    public int increaseCartUnits(){
+        cartUnits++;
+        return  cartUnits;
+    }
+
+    public int decreaseCartUnits(){
+        cartUnits--;
+        return  cartUnits;
+    }
+
+    public int increaseConsumeCycle(){
+        consumeCycle++;
+        return  consumeCycle;
+    }
+
+    public int decreaseConsumeCycle(){
+        consumeCycle--;
+        return  consumeCycle;
+    }
+
+    public int increaseConsumeUnits(){
+        consumeUnits++;
+        return  consumeUnits;
+    }
+
+    public int decreaseConsumeUnits(){
+        consumeUnits--;
+        return  consumeUnits;
+    }
+
+    public int increaseUnitsToAdd(){
+        unitsToAdd++;
+        return  unitsToAdd;
+    }
+
+    public int decreaseUnitsToAdd(){
+        unitsToAdd--;
+        return  unitsToAdd;
+    }
+
+    public int increaseMinStock(){
+        minStock++;
+        return  unitsToAdd;
+    }
+
+    public int decreaseMinStock(){
+        minStock--;
+        return  unitsToAdd;
     }
 
     public Bitmap getImage(Context context) {
