@@ -1,7 +1,14 @@
 package grupomoviles.quelista.logic;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Created by Nauce on 22/12/15.
@@ -242,4 +249,33 @@ public class Product implements Serializable {
         return stock;
     }
 
+    public Bitmap getImage(Context context) {
+        Bitmap bitmap = null;
+
+        try {
+            FileInputStream fileInputStream =
+                    new FileInputStream(context.getApplicationContext().getFilesDir().getPath()+ "/" + this.code + ".png");
+            bitmap = BitmapFactory.decodeStream(fileInputStream);
+        } catch (IOException io){
+            io.printStackTrace();
+        }
+
+        return bitmap;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        return code.equals(product.code);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return code.hashCode();
+    }
 }

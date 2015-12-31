@@ -9,4 +9,8 @@ import java.util.Set;
 public class Pantry {
 
     private Set<Product> products = new HashSet<Product>();
+
+    public Set<Product> getProducts() {
+        return products;
+    }
 }

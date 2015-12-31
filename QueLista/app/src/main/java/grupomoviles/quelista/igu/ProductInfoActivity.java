@@ -1,23 +1,16 @@
 package grupomoviles.quelista.igu;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
-import android.os.Bundle;
-
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Date;
 
 import grupomoviles.quelista.R;
@@ -102,12 +95,12 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         switchCompatTakeUnits.setOnCheckedChangeListener(this);
         switchCompatAddToShoppingList.setOnCheckedChangeListener(this);
 
-        showAllProductProperties(product);
+        showAllProductProperties();
     }
 
-    private void showAllProductProperties(Product product) {
+    private void showAllProductProperties() {
 
-        productImage.setImageBitmap(getImage(product.getCode()));
+        productImage.setImageBitmap(product.getImage(getApplicationContext()));
 
         description.setText(product.getDescription());
         brand.setText(product.getBrand());
@@ -140,20 +133,6 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
             unitsAddWhenHave.setText(product.getUnitsToAdd() + " unidad");
         }
 
-    }
-
-    private Bitmap getImage(String barcode) {
-        Bitmap bitmap = null;
-
-        try{
-            FileInputStream fileInputStream =
-                    new FileInputStream(getApplicationContext().getFilesDir().getPath()+ "/" + barcode + ".png");
-            bitmap = BitmapFactory.decodeStream(fileInputStream);
-        }catch (IOException io){
-            io.printStackTrace();
-        }
-
-        return bitmap;
     }
 
     @Override

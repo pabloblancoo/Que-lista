@@ -8,11 +8,11 @@
     <ImageButton
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:id="@+id/btnShoppingList"
+        android:id="@+id/btnPantry"
         android:layout_alignTop="@+id/btnCart"
         android:layout_toStartOf="@+id/btnCart"
         android:background="@null"
-        android:src="@drawable/icon_button_shopping_list"
+        android:src="@drawable/icon_button_home"
         android:scaleType="centerCrop" />
 
     <ImageButton
@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="3"
-        android:id="@+id/txShoppingList"
+        android:id="@+id/txPantry"
         android:background="@drawable/circle_red"
         android:paddingLeft="6dp"
         android:paddingRight="5dp"
@@ -56,7 +56,7 @@
         android:gravity="center_horizontal"
         android:layout_marginStart="22dp"
         android:layout_alignTop="@+id/txCart"
-        android:layout_alignStart="@+id/btnShoppingList" />
+        android:layout_alignStart="@+id/btnPantry" />
 
     <ImageButton
         android:layout_width="36dp"

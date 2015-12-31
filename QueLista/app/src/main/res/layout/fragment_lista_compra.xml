@@ -1,29 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:textSize="30sp"
-        android:gravity="center"
-        android:id="@+id/textView1_ListaCompra"
-        android:layout_centerHorizontal="true"
-        android:textColor="@android:color/holo_green_dark"
-        android:text="Lista de la compra \nFragment"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autoLink="web"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
-        android:text="listacompra_layout"
-        android:textColor="#000"
-        android:layout_below="@+id/textView1_ListaCompra"
-        android:textStyle="italic"/>
-
-</RelativeLayout>
+<android.support.v4.widget.SwipeRefreshLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:id="@+id/swipeRefresh"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recyclerView"
+        android:background="#ffffff"
+        android:paddingBottom="12dp">
+    </android.support.v7.widget.RecyclerView>
+</android.support.v4.widget.SwipeRefreshLayout>

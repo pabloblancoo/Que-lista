@@ -9,14 +9,14 @@ import grupomoviles.quelista.logic.Product;
 /**
  * Created by Nauce on 24/12/15.
  */
-public class RefreshRecyclerTask extends AsyncTask<SimpleAdapter, Void, List<Product>> {
+public class RefreshRecyclerTask extends AsyncTask<PantryAdapter, Void, List<Product>> {
 
-    SimpleAdapter adapter;
+    PantryAdapter adapter;
 
     @Override
-    protected List<Product> doInBackground(SimpleAdapter... simpleAdapters) {
+    protected List<Product> doInBackground(PantryAdapter... pantryAdapters) {
 
-        adapter = simpleAdapters[0];
+        adapter = pantryAdapters[0];
 
         return null;
     }
