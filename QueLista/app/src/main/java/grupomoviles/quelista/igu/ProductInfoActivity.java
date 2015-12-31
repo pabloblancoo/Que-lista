@@ -11,7 +11,10 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.annimon.stream.Stream;
+
 import java.util.Date;
+import java.util.List;
 
 import grupomoviles.quelista.R;
 import grupomoviles.quelista.localDatabase.ProductDataSource;
@@ -235,12 +238,28 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         }
         textView.setText(units + old);
         guardarDatos();
+        showDatabaseData();
+
+    }
+
+    private void showDatabaseData() {
+        ProductDataSource database = new ProductDataSource(this);
+        database.openDatabase();
+        List<Product> productsList = database.getAllProducts();
+        database.close();
+
+        Stream.of(productsList).forEach(p -> System.out.println(
+                "Stock: " + p.getStock() +
+                        "; ShoppingList: " + p.getShoppingListUnits() +
+                        "; CartUnits: " + p.getCartUnits() +
+                        ";LastUpdate: " + p.getLastUpdate() +
+                        "; Minstock: " + p.getMinStock()));
     }
 
     private void guardarDatos() {
         ProductDataSource database = new ProductDataSource(this);
         database.openDatabase();
-        database.update(product);
+        database.insertProduct(product);
         database.close();
     }
 
@@ -250,11 +269,13 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         if (compoundButton.getId() == switchCompatTakeUnits.getId())
             if (b) {
                 findViewById(R.id.layoutTakeUnitsSwitch).setVisibility(View.VISIBLE);
+                product.setLastUpdate(new Date());
                 product.setConsumeUnits(Integer.parseInt(unitsDescontar.getText().toString().replace(" unidad", "")));
                 product.setConsumeCycle(Integer.parseInt(unitsDays.getText().toString().replace(" día", "")));
             } else {
                 findViewById(R.id.layoutTakeUnitsSwitch).setVisibility(View.GONE);
-                product.setConsumeUnits(-1);
+
+                product.setLastUpdate(null);
             }
         else if (compoundButton.getId() == switchCompatAddToShoppingList.getId()) {
             if (b) {
@@ -263,9 +284,10 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
                 product.setUnitsToAdd(Integer.parseInt(unitsAddWhenHave.getText().toString().replace(" unidad", "")));
             } else {
                 findViewById(R.id.layoutAddToShoppingListSwitch).setVisibility(View.GONE);
-                product.setLastUpdate(null);
+                product.setMinStock(-1);
             }
         }
         guardarDatos();
+        showDatabaseData();
     }
 }
