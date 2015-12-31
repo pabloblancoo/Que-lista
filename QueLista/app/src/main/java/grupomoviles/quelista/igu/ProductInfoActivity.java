@@ -152,129 +152,97 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
     }
 
     public void aumentarPantry(View view) {
-
-        int units = Integer.parseInt((String) unitsPantry.getText());
-        units++;
-        unitsPantry.setText(units + "");
+        product.increaseStock();
+        makeChanges(unitsPantry,"",true);
     }
 
     public void disminuirPantry(View view) {
-
-        int units = Integer.parseInt((String) unitsPantry.getText());
-        if (units > 0)
-            units--;
-        unitsPantry.setText(units + "");
+        product.decreaseStock();
+        makeChanges(unitsPantry,"",false);
     }
 
     public void aumentarShoppingList(View view) {
-
-        int units = Integer.parseInt((String) unitsLista.getText());
-        units++;
-        unitsLista.setText(units + "");
+        
+        makeChanges(unitsLista, "", true);
     }
 
     public void disminuirShoppingList(View view) {
 
-        int units = Integer.parseInt((String) unitsLista.getText());
-        if (units > 0)
-            units--;
-        unitsLista.setText(units + "");
+        makeChanges(unitsLista,"",false);
+
     }
 
     public void aumentarCartList(View view) {
 
-        int units = Integer.parseInt((String) unitsCarrito.getText());
-        units++;
-        unitsCarrito.setText(units + "");
+        makeChanges(unitsCarrito, "", true);
     }
 
     public void disminuirCartList(View view) {
 
-        int units = Integer.parseInt((String) unitsCarrito.getText());
-        if (units > 0)
-            units--;
-        unitsCarrito.setText(units + "");
+        makeChanges(unitsCarrito, "", false);
+
     }
 
     public void aumentarUnitsDescontar(View view) {
 
-        String texto = unitsDescontar.getText().toString();
-        texto = texto.replace(" unidad", "");
-        int units = Integer.parseInt(texto);
-        units++;
-        unitsDescontar.setText(units + " unidad");
+        makeChanges(unitsDescontar, " unidad", true);
+
     }
 
     public void disminuirUnitsDescontar(View view) {
 
-        String texto = unitsDescontar.getText().toString();
-        texto = texto.replace(" unidad", "");
-        int units = Integer.parseInt(texto);
-        if (units > 0)
-            units--;
-        unitsDescontar.setText(units + " unidad");
+        makeChanges(unitsDescontar, " unidad", false);
     }
 
     public void aumentarDays(View view) {
 
-        String texto = unitsDays.getText().toString();
-        texto = texto.replace(" día", "");
-        int units = Integer.parseInt(texto);
-        units++;
-        unitsDays.setText(units + " día");
+        makeChanges(unitsDays, " día", true);
     }
 
 
     public void disminuirDays(View view) {
 
-        String texto = unitsDays.getText().toString();
-        texto = texto.replace(" día", "");
-        int units = Integer.parseInt(texto);
-        if (units > 0)
-            units--;
-        unitsDays.setText(units + " día");
+        makeChanges(unitsDays, " día", false);
     }
 
     public  void aumentarWhenHave(View view){
-        String texto = unitsWhenHave.getText().toString();
-        texto = texto.replace(" unidades", "");
-        int units = Integer.parseInt(texto);
-        units++;
-        unitsWhenHave.setText(units + " unidades");
+        makeChanges(unitsWhenHave, " unidades", true);
     }
 
     public  void disminuirWhenHave(View view){
-        String texto = unitsWhenHave.getText().toString();
-        texto = texto.replace(" unidades", "");
-        int units = Integer.parseInt(texto);
-        if(units>0)
-        units--;
-        unitsWhenHave.setText(units + " unidades");
+        makeChanges(unitsWhenHave, " unidades", false);
     }
 
     public  void aumentarAddWhenHave(View view){
-        String texto = unitsAddWhenHave.getText().toString();
-        texto = texto.replace(" unidad", "");
-        int units = Integer.parseInt(texto);
-        units++;
-        unitsAddWhenHave.setText(units + " unidad");
+        makeChanges(unitsAddWhenHave, " unidad", true);
     }
 
-    public  void disminuirAddWhenHave(View view){
-        String texto = unitsAddWhenHave.getText().toString();
-        texto = texto.replace(" unidad", "");
-        int units = Integer.parseInt(texto);
-        if(units>0)
-            units--;
-        unitsAddWhenHave.setText(units + " unidad");
+    public  void disminuirAddWhenHave(View view) {
+        makeChanges(unitsAddWhenHave, " unidad", false);
     }
 
-    private void guardar(){
+    private void makeChanges(TextView textView,String old,boolean sum){
+        String texto =  textView.getText().toString();
+        texto = texto.replace(old,"");
+        int units = Integer.parseInt(texto);
+        if(sum)
+            units++;
+        else
+        {
+            if(units > 0)
+                units--;
+        }
+        textView.setText(units + old);
+        guardarDatos();
+    }
+
+    private void guardarDatos(){
         ProductDataSource database = new ProductDataSource(this);
         database.openDatabase();
-        //database.insertProduct(product);
+        database.update(product);
         database.close();
     }
+
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
