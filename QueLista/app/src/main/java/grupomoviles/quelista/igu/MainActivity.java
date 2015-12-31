@@ -1,17 +1,13 @@
 package grupomoviles.quelista.igu;
 
-import android.content.Context;
-import android.content.Intent;
 import android.nfc.NfcAdapter;
 
+import android.opengl.Visibility;
 import android.os.Bundle;
 
-import android.support.design.widget.TabLayout;
+import android.support.design.internal.NavigationMenuItemView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.util.AttributeSet;
-import android.view.MotionEvent;
+import android.view.MenuItem;
 import android.view.View;
 
 import java.io.IOException;
@@ -27,9 +23,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     NavigationView mNavigationView;
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
+    TabsFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,17 +62,25 @@ public class MainActivity extends AppCompatActivity {
          */
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        mNavigationView = (NavigationView) findViewById(R.id.navView);
+        mNavigationView = (NavigationView) findViewById(R.id.navview);
+
+        if(nfcAdapter == null) {
+            mNavigationView.getMenu().findItem(R.id.nav_item_nfc).setEnabled(false);
+            mNavigationView.getMenu().findItem(R.id.nav_item_nfc).setVisible(false);
+            mNavigationView.getMenu().removeItem(R.id.nav_item_nfc);
+        }
+
 
         /**
          * Inflamos el primer fragmento que vamos a mostrar.
          * En este caso decidimos que el primero que mostramos es el fragmento con las pestañas,
          * pero solo si no hay instancias anteriores.
          */
+        fragment = new TabsFragment();
         mFragmentManager = getSupportFragmentManager();
         if (savedInstanceState == null) {
             mFragmentTransaction = mFragmentManager.beginTransaction();
-            mFragmentTransaction.replace(R.id.fragment_container, new TabsFragment()).commit();
+            mFragmentTransaction.replace(R.id.fragment_container, fragment).commit();
         }
 
         /**
@@ -87,13 +90,41 @@ public class MainActivity extends AppCompatActivity {
         mNavigationView.setNavigationItemSelectedListener(menuItem -> {
             FragmentTransaction fragmentTransaction;
             mDrawerLayout.closeDrawers();
-            if (menuItem.getItemId() == R.id.nav_item_settings) {
-                fragmentTransaction = mFragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, new OpcionesFragment()).commit();
-            } else if (menuItem.getItemId() == R.id.nav_item_inicio) {
-                fragmentTransaction = mFragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, new TabsFragment()).commit();
 
+            fragmentTransaction = mFragmentManager.beginTransaction();
+            switch (menuItem.getItemId()) {
+                case R.id.nav_item_despensa:
+                    fragment.setTab(0);
+                    fragmentTransaction.replace(R.id.fragment_container,
+                            fragment).commit();
+                    break;
+                case R.id.nav_item_lista:
+                    fragment.setTab(1);
+                    fragmentTransaction.replace(R.id.fragment_container,
+                            fragment).commit();
+
+                    break;
+                case R.id.nav_item_carrito:
+                    fragment.setTab(2);
+                    fragmentTransaction.replace(R.id.fragment_container,
+                            fragment).commit();
+                    break;
+                case R.id.nav_item_qr:
+                    fragmentTransaction.replace(R.id.fragment_container,
+                            new TabsFragment()).commit();
+                    break;
+                case R.id.nav_item_nfc:
+                    fragmentTransaction.replace(R.id.fragment_container,
+                            new TabsFragment()).commit();
+                    break;
+                case R.id.nav_item_opciones:
+                    fragmentTransaction.replace(R.id.fragment_container,
+                            new OpcionesFragment()).commit();
+                    break;
+
+                case R.id.nav_item_ayuda:
+
+                    break;
             }
 
             return false;

@@ -23,13 +23,16 @@ import grupomoviles.quelista.R;
  */
 public class TabsFragment extends Fragment {
 
-    public static TabLayout tabLayout;
-    public static ViewPager viewPager;
-    public static int int_items = 3 ;
+    private static TabLayout tabLayout;
+    private static ViewPager viewPager;
+    private int int_items = 3 ;
+    private static FragmentPagerAdapter myAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
         /**
          * Inflamos fragment_tab y adjuntamos Views.
          */
@@ -37,10 +40,13 @@ public class TabsFragment extends Fragment {
         tabLayout = (TabLayout) v.findViewById(R.id.tab_layout);
         viewPager = (ViewPager) v.findViewById(R.id.viewpager);
 
+
+
         /**
          * Establecemos un Adapter para el ViewPager
          */
-        viewPager.setAdapter(new MyAdapter(getChildFragmentManager()));
+        myAdapter = new MyAdapter(this.getChildFragmentManager());
+        viewPager.setAdapter(myAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
 
@@ -61,6 +67,12 @@ public class TabsFragment extends Fragment {
         mDrawerToggle.syncState();
 
         return v;
+
+    }
+
+    public void setTab(int tab) {
+       viewPager.setCurrentItem(tab);
+
 
     }
 

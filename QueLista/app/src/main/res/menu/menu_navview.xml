@@ -1,30 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-
-
-    <item android:title="Inicio"
-          android:id="@+id/nav_item_inicio"
+    <item android:title="Despensa"
+          android:id="@+id/nav_item_despensa"
           android:icon="@drawable/icon_button_home"/>
 
-    <item android:title="¿Otra opción?"
-          android:id="@+id/nav_item_opcion"
+    <item android:title="Lista"
+          android:id="@+id/nav_item_lista"
           android:icon="@drawable/icon_button_shopping_list"/>
 
+    <item android:title="Carrito"
+        android:id="@+id/nav_item_carrito"
+        android:icon="@drawable/icon_button_cart"/>
 
     <item android:title="Otras">
         <menu>
             <item
-                android:title="Otra opción diferente"
-                android:id="@+id/nav_item_otraopcion"
+                android:title="QR"
+                android:id="@+id/nav_item_qr"
                 android:icon="@drawable/icon_button_shopping_list"/>
+            <item
+                android:title="NFC"
+                android:id="@+id/nav_item_nfc"
+                android:icon="@drawable/nfc"/>
         </menu>
     </item>
 
     <group android:id="@+id/group_settings_id">
 
         <item android:title="Opciones"
-              android:id="@+id/nav_item_settings"
+              android:id="@+id/nav_item_opciones"
               android:icon="@drawable/settings"/>
         <item android:title="Ayuda"
               android:id="@+id/nav_item_ayuda"
