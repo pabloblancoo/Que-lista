@@ -4,11 +4,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.annimon.stream.Collectors;
@@ -27,13 +25,10 @@ import grupomoviles.quelista.logic.Product;
 
 public class PantryAdapter extends MyAdapter {
 
-    private List<Product> items;
-
     private Pantry pantry;
 
     public PantryAdapter(Context context, Pantry pantry) {
-        super(context);
-        this.items = Stream.of(pantry.getProducts()).collect(Collectors.toList());
+        super(context, Stream.of(pantry.getProducts()).collect(Collectors.toList()));
         this.pantry = pantry;
     }
 
@@ -42,33 +37,26 @@ public class PantryAdapter extends MyAdapter {
     }
 
     @Override
-    public int getItemCount() {
-        return items.size();
-    }
-
-    @Override
-    public int getSwipeLayoutResourceId(int i) {
-        return R.id.swipeLayout;
-    }
-
-    @Override
-    public PantryViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.holder_product, viewGroup, false);
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.holder_product, parent, false);
 
         View blur = v.findViewById(R.id.blurLayout);
-        View hover = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.hover_holder_pantry, null);
+        View hover = LayoutInflater.from(parent.getContext()).inflate(R.layout.hover_holder_pantry, null);
         ((BlurLayout)blur).setHoverView(hover);
+
         ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.btnCart, Techniques.ZoomIn);
         ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.btnShoppingList, Techniques.ZoomIn);
         ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.btnMore, Techniques.ZoomIn);
         ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.txCart, Techniques.SlideInDown);
         ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.txShoppingList, Techniques.SlideInDown);
+
         ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.btnCart, Techniques.ZoomOut);
         ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.btnShoppingList, Techniques.ZoomOut);
         ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.btnMore, Techniques.ZoomOut);
         ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.txCart, Techniques.SlideOutUp);
         ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.txShoppingList, Techniques.SlideOutUp);
+
         ((SwipeLayout)v).setShowMode(SwipeLayout.ShowMode.PullOut);
         ((SwipeLayout)v).addDrag(SwipeLayout.DragEdge.Right, v.findViewById(R.id.layout_buttons));
 
@@ -76,61 +64,31 @@ public class PantryAdapter extends MyAdapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(MyViewHolder viewHolder, int position) {
         Product currentItem = items.get(position);
-
-        ((PantryViewHolder)viewHolder).blurLayout.dismissHover();
-        ((PantryViewHolder)viewHolder).product = currentItem;
-        ((PantryViewHolder)viewHolder).image.setImageBitmap(currentItem.getImage(context));
-        ((PantryViewHolder)viewHolder).description.setText(currentItem.getDescription());
-        ((PantryViewHolder)viewHolder).brand.setText(currentItem.getBrand());
-        ((PantryViewHolder)viewHolder).netValue.setText(currentItem.getNetValue());
-        ((PantryViewHolder)viewHolder).units.setText(String.valueOf(currentItem.getStock()));
 
         ((PantryViewHolder)viewHolder).unitsShoppingList.setText(String.valueOf(currentItem.getShoppingListUnits()));
         ((PantryViewHolder)viewHolder).unitsCart.setText(String.valueOf(currentItem.getCartUnits()));
 
-        mItemManger.bindView(viewHolder.itemView, position);
+        if (currentItem.getCartUnits() == 0)
+            ((SwipeLayout) viewHolder.itemView).findViewById(R.id.btnAddToShoppingList).setVisibility(View.VISIBLE);
+        else
+            ((SwipeLayout)viewHolder.itemView).findViewById(R.id.btnAddToShoppingList).setVisibility(View.GONE);
+
+        super.onBindViewHolder(viewHolder, position);
     }
 
-    public static class PantryViewHolder extends RecyclerView.ViewHolder
+    public class PantryViewHolder extends MyViewHolder
             implements View.OnClickListener {
 
-        private Product product;
-        private ImageView image;
-        private TextView description;
-        private TextView brand;
-        private TextView netValue;
-        private TextView units;
-        private PantryAdapter adapter;
-        private BlurLayout blurLayout;
-
-        /**
-         * Hover
-         */
         private TextView unitsShoppingList;
         private TextView unitsCart;
 
         public PantryViewHolder(View v, PantryAdapter adapter, View hover) {
-            super(v);
+            super(v, adapter, hover);
 
-            image = (ImageView) v.findViewById(R.id.imgProduct);
-            description = (TextView) v.findViewById(R.id.txDescription);
-            brand = (TextView) v.findViewById(R.id.txBrand);
-            netValue = (TextView) v.findViewById(R.id.txNetValue);
-            units = (TextView) v.findViewById(R.id.txUnits);
-
-            blurLayout = (BlurLayout) v.findViewById(R.id.blurLayout);
-            v.findViewById(R.id.btnPlusStock).setOnClickListener(this);
-            v.findViewById(R.id.btnMinusStock).setOnClickListener(this);
-            v.findViewById(R.id.btnDelete).setOnClickListener(this);
-
-            hover.findViewById(R.id.btnMore).setOnClickListener(this);
             unitsShoppingList = (TextView) hover.findViewById(R.id.txShoppingList);
             unitsCart = (TextView) hover.findViewById(R.id.txCart);
-
-            this.adapter = adapter;
-            v.setOnClickListener(this);
         }
 
         @Override
