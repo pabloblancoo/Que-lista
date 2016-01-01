@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3ffffff"
+    android:id="@+id/hover_layout">
+
+    <ImageButton
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:id="@+id/btnPantry"
+        android:layout_alignTop="@+id/btnShoppingList"
+        android:layout_toStartOf="@+id/btnShoppingList"
+        android:background="@null"
+        android:src="@drawable/icon_button_home"
+        android:scaleType="centerCrop" />
+
+    <ImageButton
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:id="@+id/btnShoppingList"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="@null"
+        android:src="@drawable/icon_button_shopping_list"
+        android:scaleType="centerCrop"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:id="@+id/txShoppingList"
+        android:background="@drawable/circle_red"
+        android:paddingLeft="6dp"
+        android:paddingRight="5dp"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:layout_alignTop="@+id/btnShoppingList"
+        android:layout_alignEnd="@+id/btnShoppingList"
+        android:layout_marginTop="-6dp"
+        android:layout_marginRight="-6dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:id="@+id/txPantry"
+        android:background="@drawable/circle_red"
+        android:paddingLeft="6dp"
+        android:paddingRight="5dp"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:gravity="center_horizontal"
+        android:layout_marginStart="22dp"
+        android:layout_alignTop="@+id/txShoppingList"
+        android:layout_alignStart="@+id/btnPantry" />
+
+    <ImageButton
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:id="@+id/btnMore"
+        android:background="@null"
+        android:src="@drawable/icon_button_more"
+        android:scaleType="centerCrop"
+        android:layout_alignTop="@+id/btnShoppingList"
+        android:layout_toEndOf="@+id/btnShoppingList" />
+
+</RelativeLayout>

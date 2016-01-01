@@ -9,7 +9,24 @@
         android:id="@+id/layout_buttons"
         android:paddingTop="1dp"
         android:paddingBottom="1dp">
-
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/btnAddToShoppingList"
+            android:text="Añadir Lista Compra"
+            android:background="#555555"
+            android:backgroundTint="#555555"
+            android:textColor="#ffffff"
+            android:visibility="gone"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/btnAddToCart"
+            android:text="Añadir Carro"
+            android:background="#555555"
+            android:backgroundTint="#555555"
+            android:textColor="#ffffff"
+            android:visibility="gone"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

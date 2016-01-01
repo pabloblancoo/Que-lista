@@ -4,19 +4,21 @@ import android.os.AsyncTask;
 
 import java.util.List;
 
+import grupomoviles.quelista.igu.recyclerViewAdapters.MyAdapter;
+import grupomoviles.quelista.igu.recyclerViewAdapters.PantryAdapter;
 import grupomoviles.quelista.logic.Product;
 
 /**
  * Created by Nauce on 24/12/15.
  */
-public class RefreshRecyclerTask extends AsyncTask<PantryAdapter, Void, List<Product>> {
+public class RefreshRecyclerTask extends AsyncTask<MyAdapter, Void, List<Product>> {
 
-    PantryAdapter adapter;
+    MyAdapter adapter;
 
     @Override
-    protected List<Product> doInBackground(PantryAdapter... pantryAdapters) {
+    protected List<Product> doInBackground(MyAdapter... adapters) {
 
-        adapter = pantryAdapters[0];
+        adapter = adapters[0];
 
         return null;
     }

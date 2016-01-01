@@ -1,4 +1,4 @@
-package grupomoviles.quelista.igu;
+package grupomoviles.quelista.igu.recyclerViewAdapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,23 +17,22 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.androidviewhover.BlurLayout;
 import com.daimajia.swipe.SwipeLayout;
-import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 
 import java.util.List;
 
 import grupomoviles.quelista.R;
+import grupomoviles.quelista.igu.ProductInfoActivity;
 import grupomoviles.quelista.logic.Pantry;
 import grupomoviles.quelista.logic.Product;
 
-public class PantryAdapter extends RecyclerSwipeAdapter<PantryAdapter.PantryViewHolder> {
+public class PantryAdapter extends MyAdapter {
 
-    private static Context context;
     private List<Product> items;
 
     private Pantry pantry;
 
     public PantryAdapter(Context context, Pantry pantry) {
-        this.context = context;
+        super(context);
         this.items = Stream.of(pantry.getProducts()).collect(Collectors.toList());
         this.pantry = pantry;
     }
@@ -77,21 +76,21 @@ public class PantryAdapter extends RecyclerSwipeAdapter<PantryAdapter.PantryView
     }
 
     @Override
-    public void onBindViewHolder(PantryViewHolder viewHolder, int i) {
-        Product currentItem = items.get(i);
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+        Product currentItem = items.get(position);
 
-        viewHolder.blurLayout.dismissHover();
-        viewHolder.product = currentItem;
-        viewHolder.image.setImageBitmap(currentItem.getImage(context));
-        viewHolder.description.setText(currentItem.getDescription());
-        viewHolder.brand.setText(currentItem.getBrand());
-        viewHolder.netValue.setText(currentItem.getNetValue());
-        viewHolder.units.setText(String.valueOf(currentItem.getStock()));
+        ((PantryViewHolder)viewHolder).blurLayout.dismissHover();
+        ((PantryViewHolder)viewHolder).product = currentItem;
+        ((PantryViewHolder)viewHolder).image.setImageBitmap(currentItem.getImage(context));
+        ((PantryViewHolder)viewHolder).description.setText(currentItem.getDescription());
+        ((PantryViewHolder)viewHolder).brand.setText(currentItem.getBrand());
+        ((PantryViewHolder)viewHolder).netValue.setText(currentItem.getNetValue());
+        ((PantryViewHolder)viewHolder).units.setText(String.valueOf(currentItem.getStock()));
 
-        viewHolder.unitsShoppingList.setText(String.valueOf(currentItem.getShoppingListUnits()));
-        viewHolder.unitsCart.setText(String.valueOf(currentItem.getCartUnits()));
+        ((PantryViewHolder)viewHolder).unitsShoppingList.setText(String.valueOf(currentItem.getShoppingListUnits()));
+        ((PantryViewHolder)viewHolder).unitsCart.setText(String.valueOf(currentItem.getCartUnits()));
 
-        mItemManger.bindView(viewHolder.itemView, i);
+        mItemManger.bindView(viewHolder.itemView, position);
     }
 
     public static class PantryViewHolder extends RecyclerView.ViewHolder
@@ -103,7 +102,7 @@ public class PantryAdapter extends RecyclerSwipeAdapter<PantryAdapter.PantryView
         private TextView brand;
         private TextView netValue;
         private TextView units;
-        private PantryAdapter pantryAdapter;
+        private PantryAdapter adapter;
         private BlurLayout blurLayout;
 
         /**
@@ -112,7 +111,7 @@ public class PantryAdapter extends RecyclerSwipeAdapter<PantryAdapter.PantryView
         private TextView unitsShoppingList;
         private TextView unitsCart;
 
-        public PantryViewHolder(View v, PantryAdapter pantryAdapter, View hover) {
+        public PantryViewHolder(View v, PantryAdapter adapter, View hover) {
             super(v);
 
             image = (ImageView) v.findViewById(R.id.imgProduct);
@@ -130,7 +129,7 @@ public class PantryAdapter extends RecyclerSwipeAdapter<PantryAdapter.PantryView
             unitsShoppingList = (TextView) hover.findViewById(R.id.txShoppingList);
             unitsCart = (TextView) hover.findViewById(R.id.txCart);
 
-            this.pantryAdapter = pantryAdapter;
+            this.adapter = adapter;
             v.setOnClickListener(this);
         }
 
@@ -169,8 +168,8 @@ public class PantryAdapter extends RecyclerSwipeAdapter<PantryAdapter.PantryView
             product.setStock(Product.NOT_IN_PANTRY);
             ((SwipeLayout)itemView).close(false);
             blurLayout.dismissHover();
-            pantryAdapter.items.remove(product);
-            pantryAdapter.notifyItemRemoved(getAdapterPosition());
+            adapter.items.remove(product);
+            adapter.notifyItemRemoved(getAdapterPosition());
         }
     }
 }

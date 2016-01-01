@@ -1,4 +1,4 @@
-package grupomoviles.quelista.igu;
+package grupomoviles.quelista.igu.recyclerViewAdapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,23 +17,20 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.androidviewhover.BlurLayout;
 import com.daimajia.swipe.SwipeLayout;
-import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 
 import java.util.List;
 
 import grupomoviles.quelista.R;
+import grupomoviles.quelista.igu.ProductInfoActivity;
 import grupomoviles.quelista.logic.Product;
 import grupomoviles.quelista.logic.ShoppingList;
 
-public class ShoppingListAdapter extends RecyclerSwipeAdapter<ShoppingListAdapter.PantryViewHolder> {
-
-    private static Context context;
-    private List<Product> items;
+public class ShoppingListAdapter extends MyAdapter {
 
     private ShoppingList shoppingList;
 
     public ShoppingListAdapter(Context context, ShoppingList shoppingList) {
-        this.context = context;
+        super(context);
         this.items = Stream.of(shoppingList.getProducts()).collect(Collectors.toList());
         this.shoppingList = shoppingList;
     }
@@ -53,7 +50,7 @@ public class ShoppingListAdapter extends RecyclerSwipeAdapter<ShoppingListAdapte
     }
 
     @Override
-    public PantryViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public ShoppingListViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.holder_product, viewGroup, false);
 
@@ -73,28 +70,28 @@ public class ShoppingListAdapter extends RecyclerSwipeAdapter<ShoppingListAdapte
         ((SwipeLayout)v).setShowMode(SwipeLayout.ShowMode.PullOut);
         ((SwipeLayout)v).addDrag(SwipeLayout.DragEdge.Right, v.findViewById(R.id.layout_buttons));
 
-        return new PantryViewHolder(v, this, hover);
+        return new ShoppingListViewHolder(v, this, hover);
     }
 
     @Override
-    public void onBindViewHolder(PantryViewHolder viewHolder, int i) {
-        Product currentItem = items.get(i);
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+        Product currentItem = items.get(position);
 
-        viewHolder.blurLayout.dismissHover();
-        viewHolder.product = currentItem;
-        viewHolder.image.setImageBitmap(currentItem.getImage(context));
-        viewHolder.description.setText(currentItem.getDescription());
-        viewHolder.brand.setText(currentItem.getBrand());
-        viewHolder.netValue.setText(currentItem.getNetValue());
-        viewHolder.units.setText(String.valueOf(currentItem.getStock()));
+        ((ShoppingListViewHolder)viewHolder).blurLayout.dismissHover();
+        ((ShoppingListViewHolder)viewHolder).product = currentItem;
+        ((ShoppingListViewHolder)viewHolder).image.setImageBitmap(currentItem.getImage(context));
+        ((ShoppingListViewHolder)viewHolder).description.setText(currentItem.getDescription());
+        ((ShoppingListViewHolder)viewHolder).brand.setText(currentItem.getBrand());
+        ((ShoppingListViewHolder)viewHolder).netValue.setText(currentItem.getNetValue());
+        ((ShoppingListViewHolder)viewHolder).units.setText(String.valueOf(currentItem.getStock()));
 
-        viewHolder.unitsPantry.setText(String.valueOf(currentItem.getStock()));
-        viewHolder.unitsCart.setText(String.valueOf(currentItem.getCartUnits()));
+        ((ShoppingListViewHolder)viewHolder).unitsPantry.setText(String.valueOf(currentItem.getStock()));
+        ((ShoppingListViewHolder)viewHolder).unitsCart.setText(String.valueOf(currentItem.getCartUnits()));
 
-        mItemManger.bindView(viewHolder.itemView, i);
+        mItemManger.bindView(viewHolder.itemView, position);
     }
 
-    public static class PantryViewHolder extends RecyclerView.ViewHolder
+    public static class ShoppingListViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
         private Product product;
@@ -103,7 +100,7 @@ public class ShoppingListAdapter extends RecyclerSwipeAdapter<ShoppingListAdapte
         private TextView brand;
         private TextView netValue;
         private TextView units;
-        private ShoppingListAdapter pantryAdapter;
+        private ShoppingListAdapter adapter;
         private BlurLayout blurLayout;
 
         /**
@@ -112,7 +109,7 @@ public class ShoppingListAdapter extends RecyclerSwipeAdapter<ShoppingListAdapte
         private TextView unitsPantry;
         private TextView unitsCart;
 
-        public PantryViewHolder(View v, ShoppingListAdapter pantryAdapter, View hover) {
+        public ShoppingListViewHolder(View v, ShoppingListAdapter adapter, View hover) {
             super(v);
 
             image = (ImageView) v.findViewById(R.id.imgProduct);
@@ -130,7 +127,7 @@ public class ShoppingListAdapter extends RecyclerSwipeAdapter<ShoppingListAdapte
             unitsPantry = (TextView) hover.findViewById(R.id.txPantry);
             unitsCart = (TextView) hover.findViewById(R.id.txCart);
 
-            this.pantryAdapter = pantryAdapter;
+            this.adapter = adapter;
             v.setOnClickListener(this);
         }
 
@@ -169,8 +166,8 @@ public class ShoppingListAdapter extends RecyclerSwipeAdapter<ShoppingListAdapte
             product.setStock(Product.NOT_IN_PANTRY);
             ((SwipeLayout)itemView).close(false);
             blurLayout.dismissHover();
-            pantryAdapter.items.remove(product);
-            pantryAdapter.notifyItemRemoved(getAdapterPosition());
+            adapter.items.remove(product);
+            adapter.notifyItemRemoved(getAdapterPosition());
         }
     }
 }

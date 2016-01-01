@@ -10,13 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.annimon.stream.Stream;
-
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import grupomoviles.quelista.R;
-import grupomoviles.quelista.logic.Pantry;
+import grupomoviles.quelista.igu.recyclerViewAdapters.MyAdapter;
+import grupomoviles.quelista.igu.recyclerViewAdapters.PantryAdapter;
+import grupomoviles.quelista.igu.recyclerViewAdapters.ShoppingListAdapter;
 import grupomoviles.quelista.logic.Product;
 import grupomoviles.quelista.logic.ShoppingList;
 import grupomoviles.quelista.onlineDatabase.GestorBD;
@@ -45,7 +44,7 @@ public class ListaCompraFragment extends Fragment {
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        new RefreshRecyclerTask().execute((PantryAdapter) recycler.getAdapter());
+                        new RefreshRecyclerTask().execute((MyAdapter) recycler.getAdapter());
                         refreshLayout.setRefreshing(false);
                     }
                 }
