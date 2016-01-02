@@ -30,7 +30,6 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
 
     public MyAdapter(Context context, List<Product> items) {
         this.context = context;
-        this.items = items;
         this.items = Stream.of(items).sortBy(i -> i.getDescription().charAt(0)).collect(Collectors.toList());
     }
 
