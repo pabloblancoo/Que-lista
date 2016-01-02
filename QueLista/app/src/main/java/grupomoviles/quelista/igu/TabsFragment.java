@@ -38,14 +38,11 @@ public class TabsFragment extends Fragment {
         tabLayout = (TabLayout) v.findViewById(R.id.tab_layout);
         viewPager = (ViewPager) v.findViewById(R.id.viewpager);
 
-<<<<<<< HEAD
-
-=======
->>>>>>> b2fd6cd9d7f192593db1a0f984aa813c5bd1b8f7
         /**
          * Establecemos un Adapter para el ViewPager
          */
-        myAdapter = new MyAdapter(this.getChildFragmentManager());
+        if(myAdapter==null)
+            myAdapter = new MyAdapter(this.getChildFragmentManager());
 
         viewPager.setAdapter(myAdapter);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -87,11 +84,8 @@ public class TabsFragment extends Fragment {
     }
 
     public void setTab(int tab) {
-<<<<<<< HEAD
         this.tab = tab;
-=======
-       viewPager.setCurrentItem(tab);
->>>>>>> b2fd6cd9d7f192593db1a0f984aa813c5bd1b8f7
+        viewPager.setCurrentItem(tab);
     }
 
     class MyAdapter extends FragmentPagerAdapter {
