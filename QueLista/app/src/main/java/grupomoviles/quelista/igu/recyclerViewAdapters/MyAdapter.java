@@ -38,8 +38,6 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
     }
 
     public void onResultProductInfoActivity(Product product) {
-        items.remove(product);
-        items.add(product);
         items = Stream.of(items).sortBy(i -> i.getDescription().charAt(0)).collect(Collectors.toList());
         notifyDataSetChanged();
     }

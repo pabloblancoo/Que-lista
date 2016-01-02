@@ -1,9 +1,7 @@
 package grupomoviles.quelista.igu.recyclerViewAdapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +15,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.androidviewhover.BlurLayout;
 import com.daimajia.swipe.SwipeLayout;
 
-import java.util.List;
-
 import grupomoviles.quelista.R;
-import grupomoviles.quelista.igu.ProductInfoActivity;
 import grupomoviles.quelista.logic.Cart;
 import grupomoviles.quelista.logic.Product;
 
@@ -43,7 +38,9 @@ public class CartAdapter extends MyAdapter {
 
     @Override
     public void onResultProductInfoActivity(Product product) {
-        cart.onResultProductInfoActivity(product);
+        items.remove(product);
+        if(cart.onResultProductInfoActivity(product))
+            items.add(product);
         super.onResultProductInfoActivity(product);
     }
 
@@ -101,13 +98,13 @@ public class CartAdapter extends MyAdapter {
         public void onClick(View v) {
             YoYo.with(Techniques.Pulse).duration(100).playOn(v);
             if (v.getId() == R.id.btnPlusStock)
-                units.setText(String.valueOf(product.increaseStock()));
+                units.setText(String.valueOf(product.increaseCartUnits()));
             else if (v.getId() == R.id.btnMinusStock) {
-                if (product.getStock() > 0)
-                    units.setText(String.valueOf(product.decreaseStock()));
+                if (product.getCartUnits() > 1)
+                    units.setText(String.valueOf(product.decreaseCartUnits()));
                 else {
                     AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
-                    dialog.setTitle("¿Desea eliminar este producto de la despensa?");
+                    dialog.setTitle("¿Desea eliminar este producto del carrito?");
                     dialog.setNegativeButton("Cancelar", null);
                     dialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
@@ -125,10 +122,11 @@ public class CartAdapter extends MyAdapter {
         }
 
         private void removeProduct() {
-            product.setStock(Product.NOT_IN_PANTRY);
+            product.setCartUnits(0);
             ((SwipeLayout)itemView).close(false);
             blurLayout.dismissHover();
             adapter.items.remove(product);
+            cart.remove(product);
             adapter.notifyItemRemoved(getAdapterPosition());
         }
     }

@@ -14,10 +14,16 @@ public class Pantry {
         return products;
     }
 
-    public void onResultProductInfoActivity(Product product) {
+    public boolean onResultProductInfoActivity(Product product) {
         products.remove(product);
 
         if (product.getStock() > Product.NOT_IN_PANTRY)
-            products.add(product);
+            return products.add(product);
+
+        return false;
+    }
+
+    public void remove(Product product) {
+        products.remove(product);
     }
 }

@@ -1,7 +1,7 @@
 package grupomoviles.quelista.igu;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,8 +16,6 @@ import java.util.concurrent.ExecutionException;
 
 import grupomoviles.quelista.R;
 import grupomoviles.quelista.igu.recyclerViewAdapters.MyAdapter;
-import grupomoviles.quelista.igu.recyclerViewAdapters.PantryAdapter;
-import grupomoviles.quelista.logic.Pantry;
 import grupomoviles.quelista.logic.Product;
 import grupomoviles.quelista.onlineDatabase.GestorBD;
 

@@ -2,7 +2,6 @@ package grupomoviles.quelista.igu.recyclerViewAdapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +15,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.androidviewhover.BlurLayout;
 import com.daimajia.swipe.SwipeLayout;
 
-import java.util.List;
-
 import grupomoviles.quelista.R;
-import grupomoviles.quelista.igu.ProductInfoActivity;
-import grupomoviles.quelista.logic.Cart;
 import grupomoviles.quelista.logic.Pantry;
 import grupomoviles.quelista.logic.Product;
 
@@ -39,7 +34,9 @@ public class PantryAdapter extends MyAdapter {
 
     @Override
     public void onResultProductInfoActivity(Product product) {
-        pantry.onResultProductInfoActivity(product);
+        items.remove(product);
+        if(pantry.onResultProductInfoActivity(product))
+            items.add(product);
         super.onResultProductInfoActivity(product);
     }
 
@@ -136,6 +133,7 @@ public class PantryAdapter extends MyAdapter {
             ((SwipeLayout)itemView).close(false);
             blurLayout.dismissHover();
             adapter.items.remove(product);
+            pantry.remove(product);
             adapter.notifyItemRemoved(getAdapterPosition());
         }
     }

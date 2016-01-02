@@ -43,6 +43,26 @@ public class TabsFragment extends Fragment {
          */
         myAdapter = new MyAdapter(this.getChildFragmentManager());
         viewPager.setAdapter(myAdapter);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0 : ((MainActivity)getActivity()).pantryAdapter.notifyDataSetChanged();
+                    case 1 : ((MainActivity)getActivity()).shoppingListAdapter.notifyDataSetChanged();
+                    case 2 : ((MainActivity)getActivity()).cartAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         tabLayout.setupWithViewPager(viewPager);
 
