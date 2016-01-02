@@ -10,26 +10,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.annimon.stream.Stream;
+
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import grupomoviles.quelista.R;
+import grupomoviles.quelista.igu.recyclerViewAdapters.CartAdapter;
 import grupomoviles.quelista.igu.recyclerViewAdapters.MyAdapter;
-import grupomoviles.quelista.igu.recyclerViewAdapters.PantryAdapter;
-import grupomoviles.quelista.igu.recyclerViewAdapters.ShoppingListAdapter;
+import grupomoviles.quelista.logic.Cart;
 import grupomoviles.quelista.logic.Product;
-import grupomoviles.quelista.logic.ShoppingList;
 import grupomoviles.quelista.onlineDatabase.GestorBD;
 
 /**
  * Created by Alperi on 30/12/2015
  */
 
-public class ListaCompraFragment extends Fragment {
+public class CartFragment extends Fragment {
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_lista_compra, container, false);
+        View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
         RecyclerView recycler = (RecyclerView) view.findViewById(R.id.recyclerView);
         recycler.setHasFixedSize(true);
@@ -44,30 +51,14 @@ public class ListaCompraFragment extends Fragment {
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        new RefreshRecyclerTask().execute((MyAdapter) recycler.getAdapter());
+                        new RefreshRecyclerTask().execute((MyAdapter)recycler.getAdapter());
                         refreshLayout.setRefreshing(false);
                     }
                 }
         );
 
-        Product product = null;
-
-        try {
-            product = GestorBD.FindProduct("5449000000996");
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        ShoppingList s = new ShoppingList();
-
-        s.getProducts().add(product);
-
-        recycler.setAdapter(new ShoppingListAdapter(getActivity(), s));
+        recycler.setAdapter(((MainActivity) getActivity()).cartAdapter);
 
         return view;
     }
-
-
 }

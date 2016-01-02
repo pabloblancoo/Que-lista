@@ -13,4 +13,11 @@ public class Pantry {
     public Set<Product> getProducts() {
         return products;
     }
+
+    public void onResultProductInfoActivity(Product product) {
+        products.remove(product);
+
+        if (product.getStock() > Product.NOT_IN_PANTRY)
+            products.add(product);
+    }
 }

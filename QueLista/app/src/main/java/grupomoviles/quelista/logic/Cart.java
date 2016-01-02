@@ -1,5 +1,7 @@
 package grupomoviles.quelista.logic;
 
+import com.mongodb.util.Hash;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,5 +14,12 @@ public class Cart {
 
     public Set<Product> getProducts() {
         return products;
+    }
+
+    public void onResultProductInfoActivity(Product product) {
+        products.remove(product);
+
+        if (product.getCartUnits() > 0)
+            products.add(product);
     }
 }

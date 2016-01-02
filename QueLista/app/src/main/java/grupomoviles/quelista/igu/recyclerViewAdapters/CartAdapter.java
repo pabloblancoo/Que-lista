@@ -1,5 +1,6 @@
 package grupomoviles.quelista.igu.recyclerViewAdapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,8 +33,18 @@ public class CartAdapter extends MyAdapter {
         this.cart = cart;
     }
 
-    public void swipeList(List<Product> products) {
-        items = products;
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void swipeList() {
+        items = Stream.of(cart.getProducts()).collect(Collectors.toList());
+    }
+
+    @Override
+    public void onResultProductInfoActivity(Product product) {
+        cart.onResultProductInfoActivity(product);
+        super.onResultProductInfoActivity(product);
     }
 
     @Override
@@ -64,8 +75,9 @@ public class CartAdapter extends MyAdapter {
     public void onBindViewHolder(MyViewHolder viewHolder, int position) {
         Product currentItem = items.get(position);
 
+        ((CartViewHolder)viewHolder).units.setText(String.valueOf(currentItem.getCartUnits()));
         ((CartViewHolder)viewHolder).unitsPantry.setText(String.valueOf(currentItem.getStock()));
-        ((CartViewHolder)viewHolder).unitsShoppinglist.setText(String.valueOf(currentItem.getCartUnits()));
+        ((CartViewHolder)viewHolder).unitsShoppinglist.setText(String.valueOf(currentItem.getShoppingListUnits()));
 
         super.onBindViewHolder(viewHolder, position);
     }
@@ -108,12 +120,8 @@ public class CartAdapter extends MyAdapter {
             }
             else if (v.getId() == R.id.btnDelete) {
                 removeProduct();
-            }
-            else if (v.getId() == R.id.btnMore) {
-                Intent i = new Intent(context, ProductInfoActivity.class);
-                i.putExtra(ProductInfoActivity.PRODUCT, product);
-                context.startActivity(i);
-            }
+            } else
+                super.onClick(v);
         }
 
         private void removeProduct() {

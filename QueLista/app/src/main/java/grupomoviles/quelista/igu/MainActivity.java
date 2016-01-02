@@ -1,5 +1,6 @@
 package grupomoviles.quelista.igu;
 
+import android.content.Intent;
 import android.nfc.NfcAdapter;
 
 import android.opengl.Visibility;
@@ -15,7 +16,14 @@ import java.io.IOException;
 
 import grupomoviles.quelista.R;
 import grupomoviles.quelista.captureCodes.IntentCaptureActivity;
+import grupomoviles.quelista.igu.recyclerViewAdapters.CartAdapter;
+import grupomoviles.quelista.igu.recyclerViewAdapters.PantryAdapter;
+import grupomoviles.quelista.igu.recyclerViewAdapters.ShoppingListAdapter;
+import grupomoviles.quelista.logic.Cart;
 import grupomoviles.quelista.logic.DownloadImageTask;
+import grupomoviles.quelista.logic.Pantry;
+import grupomoviles.quelista.logic.Product;
+import grupomoviles.quelista.logic.ShoppingList;
 import grupomoviles.quelista.logic.TicketReader;
 
 
@@ -27,7 +35,9 @@ import android.support.v7.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    NfcAdapter nfcAdapter;
+    PantryAdapter pantryAdapter = new PantryAdapter(this, new Pantry());
+    ShoppingListAdapter shoppingListAdapter = new ShoppingListAdapter(this, new ShoppingList());
+    CartAdapter cartAdapter = new CartAdapter(this, new Cart());
 
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
@@ -45,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
         task.execute("5449000000996", "8410297112041", "8410297170058", "8410188012092",
                 "5449000009067", "8410000826937", "8410014307682", "8410014312495", "5000127281752");
 
-        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-
         TicketReader ticketReader = new TicketReader();
         try {
             ticketReader.leer("");
@@ -54,22 +62,7 @@ public class MainActivity extends AppCompatActivity {
             System.out.print("No existe");
         }
 
-
-        /******************************* SECCION GUI *******************************/
-
-        /**
-         * Establecemos el DrawerLayout y el NavigationView
-         */
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        mNavigationView = (NavigationView) findViewById(R.id.navview);
-
-        if(nfcAdapter == null) {
-            mNavigationView.getMenu().findItem(R.id.nav_item_nfc).setEnabled(false);
-            mNavigationView.getMenu().findItem(R.id.nav_item_nfc).setVisible(false);
-            mNavigationView.getMenu().removeItem(R.id.nav_item_nfc);
-        }
-
+        setUpNavigationDrawer();
 
         /**
          * Inflamos el primer fragmento que vamos a mostrar.
@@ -78,15 +71,37 @@ public class MainActivity extends AppCompatActivity {
          */
         fragment = new TabsFragment();
         mFragmentManager = getSupportFragmentManager();
+
         if (savedInstanceState == null) {
             mFragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentTransaction.replace(R.id.fragment_container, fragment).commit();
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (ProductInfoActivity.REQUEST_CODE == requestCode && resultCode == RESULT_OK) {
+            Product product = (Product) data.getExtras().get(ProductInfoActivity.PRODUCT);
+            pantryAdapter.onResultProductInfoActivity(product);
+            shoppingListAdapter.onResultProductInfoActivity(product);
+            cartAdapter.onResultProductInfoActivity(product);
+        }
+    }
+
+    private void setUpNavigationDrawer() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        mNavigationView = (NavigationView) findViewById(R.id.navview);
+
+        if(NfcAdapter.getDefaultAdapter(this) == null) {
+            mNavigationView.getMenu().findItem(R.id.nav_item_nfc).setEnabled(false);
+            mNavigationView.getMenu().findItem(R.id.nav_item_nfc).setVisible(false);
+            mNavigationView.getMenu().removeItem(R.id.nav_item_nfc);
+        }
+
         /**
          * Establecemos los eventos de click en los elementos del Navigation Drawer
          */
-
         mNavigationView.setNavigationItemSelectedListener(menuItem -> {
             FragmentTransaction fragmentTransaction;
             mDrawerLayout.closeDrawers();
@@ -129,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
 
             return false;
         });
-
     }
 
     public void scan(View view) {

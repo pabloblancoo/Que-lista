@@ -1,5 +1,6 @@
 package grupomoviles.quelista.igu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
@@ -23,6 +24,7 @@ import grupomoviles.quelista.logic.Product;
 public class ProductInfoActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
     public static final String PRODUCT = "PRODUCT";
+    public static final int REQUEST_CODE = 1;
 
     ImageView productImage;
 
@@ -145,6 +147,9 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
 
         switch (id) {
             case android.R.id.home:
+                Intent i = new Intent();
+                i.putExtra(PRODUCT, product);
+                setResult(RESULT_OK, i);
                 onBackPressed();
                 return true;
         }

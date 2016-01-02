@@ -1,18 +1,23 @@
 package grupomoviles.quelista.igu.recyclerViewAdapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
 import com.daimajia.androidviewhover.BlurLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 
 import java.util.List;
 
 import grupomoviles.quelista.R;
+import grupomoviles.quelista.igu.ProductInfoActivity;
 import grupomoviles.quelista.logic.Product;
 
 /**
@@ -26,11 +31,20 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
     public MyAdapter(Context context, List<Product> items) {
         this.context = context;
         this.items = items;
+        this.items = Stream.of(items).sortBy(i -> i.getDescription().charAt(0)).collect(Collectors.toList());
     }
 
     public void refresh() {
         notifyDataSetChanged();
     }
+
+    public void onResultProductInfoActivity(Product product) {
+        items.remove(product);
+        items.add(product);
+        items = Stream.of(items).sortBy(i -> i.getDescription().charAt(0)).collect(Collectors.toList());
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return items.size();
@@ -56,7 +70,6 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
         viewHolder.description.setText(currentItem.getDescription());
         viewHolder.brand.setText(currentItem.getBrand());
         viewHolder.netValue.setText(currentItem.getNetValue());
-        viewHolder.units.setText(String.valueOf(currentItem.getStock()));
 
         mItemManger.bindView(viewHolder.itemView, position);
     }
@@ -93,6 +106,12 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
         }
 
         @Override
-        public void onClick(View view) { }
+        public void onClick(View view) {
+            if (view.getId() == R.id.btnMore) {
+                Intent i = new Intent(context, ProductInfoActivity.class);
+                i.putExtra(ProductInfoActivity.PRODUCT, product);
+                ((Activity)context).startActivityForResult(i, ProductInfoActivity.REQUEST_CODE);
+            }
+        }
     }
 }

@@ -20,6 +20,7 @@ import java.util.List;
 
 import grupomoviles.quelista.R;
 import grupomoviles.quelista.igu.ProductInfoActivity;
+import grupomoviles.quelista.logic.Cart;
 import grupomoviles.quelista.logic.Pantry;
 import grupomoviles.quelista.logic.Product;
 
@@ -32,8 +33,18 @@ public class PantryAdapter extends MyAdapter {
         this.pantry = pantry;
     }
 
-    public void swipeList(List<Product> products) {
-        items = products;
+    public Pantry getPantry() {
+        return pantry;
+    }
+
+    @Override
+    public void onResultProductInfoActivity(Product product) {
+        pantry.onResultProductInfoActivity(product);
+        super.onResultProductInfoActivity(product);
+    }
+
+    public void swipeList() {
+        items = Stream.of(pantry.getProducts()).collect(Collectors.toList());
     }
 
     @Override
@@ -67,6 +78,7 @@ public class PantryAdapter extends MyAdapter {
     public void onBindViewHolder(MyViewHolder viewHolder, int position) {
         Product currentItem = items.get(position);
 
+        ((PantryViewHolder)viewHolder).units.setText(String.valueOf(currentItem.getStock()));
         ((PantryViewHolder)viewHolder).unitsShoppingList.setText(String.valueOf(currentItem.getShoppingListUnits()));
         ((PantryViewHolder)viewHolder).unitsCart.setText(String.valueOf(currentItem.getCartUnits()));
 
@@ -115,11 +127,8 @@ public class PantryAdapter extends MyAdapter {
             else if (v.getId() == R.id.btnDelete) {
                 removeProduct();
             }
-            else if (v.getId() == R.id.btnMore) {
-                Intent i = new Intent(context, ProductInfoActivity.class);
-                i.putExtra(ProductInfoActivity.PRODUCT, product);
-                context.startActivity(i);
-            }
+            else
+                super.onClick(v);
         }
 
         private void removeProduct() {

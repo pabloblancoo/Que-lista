@@ -32,8 +32,18 @@ public class ShoppingListAdapter extends MyAdapter {
         this.shoppingList = shoppingList;
     }
 
-    public void swipeList(List<Product> products) {
-        items = products;
+    public ShoppingList getShoppingList() {
+        return shoppingList;
+    }
+
+    public void swipeList() {
+        items = Stream.of(shoppingList.getProducts()).collect(Collectors.toList());
+    }
+
+    @Override
+    public void onResultProductInfoActivity(Product product) {
+        shoppingList.onResultProductInfoActivity(product);
+        super.onResultProductInfoActivity(product);
     }
 
     @Override
@@ -64,6 +74,7 @@ public class ShoppingListAdapter extends MyAdapter {
     public void onBindViewHolder(MyViewHolder viewHolder, int position) {
         Product currentItem = items.get(position);
 
+        ((ShoppingListViewHolder)viewHolder).units.setText(String.valueOf(currentItem.getShoppingListUnits()));
         ((ShoppingListViewHolder)viewHolder).unitsPantry.setText(String.valueOf(currentItem.getStock()));
         ((ShoppingListViewHolder)viewHolder).unitsCart.setText(String.valueOf(currentItem.getCartUnits()));
 
@@ -114,11 +125,8 @@ public class ShoppingListAdapter extends MyAdapter {
             else if (v.getId() == R.id.btnDelete) {
                 removeProduct();
             }
-            else if (v.getId() == R.id.btnMore) {
-                Intent i = new Intent(context, ProductInfoActivity.class);
-                i.putExtra(ProductInfoActivity.PRODUCT, product);
-                context.startActivity(i);
-            }
+            else
+                super.onClick(v);
         }
 
         private void removeProduct() {
