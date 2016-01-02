@@ -74,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             mFragmentTransaction = mFragmentManager.beginTransaction();
-            mFragmentTransaction.replace(R.id.fragment_container, fragment).commit();
+            mFragmentTransaction.replace(R.id.fragment_container, fragment);
+            mFragmentTransaction.addToBackStack(null).commit();
         }
 
     }
@@ -109,32 +110,25 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction = mFragmentManager.beginTransaction();
             switch (menuItem.getItemId()) {
                 case R.id.nav_item_despensa:
+                    fragmentTransaction.replace(R.id.fragment_container, fragment).commit();
                     fragment.setTab(0);
-                    fragmentTransaction.replace(R.id.fragment_container,
-                            fragment).commit();
                     break;
                 case R.id.nav_item_lista:
+                    fragmentTransaction.replace(R.id.fragment_container, fragment).commit();
                     fragment.setTab(1);
-                    fragmentTransaction.replace(R.id.fragment_container,
-                            fragment).commit();
-
                     break;
                 case R.id.nav_item_carrito:
+                    fragmentTransaction.replace(R.id.fragment_container, fragment).commit();
                     fragment.setTab(2);
-                    fragmentTransaction.replace(R.id.fragment_container,
-                            fragment).commit();
                     break;
                 case R.id.nav_item_qr:
-                    fragmentTransaction.replace(R.id.fragment_container,
-                            new TabsFragment()).commit();
+
                     break;
                 case R.id.nav_item_nfc:
-                    fragmentTransaction.replace(R.id.fragment_container,
-                            new TabsFragment()).commit();
+
                     break;
                 case R.id.nav_item_opciones:
-                    fragmentTransaction.replace(R.id.fragment_container,
-                            new OpcionesFragment()).commit();
+                    fragmentTransaction.replace(R.id.fragment_container, new OpcionesFragment()).commit();
                     break;
 
                 case R.id.nav_item_ayuda:

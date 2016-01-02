@@ -70,7 +70,6 @@ public class TabsFragment extends Fragment {
         viewPager.setCurrentItem(tab);
         tabLayout.setupWithViewPager(viewPager);
 
-
         // Esto es necesario debido a un bug presente en la Design Support Library 22.2.1
         tabLayout.post(new Runnable() {
             @Override
