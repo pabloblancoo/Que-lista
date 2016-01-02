@@ -1,7 +1,7 @@
 package grupomoviles.quelista.igu;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,22 +16,17 @@ import java.util.concurrent.ExecutionException;
 
 import grupomoviles.quelista.R;
 import grupomoviles.quelista.igu.recyclerViewAdapters.MyAdapter;
-import grupomoviles.quelista.igu.recyclerViewAdapters.PantryAdapter;
-import grupomoviles.quelista.logic.Pantry;
 import grupomoviles.quelista.logic.Product;
 import grupomoviles.quelista.onlineDatabase.GestorBD;
 
 /**
  * Created by Nauce on 26/12/15.
  */
-public class DespensaFragment extends Fragment {
-
-    public DespensaFragment() {
-    }
+public class PantryFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_despensa, container, false);
+        View view = inflater.inflate(R.layout.fragment_pantry, container, false);
 
         RecyclerView recycler = (RecyclerView) view.findViewById(R.id.recyclerView);
         recycler.setHasFixedSize(true);
@@ -63,11 +58,10 @@ public class DespensaFragment extends Fragment {
             e.printStackTrace();
         }
 
-        Pantry pantry = new Pantry();
+        Stream.of(products).forEach(p -> ((MainActivity) getActivity()).pantryAdapter.getPantry().getProducts().add(p));
 
-        Stream.of(products).forEach(p -> pantry.getProducts().add(p));
-
-        recycler.setAdapter(new PantryAdapter(getActivity(), pantry));
+        recycler.setAdapter(((MainActivity) getActivity()).pantryAdapter);
+        ((MainActivity) getActivity()).pantryAdapter.swipeList();
 
         return view;
     }

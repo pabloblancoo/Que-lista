@@ -32,8 +32,20 @@ public class ShoppingListAdapter extends MyAdapter {
         this.shoppingList = shoppingList;
     }
 
-    public void swipeList(List<Product> products) {
-        items = products;
+    public ShoppingList getShoppingList() {
+        return shoppingList;
+    }
+
+    public void swipeList() {
+        items = Stream.of(shoppingList.getProducts()).collect(Collectors.toList());
+    }
+
+    @Override
+    public void onResultProductInfoActivity(Product product) {
+        items.remove(product);
+        if(shoppingList.onResultProductInfoActivity(product))
+            items.add(product);
+        super.onResultProductInfoActivity(product);
     }
 
     @Override
@@ -64,6 +76,7 @@ public class ShoppingListAdapter extends MyAdapter {
     public void onBindViewHolder(MyViewHolder viewHolder, int position) {
         Product currentItem = items.get(position);
 
+        ((ShoppingListViewHolder)viewHolder).units.setText(String.valueOf(currentItem.getShoppingListUnits()));
         ((ShoppingListViewHolder)viewHolder).unitsPantry.setText(String.valueOf(currentItem.getStock()));
         ((ShoppingListViewHolder)viewHolder).unitsCart.setText(String.valueOf(currentItem.getCartUnits()));
 
@@ -94,13 +107,13 @@ public class ShoppingListAdapter extends MyAdapter {
         public void onClick(View v) {
             YoYo.with(Techniques.Pulse).duration(100).playOn(v);
             if (v.getId() == R.id.btnPlusStock)
-                units.setText(String.valueOf(product.increaseStock()));
+                units.setText(String.valueOf(product.increaseShoppingListUnits()));
             else if (v.getId() == R.id.btnMinusStock) {
-                if (product.getStock() > 0)
-                    units.setText(String.valueOf(product.decreaseStock()));
+                if (product.getShoppingListUnits() > 1)
+                    units.setText(String.valueOf(product.decreaseShoppingListUnits()));
                 else {
                     AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
-                    dialog.setTitle("¿Desea eliminar este producto de la despensa?");
+                    dialog.setTitle("¿Desea eliminar este producto de la lista de la compra?");
                     dialog.setNegativeButton("Cancelar", null);
                     dialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
@@ -114,18 +127,16 @@ public class ShoppingListAdapter extends MyAdapter {
             else if (v.getId() == R.id.btnDelete) {
                 removeProduct();
             }
-            else if (v.getId() == R.id.btnMore) {
-                Intent i = new Intent(context, ProductInfoActivity.class);
-                i.putExtra(ProductInfoActivity.PRODUCT, product);
-                context.startActivity(i);
-            }
+            else
+                super.onClick(v);
         }
 
         private void removeProduct() {
-            product.setStock(Product.NOT_IN_PANTRY);
+            product.setShoppingListUnits(0);
             ((SwipeLayout)itemView).close(false);
             blurLayout.dismissHover();
             adapter.items.remove(product);
+            shoppingList.remove(product);
             adapter.notifyItemRemoved(getAdapterPosition());
         }
     }

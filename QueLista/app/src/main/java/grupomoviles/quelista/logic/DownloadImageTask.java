@@ -1,6 +1,7 @@
 package grupomoviles.quelista.logic;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,9 +19,19 @@ import grupomoviles.quelista.igu.MainActivity;
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
     private Activity activity;
+    ProgressDialog p;
 
     public DownloadImageTask(MainActivity activity) {
         this.activity = activity;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+
+        p = new ProgressDialog(activity);
+        p.setMessage("Descargando imágenes...");
+        p.show();
     }
 
     public Bitmap doInBackground(String... product) {
@@ -57,5 +68,11 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         }
 
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Bitmap bitmap) {
+        super.onPostExecute(bitmap);
+        p.dismiss();
     }
 }

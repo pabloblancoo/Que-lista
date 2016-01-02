@@ -4,7 +4,7 @@
           android:id="@+id/nav_item_despensa"
           android:icon="@drawable/icon_button_home"/>
 
-    <item android:title="Lista"
+    <item android:title="Lista de la compra"
           android:id="@+id/nav_item_lista"
           android:icon="@drawable/icon_button_shopping_list"/>
 

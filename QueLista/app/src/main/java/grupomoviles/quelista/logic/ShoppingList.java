@@ -13,4 +13,17 @@ public class ShoppingList {
     public Set<Product> getProducts() {
         return products;
     }
+
+    public boolean onResultProductInfoActivity(Product product) {
+        products.remove(product);
+
+        if (product.getShoppingListUnits() > 0)
+            return products.add(product);
+
+        return false;
+    }
+
+    public void remove(Product product) {
+        products.remove(product);
+    }
 }

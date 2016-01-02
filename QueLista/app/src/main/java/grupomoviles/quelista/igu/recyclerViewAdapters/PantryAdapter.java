@@ -2,7 +2,6 @@ package grupomoviles.quelista.igu.recyclerViewAdapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +15,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.androidviewhover.BlurLayout;
 import com.daimajia.swipe.SwipeLayout;
 
-import java.util.List;
-
 import grupomoviles.quelista.R;
-import grupomoviles.quelista.igu.ProductInfoActivity;
 import grupomoviles.quelista.logic.Pantry;
 import grupomoviles.quelista.logic.Product;
 
@@ -32,8 +28,20 @@ public class PantryAdapter extends MyAdapter {
         this.pantry = pantry;
     }
 
-    public void swipeList(List<Product> products) {
-        items = products;
+    public Pantry getPantry() {
+        return pantry;
+    }
+
+    @Override
+    public void onResultProductInfoActivity(Product product) {
+        items.remove(product);
+        if(pantry.onResultProductInfoActivity(product))
+            items.add(product);
+        super.onResultProductInfoActivity(product);
+    }
+
+    public void swipeList() {
+        items = Stream.of(pantry.getProducts()).sortBy(p -> p.getDescription().charAt(0)).collect(Collectors.toList());
     }
 
     @Override
@@ -67,6 +75,7 @@ public class PantryAdapter extends MyAdapter {
     public void onBindViewHolder(MyViewHolder viewHolder, int position) {
         Product currentItem = items.get(position);
 
+        ((PantryViewHolder)viewHolder).units.setText(String.valueOf(currentItem.getStock()));
         ((PantryViewHolder)viewHolder).unitsShoppingList.setText(String.valueOf(currentItem.getShoppingListUnits()));
         ((PantryViewHolder)viewHolder).unitsCart.setText(String.valueOf(currentItem.getCartUnits()));
 
@@ -115,11 +124,8 @@ public class PantryAdapter extends MyAdapter {
             else if (v.getId() == R.id.btnDelete) {
                 removeProduct();
             }
-            else if (v.getId() == R.id.btnMore) {
-                Intent i = new Intent(context, ProductInfoActivity.class);
-                i.putExtra(ProductInfoActivity.PRODUCT, product);
-                context.startActivity(i);
-            }
+            else
+                super.onClick(v);
         }
 
         private void removeProduct() {
@@ -127,6 +133,7 @@ public class PantryAdapter extends MyAdapter {
             ((SwipeLayout)itemView).close(false);
             blurLayout.dismissHover();
             adapter.items.remove(product);
+            pantry.remove(product);
             adapter.notifyItemRemoved(getAdapterPosition());
         }
     }
