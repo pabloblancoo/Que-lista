@@ -1,6 +1,7 @@
 package grupomoviles.quelista.igu;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -15,13 +16,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.reflect.Field;
+
 import grupomoviles.quelista.R;
 
 public class TabsFragment extends Fragment {
 
     private static TabLayout tabLayout;
     private static ViewPager viewPager;
-    private int int_items = 3 ;
+    private static int int_items = 3 ;
     private static FragmentPagerAdapter myAdapter;
     private int tab = 0;
     private View v = null;
@@ -42,29 +45,9 @@ public class TabsFragment extends Fragment {
          * Establecemos un Adapter para el ViewPager
          */
         if(myAdapter==null)
-            myAdapter = new MyAdapter(this.getChildFragmentManager());
+            myAdapter = new MyAdapter(getChildFragmentManager());
 
         viewPager.setAdapter(myAdapter);
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                switch (position) {
-                    case 0 : ((MainActivity)getActivity()).pantryAdapter.notifyDataSetChanged();
-                    case 1 : ((MainActivity)getActivity()).shoppingListAdapter.notifyDataSetChanged();
-                    case 2 : ((MainActivity)getActivity()).cartAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
         tabLayout.setOnTabSelectedListener(null);
         viewPager.setCurrentItem(tab);
@@ -87,11 +70,17 @@ public class TabsFragment extends Fragment {
         viewPager.setCurrentItem(tab);
     }
 
-    class MyAdapter extends FragmentPagerAdapter {
+    @Override
+    public void onAttach(Activity activity) {
+        myAdapter = new MyAdapter(getChildFragmentManager());
+        super.onAttach(activity);
+    }
 
-        private PantryFragment pantryFragment;
-        private ShoppingListFragment shoppingListFragment;
-        private CartFragment cartFragment;
+    static class MyAdapter extends FragmentPagerAdapter {
+
+        private static PantryFragment pantryFragment;
+        private static ShoppingListFragment shoppingListFragment;
+        private static CartFragment cartFragment;
 
         public MyAdapter(FragmentManager childFragmentManager) {
             super(childFragmentManager);

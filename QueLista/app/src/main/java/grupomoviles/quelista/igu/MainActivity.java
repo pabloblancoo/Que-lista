@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.List;
 
 
 import grupomoviles.quelista.R;
@@ -74,8 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             mFragmentTransaction = mFragmentManager.beginTransaction();
-            mFragmentTransaction.replace(R.id.fragment_container, fragment);
-            mFragmentTransaction.addToBackStack(null).commit();
+            mFragmentTransaction.replace(R.id.fragment_container, fragment).commit();
         }
 
     }
@@ -105,9 +106,8 @@ public class MainActivity extends AppCompatActivity {
          */
         mNavigationView.setNavigationItemSelectedListener(menuItem -> {
             FragmentTransaction fragmentTransaction;
-            mDrawerLayout.closeDrawers();
 
-            fragmentTransaction = mFragmentManager.beginTransaction();
+            fragmentTransaction = getSupportFragmentManager().beginTransaction();
             switch (menuItem.getItemId()) {
                 case R.id.nav_item_despensa:
                     fragmentTransaction.replace(R.id.fragment_container, fragment).commit();
@@ -136,6 +136,8 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
 
+            mDrawerLayout.closeDrawers();
+
             return false;
         });
     }
@@ -150,5 +152,4 @@ public class MainActivity extends AppCompatActivity {
 
         ica.initScan(this);
     }
-
 }
