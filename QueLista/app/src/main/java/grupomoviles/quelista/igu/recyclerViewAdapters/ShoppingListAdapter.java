@@ -28,7 +28,7 @@ public class ShoppingListAdapter extends MyAdapter {
     private ShoppingList shoppingList;
 
     public ShoppingListAdapter(Context context, ShoppingList shoppingList) {
-        super(context, Stream.of(shoppingList.getProducts()).collect(Collectors.toList()));
+        super(context, Stream.of(shoppingList.getProducts().values()).collect(Collectors.toList()));
         this.shoppingList = shoppingList;
     }
 
@@ -37,7 +37,7 @@ public class ShoppingListAdapter extends MyAdapter {
     }
 
     public void swipeList() {
-        items = Stream.of(shoppingList.getProducts()).collect(Collectors.toList());
+        items = Stream.of(shoppingList.getProducts().values()).collect(Collectors.toList());
     }
 
     @Override

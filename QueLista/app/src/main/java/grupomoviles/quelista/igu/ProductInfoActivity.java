@@ -3,6 +3,7 @@ package grupomoviles.quelista.igu;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
@@ -68,8 +69,8 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         product = (Product) getIntent().getExtras().get(PRODUCT);
-       // newProduct = (boolean) getIntent().getExtras().get(NEWPRODUCT);     //Usa esta key para mandar el boolean
-
+        if (getIntent().getExtras().get(NEWPRODUCT) != null)
+            newProduct = (boolean) getIntent().getExtras().get(NEWPRODUCT);     //Usa esta key para mandar el boolean
 
         productImage = (ImageView) findViewById(R.id.imgProduct);
 
@@ -115,6 +116,16 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
 
     private void showAllProductProperties() {
 
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Bitmap bitmap = null;
+                    while (bitmap == null) {
+                        bitmap = product.getImage(getApplicationContext());
+                        productImage.setImageBitmap(bitmap);
+                    }
+                }
+            });
 
             productImage.setImageBitmap(product.getImage(getApplicationContext()));
 

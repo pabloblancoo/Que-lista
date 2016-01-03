@@ -58,7 +58,7 @@ public class PantryFragment extends Fragment {
             e.printStackTrace();
         }
 
-        Stream.of(products).forEach(p -> ((MainActivity) getActivity()).pantryAdapter.getPantry().getProducts().add(p));
+        Stream.of(products).forEach(p -> ((MainActivity) getActivity()).pantryAdapter.getPantry().getProducts().put(p.getCode(), p));
 
         recycler.setAdapter(((MainActivity) getActivity()).pantryAdapter);
         ((MainActivity) getActivity()).pantryAdapter.swipeList();

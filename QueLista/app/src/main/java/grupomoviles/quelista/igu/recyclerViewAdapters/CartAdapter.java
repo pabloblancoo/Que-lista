@@ -24,7 +24,7 @@ public class CartAdapter extends MyAdapter {
     private Cart cart;
 
     public CartAdapter(Context context, Cart cart) {
-        super(context, Stream.of(cart.getProducts()).collect(Collectors.toList()));
+        super(context, Stream.of(cart.getProducts().values()).collect(Collectors.toList()));
         this.cart = cart;
     }
 
@@ -33,7 +33,7 @@ public class CartAdapter extends MyAdapter {
     }
 
     public void swipeList() {
-        items = Stream.of(cart.getProducts()).collect(Collectors.toList());
+        items = Stream.of(cart.getProducts().values()).collect(Collectors.toList());
     }
 
     @Override

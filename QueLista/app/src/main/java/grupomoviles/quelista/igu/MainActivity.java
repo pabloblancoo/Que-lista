@@ -1,5 +1,6 @@
 package grupomoviles.quelista.igu;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 
@@ -14,9 +15,11 @@ import android.view.View;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 import grupomoviles.quelista.R;
+import grupomoviles.quelista.captureCodes.CaptureActivity;
 import grupomoviles.quelista.captureCodes.IntentCaptureActivity;
 import grupomoviles.quelista.igu.recyclerViewAdapters.CartAdapter;
 import grupomoviles.quelista.igu.recyclerViewAdapters.PantryAdapter;
@@ -27,6 +30,7 @@ import grupomoviles.quelista.logic.Pantry;
 import grupomoviles.quelista.logic.Product;
 import grupomoviles.quelista.logic.ShoppingList;
 import grupomoviles.quelista.logic.TicketReader;
+import grupomoviles.quelista.onlineDatabase.GestorBD;
 
 
 import android.support.design.widget.NavigationView;
@@ -88,6 +92,41 @@ public class MainActivity extends AppCompatActivity {
             pantryAdapter.onResultProductInfoActivity(product);
             shoppingListAdapter.onResultProductInfoActivity(product);
             cartAdapter.onResultProductInfoActivity(product);
+        }
+        else if (IntentCaptureActivity.CODE_CAPTURE_ACTIVITY == requestCode && resultCode == RESULT_OK) {
+            String content = data.getExtras().getString(CaptureActivity.SCAN_CONTENT);
+            Product product;
+            boolean newProduct = false;
+            product = pantryAdapter.getPantry().find(content);
+            if (product == null)
+                product = shoppingListAdapter.getShoppingList().find(content);
+            if (product == null)
+                product = cartAdapter.getCart().find(content);
+            if (product == null) {
+                newProduct = true;
+                try {
+                    product = GestorBD.FindProduct(content);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if (product != null)
+                    new DownloadImageTask(this).execute(product.getCode());
+            }
+
+            if (product == null) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(getApplicationContext());
+                dialog.setTitle("El producto no se encuentra registrado y tampoco está en la base de datos online...");
+                dialog.show();
+            }
+            else {
+                Intent intent = new Intent(MainActivity.this, ProductInfoActivity.class);
+                intent.putExtra(ProductInfoActivity.PRODUCT, product);
+                intent.putExtra(ProductInfoActivity.NEWPRODUCT, newProduct);
+                startActivityForResult(intent, ProductInfoActivity.REQUEST_CODE);
+            }
         }
     }
 
