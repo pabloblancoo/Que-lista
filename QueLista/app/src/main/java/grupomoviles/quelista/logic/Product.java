@@ -246,7 +246,8 @@ public class Product implements Serializable {
     }
 
     public int decreaseStock() {
-        stock--;
+        if(stock >1)
+            stock--;
         return stock;
     }
 
@@ -256,7 +257,8 @@ public class Product implements Serializable {
     }
 
     public int decreaseShoppingListUnits(){
-        shoppingListUnits--;
+        if(shoppingListUnits > 0 )
+            shoppingListUnits--;
         return  shoppingListUnits;
     }
 
@@ -266,6 +268,7 @@ public class Product implements Serializable {
     }
 
     public int decreaseCartUnits(){
+        if(cartUnits > 0 )
         cartUnits--;
         return  cartUnits;
     }
@@ -276,6 +279,7 @@ public class Product implements Serializable {
     }
 
     public int decreaseConsumeCycle(){
+        if(consumeCycle > 0)
         consumeCycle--;
         return  consumeCycle;
     }
@@ -286,6 +290,7 @@ public class Product implements Serializable {
     }
 
     public int decreaseConsumeUnits(){
+       if(consumeUnits > 0)
         consumeUnits--;
         return  consumeUnits;
     }
@@ -296,6 +301,7 @@ public class Product implements Serializable {
     }
 
     public int decreaseUnitsToAdd(){
+        if (unitsToAdd > 0)
         unitsToAdd--;
         return  unitsToAdd;
     }
@@ -306,6 +312,7 @@ public class Product implements Serializable {
     }
 
     public int decreaseMinStock(){
+       if(minStock > 0)
         minStock--;
         return  unitsToAdd;
     }
