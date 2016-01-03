@@ -26,7 +26,9 @@ import grupomoviles.quelista.logic.Product;
 public class ProductInfoActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
     public static final String PRODUCT = "PRODUCT";
+    public static final String NEWPRODUCT = "NEWPRODUCT";
     public static final int REQUEST_CODE = 1;
+    private boolean newProduct = false;
 
     ImageView productImage;
 
@@ -66,6 +68,8 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         product = (Product) getIntent().getExtras().get(PRODUCT);
+       // newProduct = (boolean) getIntent().getExtras().get(NEWPRODUCT);     //Usa esta key para mandar el boolean
+
 
         productImage = (ImageView) findViewById(R.id.imgProduct);
 
@@ -98,6 +102,10 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         buttonPlusAddWhenHave = (Button) findViewById(R.id.btnPlusAddWhenHave);
         buttonMinusAddWhenHave = (Button) findViewById(R.id.btnMinusAddWhenHave);
 
+        //Mostrar u ocultar botones
+        if(!newProduct){
+            findViewById(R.id.layoutButtonsNewProduct).setVisibility(View.GONE);
+        }
         //Eventos
         switchCompatTakeUnits.setOnCheckedChangeListener(this);
         switchCompatAddToShoppingList.setOnCheckedChangeListener(this);
@@ -107,36 +115,37 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
 
     private void showAllProductProperties() {
 
-        productImage.setImageBitmap(product.getImage(getApplicationContext()));
 
-        description.setText(product.getDescription());
-        brand.setText(product.getBrand());
-        netValue.setText(product.getNetValue());
-        category.setText(product.getCategory());
+            productImage.setImageBitmap(product.getImage(getApplicationContext()));
+
+            description.setText(product.getDescription());
+            brand.setText(product.getBrand());
+            netValue.setText(product.getNetValue());
+            category.setText(product.getCategory());
 
 
-        unitsPantry.setText(product.getStock() + "");
-        unitsLista.setText(product.getShoppingListUnits() + "");
-        unitsCarrito.setText(product.getCartUnits() + "");
+            unitsPantry.setText(product.getStock() + "");
+            unitsLista.setText(product.getShoppingListUnits() + "");
+            unitsCarrito.setText(product.getCartUnits() + "");
 
-        Date date = product.getLastUpdate();
-        if (date == null) {
-            findViewById(R.id.layoutTakeUnitsSwitch).setVisibility(View.GONE);
-            switchCompatTakeUnits.setChecked(false);
-        } else {
-            switchCompatTakeUnits.setChecked(true);
-            unitsDescontar.setText(product.getConsumeUnits() + " unidad");
-            unitsDays.setText(product.getConsumeCycle() + " día");
-        }
+            Date date = product.getLastUpdate();
+            if (date == null) {
+                findViewById(R.id.layoutTakeUnitsSwitch).setVisibility(View.GONE);
+                switchCompatTakeUnits.setChecked(false);
+            } else {
+                switchCompatTakeUnits.setChecked(true);
+                unitsDescontar.setText(product.getConsumeUnits() + " unidad");
+                unitsDays.setText(product.getConsumeCycle() + " día");
+            }
 
-        if (product.getMinStock() == -1) {
-            findViewById(R.id.layoutAddToShoppingListSwitch).setVisibility(View.GONE);
-            switchCompatAddToShoppingList.setChecked(false);
-        } else {
-            switchCompatAddToShoppingList.setChecked(true);
-            unitsWhenHave.setText(product.getMinStock() + " unidades");
-            unitsAddWhenHave.setText(product.getUnitsToAdd() + " unidad");
-        }
+            if (product.getMinStock() == -1) {
+                findViewById(R.id.layoutAddToShoppingListSwitch).setVisibility(View.GONE);
+                switchCompatAddToShoppingList.setChecked(false);
+            } else {
+                switchCompatAddToShoppingList.setChecked(true);
+                unitsWhenHave.setText(product.getMinStock() + " unidades");
+                unitsAddWhenHave.setText(product.getUnitsToAdd() + " unidad");
+            }
 
     }
 
@@ -258,7 +267,8 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         textView.setText(units + old);
         if (textView == unitsPantry)
             checkStockUnits();
-        guardarDatos();
+        if(!newProduct)
+            guardarDatos();
         showDatabaseData();
 
     }
@@ -332,5 +342,14 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         }
         guardarDatos();
         showDatabaseData();
+    }
+
+    public void acept(View view){
+        guardarDatos();
+        finish();
+    }
+
+    public void cancel(View view){
+        finish();
     }
 }

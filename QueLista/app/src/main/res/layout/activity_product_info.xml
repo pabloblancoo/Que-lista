@@ -524,6 +524,47 @@
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                card_view:contentPadding="12dp"
+                card_view:cardCornerRadius="0dp"
+                card_view:cardElevation="0dp"
+                card_view:cardUseCompatPadding="true"
+                android:layout_marginBottom="-3dp"
+                android:layout_marginLeft="-1dp"
+                android:layout_marginTop="-1dp"
+                android:layout_marginRight="-1dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:id="@+id/layoutButtonsNewProduct">
+
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cancelar"
+                        android:background="@color/color_rojo_app"
+                        android:id="@+id/btCancel"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:onClick="cancel" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Aceptar"
+                        android:background="@color/color_verde"
+                        android:id="@+id/btAcept"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/btCancel"
+                        android:onClick="acept" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
         </LinearLayout>
     </ScrollView>
 </android.support.design.widget.CoordinatorLayout>
