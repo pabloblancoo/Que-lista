@@ -246,7 +246,7 @@ public class Product implements Serializable {
     }
 
     public int decreaseStock() {
-        if(stock >1)
+        if(stock > 0)
             stock--;
         return stock;
     }

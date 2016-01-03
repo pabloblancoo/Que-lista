@@ -1,5 +1,7 @@
 package grupomoviles.quelista.igu;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -157,6 +159,18 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         return super.onOptionsItemSelected(item);
     }
 
+
+    /*
+    @Override
+    protected void onDestroy() {
+        Intent i = new Intent();
+        i.putExtra(PRODUCT, product);
+        setResult(RESULT_OK, i);
+        finish();
+        super.onDestroy();
+    }
+    */
+
     public void aumentarPantry(View view) {
         product.increaseStock();
         makeChanges(unitsPantry, "", true);
@@ -242,8 +256,32 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
                 units--;
         }
         textView.setText(units + old);
+        if (textView == unitsPantry)
+            checkStockUnits();
         guardarDatos();
         showDatabaseData();
+
+    }
+
+    private void checkStockUnits() {
+
+        if (switchCompatAddToShoppingList.isChecked()) {
+            if (product.getStock() <= product.getMinStock() && product.getShoppingListUnits() < product.getUnitsToAdd()) {
+                product.setShoppingListUnits(product.getShoppingListUnits() + product.getUnitsToAdd());
+                unitsPantry.setText(product.getStock() + "");
+                unitsLista.setText(product.getShoppingListUnits() + "");
+
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setTitle("Se han añadido " + product.getUnitsToAdd() + " productos a la lista de la compra");
+                dialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+                dialog.show();
+
+            }
+        }
 
     }
 
