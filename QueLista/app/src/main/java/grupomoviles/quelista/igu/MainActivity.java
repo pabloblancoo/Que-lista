@@ -2,12 +2,13 @@ package grupomoviles.quelista.igu;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
@@ -20,7 +21,6 @@ import grupomoviles.quelista.igu.recyclerViewAdapters.PantryAdapter;
 import grupomoviles.quelista.igu.recyclerViewAdapters.ShoppingListAdapter;
 import grupomoviles.quelista.logic.Cart;
 import grupomoviles.quelista.logic.DownloadImageTask;
-import grupomoviles.quelista.logic.DownloadTicketFileTask;
 import grupomoviles.quelista.logic.Pantry;
 import grupomoviles.quelista.logic.Product;
 import grupomoviles.quelista.logic.ShoppingList;
@@ -36,9 +36,9 @@ import android.support.v7.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    PantryAdapter pantryAdapter = new PantryAdapter(this, new Pantry());
-    ShoppingListAdapter shoppingListAdapter = new ShoppingListAdapter(this, new ShoppingList());
-    CartAdapter cartAdapter = new CartAdapter(this, new Cart());
+    PantryAdapter pantryAdapter;
+    ShoppingListAdapter shoppingListAdapter;
+    CartAdapter cartAdapter;
 
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
@@ -46,10 +46,27 @@ public class MainActivity extends AppCompatActivity {
     FragmentTransaction mFragmentTransaction;
     TabsFragment fragment;
 
+    private int cantidadItems;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        // Cargar valores por defecto
+        PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
+        PreferenceManager.setDefaultValues(this, R.xml.pref_data_sync, false);
+        PreferenceManager.setDefaultValues(this, R.xml.pref_notification, false);
+
+        // Procesar valores actuales de las preferencias.
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean miniaturasPref = sharedPref.getBoolean("miniaturas", true);
+        cantidadItems = Integer.parseInt(sharedPref.getString("numArticulos", "8"));
+
+        pantryAdapter = new PantryAdapter(this, new Pantry());
+        shoppingListAdapter = new ShoppingListAdapter(this, new ShoppingList());
+        cartAdapter = new CartAdapter(this, new Cart());
 
         DownloadImageTask task;
         task = new DownloadImageTask(this);
@@ -161,7 +178,8 @@ public class MainActivity extends AppCompatActivity {
 
                     break;
                 case R.id.nav_item_opciones:
-                    fragmentTransaction.replace(R.id.fragment_container, new OpcionesFragment()).commit();
+                    //fragmentTransaction.replace(R.id.fragment_container, new OpcionesFragment()).commit();
+                    startActivity(new Intent(this, SettingsActivity.class));
                     break;
 
                 case R.id.nav_item_ayuda:
@@ -186,5 +204,13 @@ public class MainActivity extends AppCompatActivity {
         ica.initScan(this);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
+        // Actualizar visibilidad de miniaturas
+        boolean miniaturasPref = sharedPref.getBoolean("miniaturas", true);
+        pantryAdapter.setConMiniaturas(miniaturasPref);
+    }
 }

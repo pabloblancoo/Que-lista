@@ -28,20 +28,21 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('lib/gradle-retrolambda-3.2.3.jar')
+    compile files('lib/commons-net-3.4.jar')
+    compile files('lib/mongo-2.10.1.jar')
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.annimon:stream:1.0.5'
     compile 'com.android.support:design:22.2.1'
     compile 'com.daimajia.swipelayout:library:1.2.0@aar'
     compile 'com.journeyapps:zxing-android-embedded:3.0.3@aar'
     compile 'com.google.zxing:core:3.2.1'
-    compile files('lib/commons-net-3.4.jar')
     compile 'com.android.support:recyclerview-v7:22.2.1'
     compile 'com.android.support:cardview-v7:22.2.1'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.easing:library:1.0.0@aar'
     compile 'com.daimajia.androidanimations:library:1.1.2@aar'
     compile 'com.daimajia.androidviewhover:library:1.0.4@aar'
-    compile files('lib/mongo-2.10.1.jar')
+    compile 'com.android.support:support-v4:22.2.1'
 }
 
 buildscript {

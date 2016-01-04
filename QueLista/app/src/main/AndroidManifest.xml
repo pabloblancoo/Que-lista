@@ -18,6 +18,7 @@
         tools:replace="android:icon,android:theme">
         <activity
             android:name=".igu.MainActivity"
+            android:configChanges="screenSize|orientation"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +37,14 @@
         </activity>
         <activity
             android:name=".igu.ProductInfoActivity"
-            android:label="">
+            android:label=""></activity>
+        <activity
+            android:name=".igu.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".igu.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="grupomoviles.quelista.igu.MainActivity" />
         </activity>
     </application>
 

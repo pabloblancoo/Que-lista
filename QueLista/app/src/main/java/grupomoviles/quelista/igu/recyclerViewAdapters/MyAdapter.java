@@ -3,6 +3,8 @@ package grupomoviles.quelista.igu.recyclerViewAdapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,10 +29,16 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
 
     static Context context;
     List<Product> items;
+    SharedPreferences sharedPref;
+    boolean miniaturasPref;
 
     public MyAdapter(Context context, List<Product> items) {
         this.context = context;
         this.items = Stream.of(items).sortBy(i -> i.getDescription().charAt(0)).collect(Collectors.toList());
+
+        // Procesar valores actuales de las preferencias.
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        miniaturasPref = sharedPref.getBoolean("miniaturas", true);
     }
 
     public void refresh() {
@@ -63,7 +71,15 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
 
         viewHolder.blurLayout.dismissHover();
         viewHolder.product = currentItem;
-        viewHolder.image.setImageBitmap(currentItem.getImage(context));
+
+        if(miniaturasPref) {
+            viewHolder.image.setVisibility(View.VISIBLE);
+            viewHolder.image.setImageBitmap(currentItem.getImage(context));
+        }
+        else{
+            viewHolder.image.setVisibility(View.GONE);
+        }
+
         viewHolder.description.setText(currentItem.getDescription());
         viewHolder.brand.setText(currentItem.getBrand());
         viewHolder.netValue.setText(currentItem.getNetValue());
@@ -110,5 +126,14 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
                 ((Activity)context).startActivityForResult(i, ProductInfoActivity.REQUEST_CODE);
             }
         }
+    }
+
+    public void setConMiniaturas(boolean miniaturasPref) {
+        if (miniaturasPref != this.miniaturasPref) {
+            this.miniaturasPref = miniaturasPref;
+            // Notificar que las miniaturas fueron afectadas
+            notifyDataSetChanged();
+        }
+
     }
 }
