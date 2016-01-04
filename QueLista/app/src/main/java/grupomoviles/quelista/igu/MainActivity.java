@@ -117,8 +117,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (product == null) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(getApplicationContext());
-                dialog.setTitle("El producto no se encuentra registrado y tampoco está en la base de datos online...");
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setMessage("El producto no se encuentra registrado y tampoco está en la base de datos online...");
                 dialog.show();
             }
             else {
