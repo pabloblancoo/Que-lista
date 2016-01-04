@@ -4,6 +4,7 @@ package grupomoviles.quelista.igu;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,7 +23,7 @@ import java.lang.reflect.Field;
 
 import grupomoviles.quelista.R;
 
-public class TabsFragment extends Fragment {
+public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChangedListener {
 
     private static TabLayout tabLayout;
     private static ViewPager viewPager;
@@ -65,14 +66,17 @@ public class TabsFragment extends Fragment {
         });
 
         Toolbar mToolbar = (Toolbar) v.findViewById(R.id.toolbar);
-        mToolbar.setLogo(R.drawable.ic_nav_menu);
-        mToolbar.getChildAt(1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v1) {
-                DrawerLayout  dl = (DrawerLayout) getActivity().findViewById(R.id.drawerLayout);
-                dl.openDrawer(GravityCompat.START);
-            }
-        });
+
+        /**
+         * Configuramos el ActionBarDrawerToggle
+         */
+        DrawerLayout mDrawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawerLayout);
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(getActivity(), mDrawerLayout,
+                mToolbar, R.string.open_drawer, R.string.close_drawer);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
+
+
         return v;
     }
 
@@ -85,6 +89,34 @@ public class TabsFragment extends Fragment {
     public void onAttach(Activity activity) {
         myAdapter = new MyAdapter(getChildFragmentManager());
         super.onAttach(activity);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppBarLayout)v.findViewById(R.id.app_bar_layout)).addOnOffsetChangedListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ((AppBarLayout)v.findViewById(R.id.app_bar_layout)).addOnOffsetChangedListener(this);
+    }
+
+    /**
+     * Soluciona el problema de scroll con el refresh layout cuando la toolbar está oculta
+     * @param appBarLayout
+     * @param i
+     */
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+        if (v.findViewById(R.id.swipeRefresh) != null) {
+            if (i == 0) {
+                v.findViewById(R.id.swipeRefresh).setEnabled(true);
+            } else {
+                v.findViewById(R.id.swipeRefresh).setEnabled(false);
+            }
+        }
     }
 
     static class MyAdapter extends FragmentPagerAdapter {

@@ -7,6 +7,7 @@ import android.nfc.NfcAdapter;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.AppBarLayout;
 import android.view.View;
 
 import java.io.IOException;
@@ -52,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         // Cargar valores por defecto
         PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
