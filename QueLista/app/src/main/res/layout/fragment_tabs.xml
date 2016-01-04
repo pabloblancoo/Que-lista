@@ -26,13 +26,14 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:title="@string/app_name"
+
             app:layout_scrollFlags="scroll|enterAlways"/>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
-            android:background="@color/material_blue_grey_800"
-            app:tabIndicatorColor="@color/orange"
-            app:tabSelectedTextColor="@color/orange"
+            android:background="@color/color_rojo_app"
+            app:tabIndicatorColor="@color/black"
+            app:tabSelectedTextColor="@color/black"
             app:tabTextColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
