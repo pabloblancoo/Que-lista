@@ -2,21 +2,13 @@ package grupomoviles.quelista.igu;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.nfc.NfcAdapter;
 
-import android.opengl.Visibility;
 import android.os.Bundle;
-
-import android.support.design.internal.NavigationMenuItemView;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
@@ -28,6 +20,7 @@ import grupomoviles.quelista.igu.recyclerViewAdapters.PantryAdapter;
 import grupomoviles.quelista.igu.recyclerViewAdapters.ShoppingListAdapter;
 import grupomoviles.quelista.logic.Cart;
 import grupomoviles.quelista.logic.DownloadImageTask;
+import grupomoviles.quelista.logic.DownloadTicketFileTask;
 import grupomoviles.quelista.logic.Pantry;
 import grupomoviles.quelista.logic.Product;
 import grupomoviles.quelista.logic.ShoppingList;
@@ -84,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
             mFragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentTransaction.replace(R.id.fragment_container, fragment).commit();
         }
-
     }
 
     @Override
