@@ -328,6 +328,10 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
                 Integer.parseInt(unitsPantry.getText().toString())
         );
 
+        product.setShoppingListUnits(Integer.parseInt(unitsLista.getText().toString()));
+        product.setCartUnits(Integer.parseInt(unitsCarrito.getText().toString()));
+
+
         if (date != null) {
             product.setLastUpdate(date);
             product.setConsumeUnits(Integer.parseInt(unitsDescontar.getText().toString().replace(" unidad", "")));
