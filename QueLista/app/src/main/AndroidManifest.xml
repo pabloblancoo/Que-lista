@@ -50,6 +50,13 @@
                 android:value="grupomoviles.quelista.igu.MainActivity" />
         </activity>
         <activity
+            android:name=".igu.Galeria"
+            android:label="">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="grupomoviles.quelista.igu.NewProductActivity" />
+        </activity>
+        <activity
             android:name=".igu.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".igu.MainActivity">

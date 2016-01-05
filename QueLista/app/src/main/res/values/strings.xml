@@ -106,5 +106,6 @@
     <string name="producto_nombre">Nombre del producto</string>
     <string name="err_msg_vacio">No puede estár vacio</string>
 
+    <string name="nombre_transicion_imagen">imagen_compartida</string>
 
 </resources>

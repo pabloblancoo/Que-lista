@@ -1,19 +1,23 @@
 package grupomoviles.quelista.igu;
 
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,10 +26,14 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Date;
-import java.util.List;
 
 import grupomoviles.quelista.R;
 import grupomoviles.quelista.localDatabase.ProductDataSource;
@@ -38,6 +46,11 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
     public static final String NEWPRODUCTCODE = "NEWPRODUCTCODE";
     public static final int REQUEST_CODE = 1;
     private boolean newProduct = true;
+
+    private static int TAKE_PICTURE = 1;
+    private static int SELECT_PICTURE = 2;
+
+    private static final int FILE_SELECT_CODE = 0;
 
     ImageView productImage;
 
@@ -81,6 +94,7 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
     int minStock = -1;
     int unitsToAdd = 1;
     private boolean imagenTomada = false;
+    String imagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +108,7 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
         productImage = (ImageView) findViewById(R.id.imgProduct);
 
         code = (EditText) findViewById(R.id.txCode);
-        if (getIntent().hasExtra(NEWPRODUCTCODE) && getIntent().getExtras().get(NEWPRODUCTCODE) != null){
+        if (getIntent().hasExtra(NEWPRODUCTCODE) && getIntent().getExtras().get(NEWPRODUCTCODE) != null) {
             code.setText(getIntent().getExtras().get(NEWPRODUCTCODE).toString());
             code.setEnabled(false);
         }
@@ -144,43 +158,43 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
 
     private void showAllProductProperties() {
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Bitmap bitmap = null;
-                    while (bitmap == null) {
-                        bitmap = product.getImage(getApplicationContext());
-                        productImage.setImageBitmap(bitmap);
-                    }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Bitmap bitmap = null;
+                while (bitmap == null) {
+                    bitmap = product.getImage(getApplicationContext());
+                    productImage.setImageBitmap(bitmap);
                 }
-            });
+            }
+        });
 
-            productImage.setImageResource(R.drawable.cereales_miel_pops);
+        productImage.setImageResource(R.drawable.cereales_miel_pops);
 
-            unitsPantry.setText(0 + "");
-            unitsLista.setText(0 + "");
-            unitsCarrito.setText(0 + "");
+        unitsPantry.setText(0 + "");
+        unitsLista.setText(0 + "");
+        unitsCarrito.setText(0 + "");
 
         //Date date = product.getLastUpdate();
-            Date date = null;
-            if (date == null) {
-                findViewById(R.id.layoutTakeUnitsSwitch).setVisibility(View.GONE);
-                switchCompatTakeUnits.setChecked(false);
-            } else {
-                switchCompatTakeUnits.setChecked(true);
-                unitsDescontar.setText(product.getConsumeUnits() + " unidad");
-                unitsDays.setText(product.getConsumeCycle() + " día");
-            }
+        Date date = null;
+        if (date == null) {
+            findViewById(R.id.layoutTakeUnitsSwitch).setVisibility(View.GONE);
+            switchCompatTakeUnits.setChecked(false);
+        } else {
+            switchCompatTakeUnits.setChecked(true);
+            unitsDescontar.setText(product.getConsumeUnits() + " unidad");
+            unitsDays.setText(product.getConsumeCycle() + " día");
+        }
 
-            minStock = -1;
-            if (minStock == -1) {
-                findViewById(R.id.layoutAddToShoppingListSwitch).setVisibility(View.GONE);
-                switchCompatAddToShoppingList.setChecked(false);
-            } else {
-                switchCompatAddToShoppingList.setChecked(true);
-                unitsWhenHave.setText(0 + " unidades");
-                unitsAddWhenHave.setText(0 + " unidad");
-            }
+        minStock = -1;
+        if (minStock == -1) {
+            findViewById(R.id.layoutAddToShoppingListSwitch).setVisibility(View.GONE);
+            switchCompatAddToShoppingList.setChecked(false);
+        } else {
+            switchCompatAddToShoppingList.setChecked(true);
+            unitsWhenHave.setText(0 + " unidades");
+            unitsAddWhenHave.setText(0 + " unidad");
+        }
 
     }
 
@@ -196,13 +210,15 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
                 onBackPressed();
                 return true;
             case R.id.action_add:
-                if(!validaciones())
+                if (!validaciones())
                     return true;
 
-                if(imagenTomada=true) {
+                if (imagenTomada = true) {
                     renombradoFinal();
                 }
-
+                else {
+                    copiadoFinal();
+                }
                 guardarDatos();
                 Intent i = new Intent();
                 i.putExtra(PRODUCT, product);
@@ -265,14 +281,14 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
         //int num = Integer.parseInt(unitsWhenHave.getText().toString());
         //unitsWhenHave.setText(String.valueOf(num++));
         makeChanges(unitsWhenHave, " unidades", true);
-        minStock =Integer.parseInt(unitsWhenHave.getText().toString().replace(" unidades", ""));
+        minStock = Integer.parseInt(unitsWhenHave.getText().toString().replace(" unidades", ""));
     }
 
     public void disminuirWhenHave(View view) {
         //int num = Integer.parseInt(unitsWhenHave.getText().toString());
         //unitsWhenHave.setText(String.valueOf(num--));
         makeChanges(unitsWhenHave, " unidades", false);
-        minStock =Integer.parseInt(unitsWhenHave.getText().toString().replace(" unidades", ""));
+        minStock = Integer.parseInt(unitsWhenHave.getText().toString().replace(" unidades", ""));
     }
 
     public void aumentarAddWhenHave(View view) {
@@ -283,7 +299,7 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
 
     public void disminuirAddWhenHave(View view) {
         //int num = Integer.parseInt(unitsAddWhenHave.getText().toString());
-       // unitsAddWhenHave.setText(String.valueOf(num--));
+        // unitsAddWhenHave.setText(String.valueOf(num--));
         makeChanges(unitsAddWhenHave, " unidad", false);
     }
 
@@ -312,12 +328,12 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
                 Integer.parseInt(unitsPantry.getText().toString())
         );
 
-        if(date!=null) {
+        if (date != null) {
             product.setLastUpdate(date);
             product.setConsumeUnits(Integer.parseInt(unitsDescontar.getText().toString().replace(" unidad", "")));
             product.setConsumeCycle(Integer.parseInt(unitsDays.getText().toString().replace(" día", "")));
         }
-        if(minStock > -1) {
+        if (minStock > -1) {
             product.setMinStock(minStock);
             product.setUnitsToAdd(Integer.parseInt(unitsAddWhenHave.getText().toString().replace(" unidad", "")));
         }
@@ -353,6 +369,27 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
 
 
     public void changeImage(View v) {
+        String[] items = {"Cámara", "Galería"};
+
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(NewProductActivity.this);
+
+        builder.setTitle("Seleccione la fuente de origen de la imágen")
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+                        Log.i("Dialogos", "Opción elegida: " + items[item]);
+                        if (items[item].equals("Galería")) {
+                           galeria();
+                        } else {
+                            camara();
+
+                        }
+                    }
+                }).show();
+
+    }
+
+    public void camara() {
 
         //Creamos el Intent para llamar a la Camara
         Intent cameraIntent = new Intent(
@@ -362,7 +399,7 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
         File imagesFolder = new File(
                 Environment.getExternalStorageDirectory(), "QueLista");
 
-        if(!imagesFolder.exists()) {
+        if (!imagesFolder.exists()) {
             imagesFolder.mkdirs();
         }
 
@@ -375,9 +412,36 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
 
         //Lanzamos la aplicacion de la camara con retorno (forResult)
-        startActivityForResult(cameraIntent, 1);
+        startActivityForResult(cameraIntent, TAKE_PICTURE);
 
     }
+
+    private void galeria(){
+        /*Intent i = new Intent(this, Galeria.class);
+        startActivityForResult(i, Galeria.REQUEST_CODE);*/
+
+        boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+        try {
+            if (isKitKat) {
+                Intent galeryIntent = new Intent();
+                //galeryIntent.setType("*/*");
+                galeryIntent.setType("image/jpeg");
+                galeryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(galeryIntent, SELECT_PICTURE);
+
+            } else {
+                Intent galeryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                galeryIntent.setType("image/jpeg");
+                startActivityForResult(galeryIntent, SELECT_PICTURE);
+            }
+        } catch (android.content.ActivityNotFoundException ex) {
+            // Potentially direct the user to the Market with a Dialog
+            Toast.makeText(this, "Por favor, instala un explorador de archivos",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 
     private boolean renombradoFinal() {
         File imagesFolder = new File(
@@ -396,9 +460,52 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
         return false;
     }
 
+    private boolean copiadoFinal() {
+        try {
+
+            File imagesFolder = new File(
+                    Environment.getExternalStorageDirectory(), "QueLista");
+
+            if (imagesFolder.exists()) {
+
+
+                File a = new File(imagePath);
+                File b = new File(imagesFolder, code.getText().toString() + ".jpg");
+
+
+                InputStream in = new FileInputStream(a);
+                OutputStream out = new FileOutputStream(b);
+
+                // Copy the bits from instream to outstream
+                byte[] buf = new byte[1024];
+                int len;
+
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+
+                in.close();
+                out.close();
+
+                Log.v("FILE", "Copy file successful.");
+
+            } else {
+                Log.v("FILE", "Copy file failed. Source file missing.");
+            }
+
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return false;
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //Comprovamos que la foto se a realizado
-        if (requestCode == 1 && resultCode == RESULT_OK) {
+        if (requestCode == TAKE_PICTURE && resultCode == RESULT_OK) {
             //Creamos un bitmap con la imagen recientemente
             //almacenada en la memoria
             Bitmap bMap = BitmapFactory.decodeFile(
@@ -410,6 +517,54 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
 
             imagenTomada = true;
         }
+        else if (requestCode == SELECT_PICTURE && resultCode == RESULT_OK) {
+            //Creamos un bitmap con la imagen recientemente
+            //almacenada en la memoria
+                //productImage.setImageBitmap((Bitmap) data.getParcelableExtra("data"));
+            Uri selectedImageUri = data.getData();
+            imagePath = getRealPathFromURI(selectedImageUri);
+
+            Bitmap bMap = BitmapFactory.decodeFile(imagePath);
+            productImage.setImageBitmap(bMap);
+            imagenTomada = false;
+        }
+    }
+    public String getRealPathFromURI(Uri contentURI) {
+        Uri contentUri = contentURI;
+
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = null;
+        try {
+            if (Build.VERSION.SDK_INT > 19) {
+                // Will return "image:x*"
+                String wholeID = DocumentsContract.getDocumentId(contentUri);
+                // Split at colon, use second item in the array
+                String id = wholeID.split(":")[1];
+                // where id is equal to
+                String sel = MediaStore.Images.Media._ID + "=?";
+
+                cursor = this.getContentResolver().query(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        projection, sel, new String[] { id }, null);
+            } else {
+                cursor = this.getContentResolver().query(contentUri,
+                        projection, null, null, null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String path = null;
+        try {
+            int column_index = cursor
+                    .getColumnIndex(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            path = cursor.getString(column_index).toString();
+            cursor.close();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return path;
     }
 
 
