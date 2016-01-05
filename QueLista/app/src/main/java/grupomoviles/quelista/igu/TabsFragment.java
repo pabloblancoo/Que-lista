@@ -29,7 +29,6 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
     private static ViewPager viewPager;
     private static int int_items = 3 ;
     private static FragmentPagerAdapter myAdapter;
-    private int tab = 0;
     private View v = null;
 
 
@@ -37,39 +36,60 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        /**
-         * Inflamos fragment_tab y adjuntamos Views.
-         */
         v =  inflater.inflate(R.layout.fragment_tabs,null);
         tabLayout = (TabLayout) v.findViewById(R.id.tab_layout);
         viewPager = (ViewPager) v.findViewById(R.id.viewpager);
 
-        /**
-         * Establecemos un Adapter para el ViewPager
-         */
-        if(myAdapter==null)
-            myAdapter = new MyAdapter(getChildFragmentManager());
-
+        /* Ya redefinido en el onAttach
+        if(myAdapter == null)
+            myAdapter = new MyAdapter(getFragmentManager());
+        */
         viewPager.setAdapter(myAdapter);
 
         tabLayout.setOnTabSelectedListener(null);
-        viewPager.setCurrentItem(tab);
-        tabLayout.setupWithViewPager(viewPager);
+
+        //Soluciona error de destrucción de fragmentos...
+        viewPager.setOffscreenPageLimit(int_items-1);
+
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                setTab(position);
+                switch (position) {
+                    case 0:
+                        ((MainActivity) getActivity()).getPantryAdapter().notifyDataSetChanged();
+                        break;
+                    case 1:
+                        ((MainActivity) getActivity()).getShoppingListAdapter().notifyDataSetChanged();
+                        break;
+                    case 2:
+                        ((MainActivity) getActivity()).getCartAdapter().notifyDataSetChanged();
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         // Esto es necesario debido a un bug presente en la Design Support Library 22.2.1
         tabLayout.post(new Runnable() {
             @Override
             public void run() {
                 tabLayout.setupWithViewPager(viewPager);
-                viewPager.setCurrentItem(tab);
+                setTab(0);
             }
         });
 
         Toolbar mToolbar = (Toolbar) v.findViewById(R.id.toolbar);
 
-        /**
-         * Configuramos el ActionBarDrawerToggle
-         */
         DrawerLayout mDrawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawerLayout);
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(getActivity(), mDrawerLayout,
                 mToolbar, R.string.open_drawer, R.string.close_drawer);
@@ -81,8 +101,8 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
     }
 
     public void setTab(int tab) {
-        this.tab = tab;
         viewPager.setCurrentItem(tab);
+        ((Toolbar)getActivity().findViewById(R.id.toolbar)).setTitle(myAdapter.getPageTitle(tab));
     }
 
     @Override

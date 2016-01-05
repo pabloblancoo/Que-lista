@@ -15,7 +15,9 @@ import java.util.Objects;
  */
 public class Product implements Serializable {
 
-    public static int NOT_IN_PANTRY = -1;
+    public static final int NOT_IN_PANTRY = -1;
+    public static final int NOT_IN_CART = 0;
+    public static final int NOT_IN_SHOPPING_LIST = 0;
 
     private String code;
     private String description;

@@ -41,10 +41,6 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
         miniaturasPref = sharedPref.getBoolean("miniaturas", true);
     }
 
-    public void refresh() {
-        notifyDataSetChanged();
-    }
-
     public void onResultProductInfoActivity(Product product) {
         items = Stream.of(items).sortBy(i -> i.getDescription().charAt(0)).collect(Collectors.toList());
         notifyDataSetChanged();

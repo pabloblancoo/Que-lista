@@ -79,11 +79,16 @@ public class CartAdapter extends MyAdapter {
         super.onBindViewHolder(viewHolder, position);
     }
 
+    public void addToCart(Product product) {
+        cart.add(product);
+        product.setCartUnits(Product.NOT_IN_CART + 1);
+        items.add(product);
+        items = Stream.of(items).sortBy(i -> i.getDescription().charAt(0)).collect(Collectors.toList());
+    }
+
     public class CartViewHolder extends MyViewHolder{
 
-        /**
-         * Hover
-         */
+        //Hover
         private TextView unitsPantry;
         private TextView unitsShoppinglist;
 
@@ -97,32 +102,35 @@ public class CartAdapter extends MyAdapter {
         @Override
         public void onClick(View v) {
             YoYo.with(Techniques.Pulse).duration(100).playOn(v);
-            if (v.getId() == R.id.btnPlusStock)
-                units.setText(String.valueOf(product.increaseCartUnits()));
-            else if (v.getId() == R.id.btnMinusStock) {
-                if (product.getCartUnits() > 1)
-                    units.setText(String.valueOf(product.decreaseCartUnits()));
-                else {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
-                    dialog.setTitle("¿Desea eliminar este producto del carrito?");
-                    dialog.setNegativeButton("Cancelar", null);
-                    dialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            removeProduct();
-                        }
-                    });
-                    dialog.show();
-                }
+            switch (v.getId()) {
+                case R.id.btnPlusStock:
+                    units.setText(String.valueOf(product.increaseCartUnits()));
+                    break;
+                case R.id.btnMinusStock:
+                    if (product.getCartUnits() > 1)
+                        units.setText(String.valueOf(product.decreaseCartUnits()));
+                    else {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
+                        dialog.setTitle("¿Desea eliminar este producto del carrito?");
+                        dialog.setNegativeButton("Cancelar", null);
+                        dialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                removeProduct();
+                            }
+                        });
+                        dialog.show();
+                    }
+                    break;
+                case R.id.btnDelete:
+                    removeProduct();
+                    break;
+                default:
+                    super.onClick(v);
             }
-            else if (v.getId() == R.id.btnDelete) {
-                removeProduct();
-            } else
-                super.onClick(v);
         }
 
         private void removeProduct() {
-            product.setCartUnits(0);
             ((SwipeLayout)itemView).close(false);
             blurLayout.dismissHover();
             adapter.items.remove(product);

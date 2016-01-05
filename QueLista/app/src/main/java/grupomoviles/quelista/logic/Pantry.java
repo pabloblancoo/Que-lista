@@ -30,6 +30,7 @@ public class Pantry {
     }
 
     public void remove(Product product) {
+        product.setStock(Product.NOT_IN_PANTRY);
         products.remove(product.getCode());
     }
 

@@ -28,10 +28,15 @@ public class ShoppingList {
     }
 
     public void remove(Product product) {
+        product.setShoppingListUnits(Product.NOT_IN_SHOPPING_LIST);
         products.remove(product.getCode());
     }
 
     public Product find(String content) {
         return products.get(content);
+    }
+
+    public void add(Product product) {
+        products.put(product.getCode(), product);
     }
 }

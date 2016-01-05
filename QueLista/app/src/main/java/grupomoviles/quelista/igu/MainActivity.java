@@ -37,9 +37,9 @@ import android.support.v7.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    PantryAdapter pantryAdapter;
-    ShoppingListAdapter shoppingListAdapter;
-    CartAdapter cartAdapter;
+    private PantryAdapter pantryAdapter;
+    private ShoppingListAdapter shoppingListAdapter;
+    private CartAdapter cartAdapter;
 
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
@@ -212,5 +212,17 @@ public class MainActivity extends AppCompatActivity {
         // Actualizar visibilidad de miniaturas
         boolean miniaturasPref = sharedPref.getBoolean("miniaturas", true);
         pantryAdapter.setConMiniaturas(miniaturasPref);
+    }
+
+    public PantryAdapter getPantryAdapter() {
+        return pantryAdapter;
+    }
+
+    public ShoppingListAdapter getShoppingListAdapter() {
+        return shoppingListAdapter;
+    }
+
+    public CartAdapter getCartAdapter() {
+        return cartAdapter;
     }
 }

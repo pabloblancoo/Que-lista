@@ -30,10 +30,15 @@ public class Cart {
     }
 
     public void remove(Product product) {
+        product.setCartUnits(Product.NOT_IN_CART);
         products.remove(product.getCode());
     }
 
     public Product find(String content) {
         return products.get(content);
+    }
+
+    public void add(Product product) {
+        products.put(product.getCode(), product);
     }
 }
