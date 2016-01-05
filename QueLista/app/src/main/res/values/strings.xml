@@ -102,5 +102,9 @@
 
     <string name="pref_description_miniaturas">Las imagenes que acompañas a los productos en los listados</string>
     <string name="action_delete_product">Eliminar producto</string>
+    <string name="action_add_product">Añadir producto</string>
+    <string name="producto_nombre">Nombre del producto</string>
+    <string name="err_msg_vacio">No puede estár vacio</string>
+
 
 </resources>

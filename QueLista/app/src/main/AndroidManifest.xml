@@ -37,7 +37,15 @@
         </activity>
         <activity
             android:name=".igu.ProductInfoActivity"
-            android:label=""></activity>
+            android:label="">
+        </activity>
+        <activity
+            android:name=".igu.NewProductActivity"
+            android:label="">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="grupomoviles.quelista.igu.MainActivity" />
+        </activity>
         <activity
             android:name=".igu.SettingsActivity"
             android:label="@string/title_activity_settings"

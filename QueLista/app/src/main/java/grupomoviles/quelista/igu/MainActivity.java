@@ -104,6 +104,12 @@ public class MainActivity extends AppCompatActivity {
             shoppingListAdapter.onResultProductInfoActivity(product);
             cartAdapter.onResultProductInfoActivity(product);
         }
+        else if (NewProductActivity.REQUEST_CODE == requestCode && resultCode == RESULT_OK) {
+            Product product = (Product) data.getExtras().get(NewProductActivity.PRODUCT);
+            pantryAdapter.onResultProductInfoActivity(product);
+            shoppingListAdapter.onResultProductInfoActivity(product);
+            cartAdapter.onResultProductInfoActivity(product);
+        }
         else if (IntentCaptureActivity.CODE_CAPTURE_ACTIVITY == requestCode && resultCode == RESULT_OK) {
             String content = data.getExtras().getString(CaptureActivity.SCAN_CONTENT);
             Product product;
@@ -128,9 +134,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (product == null) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                Intent intent = new Intent(MainActivity.this, NewProductActivity.class);
+                intent.putExtra(NewProductActivity.NEWPRODUCTCODE, content);
+                startActivityForResult(intent, NewProductActivity.REQUEST_CODE);
+                /*AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                 dialog.setMessage("El producto no se encuentra registrado y tampoco está en la base de datos online...");
-                dialog.show();
+                dialog.show();*/
             }
             else {
                 Intent intent = new Intent(MainActivity.this, ProductInfoActivity.class);
@@ -170,6 +179,10 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.nav_item_carrito:
                     fragmentTransaction.replace(R.id.fragment_container, fragment).commit();
                     fragment.setTab(2);
+                    break;
+                case R.id.nav_item_new_product:
+                    Intent i = new Intent(this, NewProductActivity.class);
+                    startActivityForResult(i, NewProductActivity.REQUEST_CODE);
                     break;
                 case R.id.nav_item_qr:
 
