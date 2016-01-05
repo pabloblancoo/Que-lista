@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -174,9 +175,25 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
                 setResult(RESULT_OK, i);
                 onBackPressed();
                 return true;
+
+            case R.id.action_delete:
+                deleteProduct();
+                Intent o = new Intent();
+                o.putExtra(PRODUCT, product);
+                setResult(RESULT_OK, o);
+                onBackPressed();
+
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_product_info, menu);
+        return true;
     }
 
 
@@ -362,5 +379,19 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
 
     public void cancel(View view){
         finish();
+    }
+
+    private void deleteProduct() {
+        product.setStock(-1);
+        product.setShoppingListUnits(0);
+        product.setCartUnits(0);
+
+        ProductDataSource database = new ProductDataSource(this);
+        database.openDatabase();
+        database.deleteProduct(product.getCode());
+        database.close();
+
+        guardarDatos();
+
     }
 }
