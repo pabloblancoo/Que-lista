@@ -108,6 +108,17 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         if(!newProduct){
             findViewById(R.id.layoutButtonsNewProduct).setVisibility(View.GONE);
         }
+        //Mostrar o ocultar los textView al principio de la aplicacion
+        if(product.getStock()==0){
+            unitsPantry.setVisibility(View.INVISIBLE);
+        }
+        if(product.getShoppingListUnits()==0){
+            unitsLista.setVisibility(View.INVISIBLE);
+        }
+        if(product.getCartUnits()==0){
+            unitsCarrito.setVisibility(View.INVISIBLE);
+        }
+
         //Eventos
         switchCompatTakeUnits.setOnCheckedChangeListener(this);
         switchCompatAddToShoppingList.setOnCheckedChangeListener(this);
@@ -136,9 +147,9 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
             category.setText(product.getCategory());
 
 
-            unitsPantry.setText(product.getStock() + "");
-            unitsLista.setText(product.getShoppingListUnits() + "");
-            unitsCarrito.setText(product.getCartUnits() + "");
+            unitsPantry.setText(String.valueOf(product.getStock()));
+            unitsLista.setText(String.valueOf(product.getShoppingListUnits()));
+            unitsCarrito.setText(String.valueOf(product.getCartUnits()));
 
             Date date = product.getLastUpdate();
             if (date == null) {
@@ -209,6 +220,9 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
     */
 
     public void aumentarPantry(View view) {
+        if(unitsPantry.getVisibility()==View.INVISIBLE){
+            unitsPantry.setVisibility(View.VISIBLE);
+        }
         product.increaseStock();
         makeChanges(unitsPantry, "", true);
     }
@@ -216,9 +230,15 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
     public void disminuirPantry(View view) {
         product.decreaseStock();
         makeChanges(unitsPantry, "", false);
+        if(product.getStock()==0){
+            unitsPantry.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void aumentarShoppingList(View view) {
+        if(unitsLista.getVisibility()==View.INVISIBLE){
+            unitsLista.setVisibility(View.VISIBLE);
+        }
         product.increaseShoppingListUnits();
         makeChanges(unitsLista, "", true);
     }
@@ -226,10 +246,16 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
     public void disminuirShoppingList(View view) {
         product.decreaseShoppingListUnits();
         makeChanges(unitsLista, "", false);
+        if(product.getShoppingListUnits()==0){
+            unitsLista.setVisibility(View.INVISIBLE);
+        }
 
     }
 
     public void aumentarCartList(View view) {
+        if(unitsCarrito.getVisibility()==View.INVISIBLE){
+            unitsCarrito.setVisibility(View.VISIBLE);
+        }
         product.increaseCartUnits();
         makeChanges(unitsCarrito, "", true);
     }
@@ -237,6 +263,9 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
     public void disminuirCartList(View view) {
         product.decreaseCartUnits();
         makeChanges(unitsCarrito, "", false);
+        if(product.getCartUnits()==0){
+            unitsCarrito.setVisibility(View.INVISIBLE);
+        }
 
     }
 
@@ -305,6 +334,9 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
 
         if (switchCompatAddToShoppingList.isChecked()) {
             if (product.getStock() <= product.getMinStock() && product.getShoppingListUnits() < product.getUnitsToAdd()) {
+                if(unitsLista.getVisibility()==View.INVISIBLE){
+                    unitsLista.setVisibility(View.VISIBLE);
+                }
                 product.setShoppingListUnits(product.getShoppingListUnits() + product.getUnitsToAdd());
                 unitsPantry.setText(product.getStock() + "");
                 unitsLista.setText(product.getShoppingListUnits() + "");
