@@ -109,14 +109,8 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
             findViewById(R.id.layoutButtonsNewProduct).setVisibility(View.GONE);
         }
         //Mostrar o ocultar los textView al principio de la aplicacion
-        if(product.getStock()==0){
+        if(product.getStock()== -1){
             unitsPantry.setVisibility(View.INVISIBLE);
-        }
-        if(product.getShoppingListUnits()==0){
-            unitsLista.setVisibility(View.INVISIBLE);
-        }
-        if(product.getCartUnits()==0){
-            unitsCarrito.setVisibility(View.INVISIBLE);
         }
 
         //Eventos
@@ -230,9 +224,6 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
     public void disminuirPantry(View view) {
         product.decreaseStock();
         makeChanges(unitsPantry, "", false);
-        if(product.getStock()==0){
-            unitsPantry.setVisibility(View.INVISIBLE);
-        }
     }
 
     public void aumentarShoppingList(View view) {
@@ -246,10 +237,6 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
     public void disminuirShoppingList(View view) {
         product.decreaseShoppingListUnits();
         makeChanges(unitsLista, "", false);
-        if(product.getShoppingListUnits()==0){
-            unitsLista.setVisibility(View.INVISIBLE);
-        }
-
     }
 
     public void aumentarCartList(View view) {
@@ -263,9 +250,6 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
     public void disminuirCartList(View view) {
         product.decreaseCartUnits();
         makeChanges(unitsCarrito, "", false);
-        if(product.getCartUnits()==0){
-            unitsCarrito.setVisibility(View.INVISIBLE);
-        }
 
     }
 

@@ -12,6 +12,7 @@ import java.net.URL;
  * Created by Nauce on 4/1/16.
  */
 public class DownloadTicketFileTask extends AsyncTask<String, Void, BufferedReader> {
+
     @Override
     protected BufferedReader doInBackground(String... url) {
         try {

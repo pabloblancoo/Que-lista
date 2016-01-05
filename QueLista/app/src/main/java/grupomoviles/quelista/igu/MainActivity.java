@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.navview);
 
+
         if(NfcAdapter.getDefaultAdapter(this) == null) {
             mNavigationView.getMenu().findItem(R.id.nav_item_nfc).setEnabled(false);
             mNavigationView.getMenu().findItem(R.id.nav_item_nfc).setVisible(false);
@@ -188,7 +189,8 @@ public class MainActivity extends AppCompatActivity {
 
                     break;
                 case R.id.nav_item_nfc:
-
+                    Intent intent = new Intent(this,ScanNFCActivity.class);
+                    startActivityForResult(intent,ScanNFCActivity.REQUEST_CODE);
                     break;
                 case R.id.nav_item_opciones:
                     //fragmentTransaction.replace(R.id.fragment_container, new OpcionesFragment()).commit();
