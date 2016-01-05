@@ -26,7 +26,7 @@ import grupomoviles.quelista.logic.DownloadTicketFileTask;
 
 public class ScanNFCActivity extends AppCompatActivity {
 
-    public static final int REQUEST_CODE = 1;
+    public static final int REQUEST_CODE = 5;
     public static final String BUFFERED = "buffered";
 
     public static final String MIME_TEXT_PLAIN = "text/plain";
@@ -215,6 +215,10 @@ public class ScanNFCActivity extends AppCompatActivity {
             return new String(payload, languageCodeLength + 1, payload.length - languageCodeLength - 1, textEncoding);
         }
 
+        /**
+         * Esto es lo que hace cuando lee
+         * @param result
+         */
         @Override
         protected void onPostExecute(String result) {
 
@@ -226,18 +230,17 @@ public class ScanNFCActivity extends AppCompatActivity {
 
                     bufferedReader = downloadTicketFileTask.execute(result).get();
 //
-                    String[] array = new String[10];
+                    String[] array = new String[6];
                     String line;
                     int i =0;
                     while((line = bufferedReader.readLine()) != null){
                         array[i] = line;
-                        System.out.println(array[i]);
                         i++;
                     }
                     Intent intent = new Intent();
                     intent.putExtra(BUFFERED,array);
                     setResult(RESULT_OK, intent);
-                    finish();
+                    onBackPressed();
                 } catch (Exception e) {
 
                 }

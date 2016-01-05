@@ -118,6 +118,9 @@ public class Product implements Serializable {
         this.units = units;
     }
 
+
+
+
     //GETTERS and SETTERS
     public String getDescription() {
         return description;

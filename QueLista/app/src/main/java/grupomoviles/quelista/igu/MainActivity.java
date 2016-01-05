@@ -1,16 +1,15 @@
 package grupomoviles.quelista.igu;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.AppBarLayout;
 import android.view.View;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
@@ -25,8 +24,9 @@ import grupomoviles.quelista.logic.DownloadImageTask;
 import grupomoviles.quelista.logic.Pantry;
 import grupomoviles.quelista.logic.Product;
 import grupomoviles.quelista.logic.ShoppingList;
-import grupomoviles.quelista.logic.TicketReader;
 import grupomoviles.quelista.onlineDatabase.GestorBD;
+import grupomoviles.quelista.onlineDatabase.GetProduct;
+import grupomoviles.quelista.onlineDatabase.GetProducts;
 
 
 import android.support.design.widget.NavigationView;
@@ -34,6 +34,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+
+import com.annimon.stream.Stream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -73,12 +75,6 @@ public class MainActivity extends AppCompatActivity {
         task.execute("5449000000996", "8410297112041", "8410297170058", "8410188012092",
                 "5449000009067", "8410000826937", "8410014307682", "8410014312495", "5000127281752");
 
-        TicketReader ticketReader = new TicketReader();
-        try {
-            ticketReader.leer("");
-        } catch (IOException e) {
-            System.out.print("No existe");
-        }
 
         setUpNavigationDrawer();
 
@@ -148,6 +144,31 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, ProductInfoActivity.REQUEST_CODE);
             }
         }
+
+        else if(ScanNFCActivity.REQUEST_CODE == requestCode && resultCode == RESULT_OK){
+            String[] lineas = (String[]) data.getExtras().get(ScanNFCActivity.BUFFERED);
+            int firstProduct  = 1;
+            List<Product> products = new ArrayList<Product>();
+            String[] codes = new String[lineas.length];
+            GetProducts getProduct = new GetProducts();
+            for (int i = firstProduct; i < lineas.length - 1 ; i++){
+
+                String[] line = lineas[i].split(";");
+                codes[i-firstProduct] = line[0];
+            }
+
+            try {
+                products = getProduct.execute(codes).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
+            Stream.of(products).forEach(p ->
+            { System.out.println("Codigo: " + p.getCode() + ", Descripcion: " + p.getDescription());
+            });
+        }
     }
 
     private void setUpNavigationDrawer() {
@@ -190,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.nav_item_nfc:
                     Intent intent = new Intent(this,ScanNFCActivity.class);
-                    startActivityForResult(intent,ScanNFCActivity.REQUEST_CODE);
+                    startActivityForResult(intent, ScanNFCActivity.REQUEST_CODE);
                     break;
                 case R.id.nav_item_opciones:
                     //fragmentTransaction.replace(R.id.fragment_container, new OpcionesFragment()).commit();
