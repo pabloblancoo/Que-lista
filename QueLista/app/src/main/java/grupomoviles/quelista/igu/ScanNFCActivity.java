@@ -19,6 +19,7 @@ import com.annimon.stream.Stream;
 
 import java.io.BufferedReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import grupomoviles.quelista.R;
@@ -229,12 +230,11 @@ public class ScanNFCActivity extends AppCompatActivity {
                 try {
 
                     bufferedReader = downloadTicketFileTask.execute(result).get();
-//
-                    String[] array = new String[6];
+                    ArrayList array = new ArrayList<String>();
                     String line;
                     int i =0;
                     while((line = bufferedReader.readLine()) != null){
-                        array[i] = line;
+                        array.add(line);
                         i++;
                     }
                     Intent intent = new Intent();
