@@ -1,10 +1,15 @@
 package grupomoviles.quelista.igu;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
@@ -18,8 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.annimon.stream.Stream;
-
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -76,6 +80,7 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
     Date date = null;
     int minStock = -1;
     int unitsToAdd = 1;
+    private boolean imagenTomada = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,6 +198,10 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
             case R.id.action_add:
                 if(!validaciones())
                     return true;
+
+                if(imagenTomada=true) {
+                    renombradoFinal();
+                }
 
                 guardarDatos();
                 Intent i = new Intent();
@@ -344,11 +353,68 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
 
 
     public void changeImage(View v) {
-        //De momento no hace nada
+
+        //Creamos el Intent para llamar a la Camara
+        Intent cameraIntent = new Intent(
+                android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+
+        //Creamos una carpeta en la memoria del movil
+        File imagesFolder = new File(
+                Environment.getExternalStorageDirectory(), "QueLista");
+
+        if(!imagesFolder.exists()) {
+            imagesFolder.mkdirs();
+        }
+
+
+        //añadimos el nombre de la imagen
+        File image = new File(imagesFolder, "foto.jpg");
+        Uri uriSavedImage = Uri.fromFile(image);
+
+        //Le decimos al Intent que queremos grabar la imagen
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+
+        //Lanzamos la aplicacion de la camara con retorno (forResult)
+        startActivityForResult(cameraIntent, 1);
+
+    }
+
+    private boolean renombradoFinal() {
+        File imagesFolder = new File(
+                Environment.getExternalStorageDirectory(), "QueLista");
+
+        if(imagesFolder.exists()) {
+
+            File from = new File(imagesFolder,"foto.jpg");
+            File to = new File(imagesFolder,code.getText().toString()+".jpg");
+            if(from.exists()) {
+                from.renameTo(to);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //Comprovamos que la foto se a realizado
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            //Creamos un bitmap con la imagen recientemente
+            //almacenada en la memoria
+            Bitmap bMap = BitmapFactory.decodeFile(
+                    Environment.getExternalStorageDirectory() +
+                            "/QueLista/" + "foto.jpg");
+            //Añadimos el bitmap al imageView para
+            //mostrarlo por pantalla
+            productImage.setImageBitmap(bMap);
+
+            imagenTomada = true;
+        }
     }
 
 
-    private boolean validaciones(){
+
+        private boolean validaciones(){
         if(!validate(description, descriptionLayout)) return false;
         if(!validate(brand, brandLayout)) return false;
         if(!validate(netValue, netValueLayout)) return false;
@@ -369,7 +435,5 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
         }
         return true;
     }
-
-
 
 }
