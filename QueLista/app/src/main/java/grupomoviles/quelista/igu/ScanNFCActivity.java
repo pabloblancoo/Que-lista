@@ -1,5 +1,6 @@
 package grupomoviles.quelista.igu;
 
+import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -12,6 +13,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +25,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import grupomoviles.quelista.R;
+import grupomoviles.quelista.igu.recyclerViewAdapters.TicketAdapter;
 import grupomoviles.quelista.logic.DownloadTicketFileTask;
+import grupomoviles.quelista.logic.Ticket;
 
 public class ScanNFCActivity extends AppCompatActivity {
 
@@ -35,22 +39,27 @@ public class ScanNFCActivity extends AppCompatActivity {
 
     private TextView mTextView;
     private NfcAdapter mNfcAdapter;
+    private TicketAdapter ticketAdapter;
+
+    public TicketAdapter getTicketAdapter() {
+        return ticketAdapter;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_nfc);
         mTextView = (TextView) findViewById(R.id.txIfno);
-
+        ticketAdapter = new TicketAdapter(this,new Ticket());
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        if (mNfcAdapter == null) {
-            // Stop here, we definitely need NFC
-            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
-            finish();
-            return;
-
-        }
+//        if (mNfcAdapter == null) {
+//            // Stop here, we definitely need NFC
+//            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
+//            finish();
+//            return;
+//
+//        }
 
         handleIntent(getIntent());
     }
@@ -237,10 +246,13 @@ public class ScanNFCActivity extends AppCompatActivity {
                         array.add(line);
                         i++;
                     }
-                    Intent intent = new Intent();
-                    intent.putExtra(BUFFERED,array);
-                    setResult(RESULT_OK, intent);
-                    onBackPressed();
+                    android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.contenedor,new FragmentTicket());
+                    fragmentTransaction.commit();
+//                    Intent intent = new Intent();
+//                    intent.putExtra(BUFFERED,array);
+//                    setResult(RESULT_OK, intent);
+//                    onBackPressed();
                 } catch (Exception e) {
 
                 }
@@ -248,5 +260,11 @@ public class ScanNFCActivity extends AppCompatActivity {
         }
 
 
+    }
+    public  void apretarMierda(View view){
+        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.contenedor,new FragmentTicket());
+        fragmentTransaction.commit();
+        Toast.makeText(this,"Aprieto el boton, y lanzo el fragment",Toast.LENGTH_SHORT).show();
     }
 }

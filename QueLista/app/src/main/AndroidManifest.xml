@@ -64,7 +64,6 @@
                 android:value="grupomoviles.quelista.igu.MainActivity" />
         </activity>
         <activity android:name=".igu.ScanNFCActivity" />
-        <activity android:name=".igu.NFCActivity"></activity>
     </application>
 
 </manifest>

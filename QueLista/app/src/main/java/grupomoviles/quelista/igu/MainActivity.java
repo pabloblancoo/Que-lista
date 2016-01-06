@@ -25,7 +25,6 @@ import grupomoviles.quelista.logic.Pantry;
 import grupomoviles.quelista.logic.Product;
 import grupomoviles.quelista.logic.ShoppingList;
 import grupomoviles.quelista.onlineDatabase.GestorBD;
-import grupomoviles.quelista.onlineDatabase.GetProduct;
 import grupomoviles.quelista.onlineDatabase.GetProducts;
 
 
@@ -146,9 +145,31 @@ public class MainActivity extends AppCompatActivity {
         }
 
         else if(ScanNFCActivity.REQUEST_CODE == requestCode && resultCode == RESULT_OK){
+
             ArrayList lineas = (ArrayList) data.getExtras().get(ScanNFCActivity.BUFFERED);
-            Intent intent = new Intent(MainActivity.this,NFCActivity.class);
-            intent.putExtra(NFCActivity.PRODUCTS, lineas);
+            int firstProduct  = 1;
+            List<Product> products = new ArrayList<Product>();
+            String[] codes = new String[lineas.size()];
+            GetProducts getProduct = new GetProducts();
+            for (int i = firstProduct; i < lineas.size() - 1 ; i++){
+
+                String[] line = lineas.get(i).toString().split(";");
+                codes[i-firstProduct] = line[0];
+            }
+
+            try {
+                products = getProduct.execute(codes).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
+            Stream.of(products).forEach(p ->
+            {
+                System.out.println("Codigo: " + p.getCode() + ", Descripcion: " + p.getDescription());
+            });
+
         }
     }
 
