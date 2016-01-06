@@ -40,7 +40,7 @@
         </activity>
         <activity
             android:name=".igu.ProductInfoActivity"
-            android:label=""></activity>
+            android:label="" />
         <activity
             android:name=".igu.NewProductActivity"
             android:label="">
@@ -63,7 +63,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="grupomoviles.quelista.igu.MainActivity" />
         </activity>
-        <activity android:name=".igu.ScanNFCActivity"></activity>
+        <activity android:name=".igu.ScanNFCActivity" />
+        <activity android:name=".igu.NFCActivity"></activity>
     </application>
 
 </manifest>
