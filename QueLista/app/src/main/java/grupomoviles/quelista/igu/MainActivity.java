@@ -175,9 +175,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.navview);
 
-
         if(NfcAdapter.getDefaultAdapter(this) == null) {
-            mNavigationView.getMenu().findItem(R.id.nav_item_nfc).setEnabled(false);
             mNavigationView.getMenu().findItem(R.id.nav_item_nfc).setVisible(false);
             mNavigationView.getMenu().removeItem(R.id.nav_item_nfc);
         }

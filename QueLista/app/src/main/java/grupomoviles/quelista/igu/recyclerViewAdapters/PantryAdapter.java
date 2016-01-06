@@ -44,7 +44,7 @@ public class PantryAdapter extends MyAdapter {
     }
 
     public void swipeList() {
-        items = Stream.of(pantry.getProducts().values()).sortBy(p -> p.getDescription().charAt(0)).collect(Collectors.toList());
+        items = Stream.of(pantry.getProducts().values()).sortBy(p -> p.getDescription() + p.getNetValue()).collect(Collectors.toList());
     }
 
     @Override

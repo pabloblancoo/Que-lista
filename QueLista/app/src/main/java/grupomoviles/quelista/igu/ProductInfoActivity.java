@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -200,18 +201,6 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         getMenuInflater().inflate(R.menu.menu_product_info, menu);
         return true;
     }
-
-
-    /*
-    @Override
-    protected void onDestroy() {
-        Intent i = new Intent();
-        i.putExtra(PRODUCT, product);
-        setResult(RESULT_OK, i);
-        finish();
-        super.onDestroy();
-    }
-    */
 
     public void aumentarPantry(View view) {
         if(unitsPantry.getVisibility()==View.INVISIBLE){
@@ -409,5 +398,17 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
 
         guardarDatos();
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            Intent i = new Intent();
+            i.putExtra(PRODUCT, product);
+            setResult(RESULT_OK, i);
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 }
