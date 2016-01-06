@@ -146,14 +146,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         else if(ScanNFCActivity.REQUEST_CODE == requestCode && resultCode == RESULT_OK){
-            String[] lineas = (String[]) data.getExtras().get(ScanNFCActivity.BUFFERED);
+            ArrayList lineas = (ArrayList) data.getExtras().get(ScanNFCActivity.BUFFERED);
             int firstProduct  = 1;
             List<Product> products = new ArrayList<Product>();
-            String[] codes = new String[lineas.length];
+            String[] codes = new String[lineas.size()];
             GetProducts getProduct = new GetProducts();
-            for (int i = firstProduct; i < lineas.length - 1 ; i++){
+            for (int i = firstProduct; i < lineas.size() - 1 ; i++){
 
-                String[] line = lineas[i].split(";");
+                String[] line = lineas.get(i).toString().split(";");
                 codes[i-firstProduct] = line[0];
             }
 
