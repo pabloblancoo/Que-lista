@@ -84,6 +84,7 @@ public class TicketAdapter extends MyAdapter {
         ((PantryViewHolder)viewHolder).unitsShoppingList.setText(String.valueOf(currentItem.getShoppingListUnits()));
         ((PantryViewHolder)viewHolder).unitsCart.setText(String.valueOf(currentItem.getCartUnits()));
         super.onBindViewHolder(viewHolder, position);
+
     }
 
     public class PantryViewHolder extends MyViewHolder

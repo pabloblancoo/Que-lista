@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.annimon.stream.Stream;
 
@@ -251,6 +250,7 @@ public class ScanNFCActivity extends AppCompatActivity {
                     fragmentTransaction.replace(R.id.contenedor, fragmentTicket);
                     fragmentTransaction.commit();
                     relativeLayout.setVisibility(View.VISIBLE);
+
                 } catch (Exception e) {
 
                 }
@@ -267,7 +267,6 @@ public class ScanNFCActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.putExtra(PRODUCTS, (Serializable) getTicketAdapter().getTicket().getProducts());
                     setResult(RESULT_OK, intent);
-                    onBackPressed();
-
+                    finish();
     }
 }

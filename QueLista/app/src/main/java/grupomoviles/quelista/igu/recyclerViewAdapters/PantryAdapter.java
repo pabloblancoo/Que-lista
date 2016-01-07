@@ -19,6 +19,7 @@ import com.daimajia.swipe.SwipeLayout;
 
 import grupomoviles.quelista.R;
 import grupomoviles.quelista.igu.MainActivity;
+import grupomoviles.quelista.igu.ScanNFCActivity;
 import grupomoviles.quelista.logic.Pantry;
 import grupomoviles.quelista.logic.Product;
 

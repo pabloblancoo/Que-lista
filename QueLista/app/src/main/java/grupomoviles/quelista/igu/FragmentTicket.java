@@ -65,7 +65,7 @@ public class FragmentTicket extends Fragment {
 
         recycler.setAdapter(((ScanNFCActivity) getActivity()).getTicketAdapter());
         ((ScanNFCActivity) getActivity()).getTicketAdapter().swipeList();
-        Toast.makeText(getActivity(), "Fragment lanzado", Toast.LENGTH_SHORT).show();
+
 
         return view;
     }
