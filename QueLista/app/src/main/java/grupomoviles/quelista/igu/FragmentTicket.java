@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.annimon.stream.Stream;
@@ -32,6 +33,7 @@ public class FragmentTicket extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ticket, container, false);
 
+
         RecyclerView recycler = (RecyclerView) view.findViewById(R.id.recyclerView);
         recycler.setHasFixedSize(true);
         // Usar un administrador para LinearLayout
@@ -39,14 +41,14 @@ public class FragmentTicket extends Fragment {
 
         Bundle bundle = getArguments();
         ArrayList lineas = (ArrayList) bundle.get(ScanNFCActivity.BUFFERED);
-        int firstProduct  = 1;
+        int firstProduct = 1;
         List<Product> products = new ArrayList<Product>();
         String[] codes = new String[lineas.size()];
         GetProducts getProduct = new GetProducts();
-        for (int i = firstProduct; i < lineas.size() - 1 ; i++){
+        for (int i = firstProduct; i < lineas.size() - 1; i++) {
 
             String[] line = lineas.get(i).toString().split(";");
-            codes[i-firstProduct] = line[0];
+            codes[i - firstProduct] = line[0];
         }
 
         try {
@@ -57,17 +59,13 @@ public class FragmentTicket extends Fragment {
             e.printStackTrace();
         }
 
-        Stream.of(products).forEach(p ->
-        {
-            System.out.println("Codigo: " + p.getCode() + ", Descripcion: " + p.getDescription());
-        });
-
-
+        products.add(new Product("5000127281752"));
+        products.add(new Product("8410014312495"));
         Stream.of(products).forEach(p -> ((ScanNFCActivity) getActivity()).getTicketAdapter().getTicket().getProducts().put(p.getCode(), p));
 
         recycler.setAdapter(((ScanNFCActivity) getActivity()).getTicketAdapter());
         ((ScanNFCActivity) getActivity()).getTicketAdapter().swipeList();
-        Toast.makeText(getActivity(),"Fragment lanzado",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Fragment lanzado", Toast.LENGTH_SHORT).show();
 
         return view;
     }

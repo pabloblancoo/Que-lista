@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class ScanNFCActivity extends AppCompatActivity {
     private TextView mTextView;
     private NfcAdapter mNfcAdapter;
     private TicketAdapter ticketAdapter;
+    private RelativeLayout relativeLayout;
 
     public TicketAdapter getTicketAdapter() {
         return ticketAdapter;
@@ -50,16 +52,11 @@ public class ScanNFCActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_nfc);
         mTextView = (TextView) findViewById(R.id.txIfno);
-        ticketAdapter = new TicketAdapter(this,new Ticket());
+        ticketAdapter = new TicketAdapter(this, new Ticket());
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        relativeLayout = (RelativeLayout) findViewById(R.id.layoutBotonTicket);
 
-//        if (mNfcAdapter == null) {
-//            // Stop here, we definitely need NFC
-//            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
-//            finish();
-//            return;
-//
-//        }
+        relativeLayout.setVisibility(View.GONE);
 
         handleIntent(getIntent());
     }
@@ -129,7 +126,7 @@ public class ScanNFCActivity extends AppCompatActivity {
 
     /**
      * @param activity The corresponding requesting the foreground dispatch.
-     * @param adapter The {@link NfcAdapter} used for the foreground dispatch.
+     * @param adapter  The {@link NfcAdapter} used for the foreground dispatch.
      */
     public static void setupForegroundDispatch(ScanNFCActivity activity, NfcAdapter adapter) {
         final Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
@@ -155,7 +152,7 @@ public class ScanNFCActivity extends AppCompatActivity {
 
     /**
      * @param activity The corresponding requesting to stop the foreground dispatch.
-     * @param adapter The {@link NfcAdapter} used for the foreground dispatch.
+     * @param adapter  The {@link NfcAdapter} used for the foreground dispatch.
      */
     public static void stopForegroundDispatch(ScanNFCActivity activity, NfcAdapter adapter) {
         adapter.disableForegroundDispatch(activity);
@@ -165,7 +162,6 @@ public class ScanNFCActivity extends AppCompatActivity {
      * Background task for reading the data. Do not block the UI thread while reading.
      *
      * @author Ralf Wondratschek
-     *
      */
     private class NdefReaderTask extends AsyncTask<Tag, Void, String> {
 
@@ -210,7 +206,7 @@ public class ScanNFCActivity extends AppCompatActivity {
 
             // Get the Text Encoding
             String textEncoding;
-            if((payload[0] & 128) == 0 )
+            if ((payload[0] & 128) == 0)
                 textEncoding = "UTF-8";
             else
                 textEncoding = "UTF-16";
@@ -227,6 +223,7 @@ public class ScanNFCActivity extends AppCompatActivity {
 
         /**
          * Esto es lo que hace cuando lee
+         *
          * @param result
          */
         @Override
@@ -241,16 +238,17 @@ public class ScanNFCActivity extends AppCompatActivity {
                     bufferedReader = downloadTicketFileTask.execute(result).get();
                     ArrayList array = new ArrayList<String>();
                     String line;
-                    while((line = bufferedReader.readLine()) != null){
+                    while ((line = bufferedReader.readLine()) != null) {
                         array.add(line);
                     }
                     android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     FragmentTicket fragmentTicket = new FragmentTicket();
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable(BUFFERED,array);
+                    bundle.putSerializable(BUFFERED, array);
                     fragmentTicket.setArguments(bundle);
-                    fragmentTransaction.replace(R.id.contenedor,fragmentTicket);
+                    fragmentTransaction.replace(R.id.contenedor, fragmentTicket);
                     fragmentTransaction.commit();
+                    relativeLayout.setVisibility(View.VISIBLE);
 //                    Intent intent = new Intent();
 //                    intent.putExtra(BUFFERED,array);
 //                    setResult(RESULT_OK, intent);
