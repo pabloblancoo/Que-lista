@@ -2,7 +2,6 @@ package grupomoviles.quelista.igu.recyclerViewAdapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +12,9 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.daimajia.androidviewhover.BlurLayout;
 import com.daimajia.swipe.SwipeLayout;
 
 import grupomoviles.quelista.R;
-import grupomoviles.quelista.igu.MainActivity;
 import grupomoviles.quelista.logic.Product;
 import grupomoviles.quelista.logic.Ticket;
 
@@ -73,28 +70,28 @@ public class TicketAdapter extends MyAdapter {
 //        ((SwipeLayout)v).setShowMode(SwipeLayout.ShowMode.PullOut);
 //        ((SwipeLayout)v).addDrag(SwipeLayout.DragEdge.Right, v.findViewById(R.id.layout_buttons));
 
-        return new PantryViewHolder(v, this, hover);
+        return new TicketViewHolder(v, this, hover);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder viewHolder, int position) {
         Product currentItem = items.get(position);
 
-        ((PantryViewHolder)viewHolder).units.setText(String.valueOf(currentItem.getStock()));
-        ((PantryViewHolder)viewHolder).unitsShoppingList.setText(String.valueOf(currentItem.getShoppingListUnits()));
-        ((PantryViewHolder)viewHolder).unitsCart.setText(String.valueOf(currentItem.getCartUnits()));
+        ((TicketViewHolder)viewHolder).units.setText(String.valueOf(currentItem.getStock()));
+        ((TicketViewHolder)viewHolder).unitsShoppingList.setText(String.valueOf(currentItem.getShoppingListUnits()));
+        ((TicketViewHolder)viewHolder).unitsCart.setText(String.valueOf(currentItem.getCartUnits()));
         super.onBindViewHolder(viewHolder, position);
 
     }
 
-    public class PantryViewHolder extends MyViewHolder
+    public class TicketViewHolder extends MyViewHolder
             implements View.OnClickListener {
 
         //Hover
         private TextView unitsShoppingList;
         private TextView unitsCart;
 
-        public PantryViewHolder(View v, TicketAdapter adapter, View hover) {
+        public TicketViewHolder(View v, TicketAdapter adapter, View hover) {
             super(v, adapter, hover);
 
             unitsShoppingList = (TextView) hover.findViewById(R.id.txShoppingList);
