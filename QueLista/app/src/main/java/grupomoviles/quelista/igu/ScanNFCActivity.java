@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.annimon.stream.Stream;
 
 import java.io.BufferedReader;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +35,7 @@ public class ScanNFCActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE = 5;
     public static final String BUFFERED = "buffered";
+    public static final String PRODUCTS = "products";
 
     public static final String MIME_TEXT_PLAIN = "text/plain";
     public static final String TAG = "NfcDemo";
@@ -249,16 +251,23 @@ public class ScanNFCActivity extends AppCompatActivity {
                     fragmentTransaction.replace(R.id.contenedor, fragmentTicket);
                     fragmentTransaction.commit();
                     relativeLayout.setVisibility(View.VISIBLE);
-//                    Intent intent = new Intent();
-//                    intent.putExtra(BUFFERED,array);
-//                    setResult(RESULT_OK, intent);
-//                    onBackPressed();
                 } catch (Exception e) {
 
                 }
             }
         }
 
+
+
+
+    }
+
+    public void guardarTicket(View view){
+
+                    Intent intent = new Intent();
+                    intent.putExtra(PRODUCTS, (Serializable) getTicketAdapter().getTicket().getProducts());
+                    setResult(RESULT_OK, intent);
+                    onBackPressed();
 
     }
 }

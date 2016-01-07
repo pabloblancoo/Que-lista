@@ -35,12 +35,22 @@ public class PantryAdapter extends MyAdapter {
         return pantry;
     }
 
+
     @Override
     public void onResultProductInfoActivity(Product product) {
         items.remove(product);
         if(pantry.onResultProductInfoActivity(product))
             items.add(product);
         super.onResultProductInfoActivity(product);
+    }
+
+    @Override
+    public void onResultNfcActivity(Product product) {
+        Stream.of(items).forEach(i ->{
+            if(i.getCode().equals(product.getCode()))
+                i.setStock(i.getStock() + product.getStock());
+        });
+        super.onResultNfcActivity(product);
     }
 
     public void swipeList() {

@@ -56,22 +56,22 @@ public class TicketAdapter extends MyAdapter {
 
         View blur = v.findViewById(R.id.blurLayout);
         View hover = LayoutInflater.from(parent.getContext()).inflate(R.layout.hover_holder_pantry, null);
-        ((BlurLayout)blur).setHoverView(hover);
+//        ((BlurLayout)blur).setHoverView(hover);
 
-        ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.btnCart, Techniques.ZoomIn);
-        ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.btnShoppingList, Techniques.ZoomIn);
-        ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.btnMore, Techniques.ZoomIn);
-        ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.txCart, Techniques.SlideInDown);
-        ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.txShoppingList, Techniques.SlideInDown);
-
-        ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.btnCart, Techniques.ZoomOut);
-        ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.btnShoppingList, Techniques.ZoomOut);
-        ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.btnMore, Techniques.ZoomOut);
-        ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.txCart, Techniques.SlideOutUp);
-        ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.txShoppingList, Techniques.SlideOutUp);
-
-        ((SwipeLayout)v).setShowMode(SwipeLayout.ShowMode.PullOut);
-        ((SwipeLayout)v).addDrag(SwipeLayout.DragEdge.Right, v.findViewById(R.id.layout_buttons));
+//        ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.btnCart, Techniques.ZoomIn);
+//        ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.btnShoppingList, Techniques.ZoomIn);
+//        ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.btnMore, Techniques.ZoomIn);
+//        ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.txCart, Techniques.SlideInDown);
+//        ((BlurLayout)blur).addChildAppearAnimator(hover, R.id.txShoppingList, Techniques.SlideInDown);
+//
+//        ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.btnCart, Techniques.ZoomOut);
+//        ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.btnShoppingList, Techniques.ZoomOut);
+//        ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.btnMore, Techniques.ZoomOut);
+//        ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.txCart, Techniques.SlideOutUp);
+//        ((BlurLayout)blur).addChildDisappearAnimator(hover, R.id.txShoppingList, Techniques.SlideOutUp);
+//
+//        ((SwipeLayout)v).setShowMode(SwipeLayout.ShowMode.PullOut);
+//        ((SwipeLayout)v).addDrag(SwipeLayout.DragEdge.Right, v.findViewById(R.id.layout_buttons));
 
         return new PantryViewHolder(v, this, hover);
     }
@@ -83,12 +83,6 @@ public class TicketAdapter extends MyAdapter {
         ((PantryViewHolder)viewHolder).units.setText(String.valueOf(currentItem.getStock()));
         ((PantryViewHolder)viewHolder).unitsShoppingList.setText(String.valueOf(currentItem.getShoppingListUnits()));
         ((PantryViewHolder)viewHolder).unitsCart.setText(String.valueOf(currentItem.getCartUnits()));
-
-        if (currentItem.getShoppingListUnits() == Product.NOT_IN_SHOPPING_LIST)
-            ((SwipeLayout) viewHolder.itemView).findViewById(R.id.btnAddToShoppingList).setVisibility(View.VISIBLE);
-        else
-            ((SwipeLayout)viewHolder.itemView).findViewById(R.id.btnAddToShoppingList).setVisibility(View.GONE);
-
         super.onBindViewHolder(viewHolder, position);
     }
 
@@ -120,7 +114,7 @@ public class TicketAdapter extends MyAdapter {
                         units.setText(String.valueOf(product.decreaseStock()));
                     else {
                         AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
-                        dialog.setMessage("¿Desea eliminar este producto de la despensa?");
+                        dialog.setMessage("¿Desea eliminar este producto de los que has comprado?");
                         dialog.setNegativeButton("Cancelar", null);
                         dialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                             @Override
@@ -134,21 +128,11 @@ public class TicketAdapter extends MyAdapter {
                 case R.id.btnDelete:
                     removeProduct();
                     break;
-                case R.id.btnAddToShoppingList:
-                    addToShoppingList();
-                    break;
                 default:
                     super.onClick(v);
             }
         }
 
-        private void addToShoppingList() {
-            itemView.findViewById(R.id.btnAddToShoppingList).setVisibility(View.GONE);
-            ((SwipeLayout)itemView).close(false);
-            notifyItemChanged(getAdapterPosition());
-            ((MainActivity) context).getShoppingListAdapter().addToShoppingList(ticket.find(product.getCode()));
-            Snackbar.make(itemView, product.getDescription() + " ha sido añadido a la lista de la compra", Snackbar.LENGTH_LONG).show();
-        }
 
         private void removeProduct() {
             ((SwipeLayout)itemView).close(false);

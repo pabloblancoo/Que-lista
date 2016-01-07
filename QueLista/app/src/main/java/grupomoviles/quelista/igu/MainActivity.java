@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 
+import java.security.Permission;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 
@@ -146,28 +148,12 @@ public class MainActivity extends AppCompatActivity {
 
         else if(ScanNFCActivity.REQUEST_CODE == requestCode && resultCode == RESULT_OK){
 
-            ArrayList lineas = (ArrayList) data.getExtras().get(ScanNFCActivity.BUFFERED);
-            int firstProduct  = 1;
-            List<Product> products = new ArrayList<Product>();
-            String[] codes = new String[lineas.size()];
-            GetProducts getProduct = new GetProducts();
-            for (int i = firstProduct; i < lineas.size() - 1 ; i++){
-
-                String[] line = lineas.get(i).toString().split(";");
-                codes[i-firstProduct] = line[0];
-            }
-
-            try {
-                products = getProduct.execute(codes).get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-
-            Stream.of(products).forEach(p ->
+            Map<String,Product> map = (Map<String, Product>) data.getExtras().get(ScanNFCActivity.PRODUCTS);
+            Stream.of(map).forEach(m ->
             {
-                System.out.println("Codigo: " + p.getCode() + ", Descripcion: " + p.getDescription());
+                pantryAdapter.onResultNfcActivity(m.getValue());
+                shoppingListAdapter.onResultNfcActivity(m.getValue());
+                cartAdapter.onResultNfcActivity(m.getValue());
             });
 
         }

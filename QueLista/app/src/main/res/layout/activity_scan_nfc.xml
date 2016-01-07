@@ -61,7 +61,8 @@
             android:text="Guardar compra"
             android:id="@+id/btGuardarTicket"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:onClick="guardarTicket" />
     </RelativeLayout>
 
 </RelativeLayout>
