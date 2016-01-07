@@ -42,14 +42,6 @@
             android:layout_centerHorizontal="true"
             android:text="Acerque el dispositivo al terminal" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Button"
-            android:id="@+id/botonMierda"
-            android:layout_below="@+id/txIfno"
-            android:layout_centerHorizontal="true"
-            android:onClick="apretarMierda" />
     </RelativeLayout>
 
 </RelativeLayout>

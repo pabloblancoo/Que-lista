@@ -23,6 +23,7 @@ import grupomoviles.quelista.R;
 import grupomoviles.quelista.igu.recyclerViewAdapters.MyAdapter;
 import grupomoviles.quelista.logic.Product;
 import grupomoviles.quelista.onlineDatabase.GestorBD;
+import grupomoviles.quelista.onlineDatabase.GetProducts;
 
 public class FragmentTicket extends Fragment {
 
@@ -36,10 +37,31 @@ public class FragmentTicket extends Fragment {
         // Usar un administrador para LinearLayout
         recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        Bundle bundle = getArguments();
+        ArrayList lineas = (ArrayList) bundle.get(ScanNFCActivity.BUFFERED);
+        int firstProduct  = 1;
+        List<Product> products = new ArrayList<Product>();
+        String[] codes = new String[lineas.size()];
+        GetProducts getProduct = new GetProducts();
+        for (int i = firstProduct; i < lineas.size() - 1 ; i++){
 
-        List<Product> products = new ArrayList<>();
+            String[] line = lineas.get(i).toString().split(";");
+            codes[i-firstProduct] = line[0];
+        }
 
-        products.add(new Product("8410297112041"));
+        try {
+            products = getProduct.execute(codes).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        Stream.of(products).forEach(p ->
+        {
+            System.out.println("Codigo: " + p.getCode() + ", Descripcion: " + p.getDescription());
+        });
+
 
         Stream.of(products).forEach(p -> ((ScanNFCActivity) getActivity()).getTicketAdapter().getTicket().getProducts().put(p.getCode(), p));
 

@@ -241,13 +241,15 @@ public class ScanNFCActivity extends AppCompatActivity {
                     bufferedReader = downloadTicketFileTask.execute(result).get();
                     ArrayList array = new ArrayList<String>();
                     String line;
-                    int i =0;
                     while((line = bufferedReader.readLine()) != null){
                         array.add(line);
-                        i++;
                     }
                     android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.contenedor,new FragmentTicket());
+                    FragmentTicket fragmentTicket = new FragmentTicket();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(BUFFERED,array);
+                    fragmentTicket.setArguments(bundle);
+                    fragmentTransaction.replace(R.id.contenedor,fragmentTicket);
                     fragmentTransaction.commit();
 //                    Intent intent = new Intent();
 //                    intent.putExtra(BUFFERED,array);
@@ -260,11 +262,5 @@ public class ScanNFCActivity extends AppCompatActivity {
         }
 
 
-    }
-    public  void apretarMierda(View view){
-        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.contenedor,new FragmentTicket());
-        fragmentTransaction.commit();
-        Toast.makeText(this,"Aprieto el boton, y lanzo el fragment",Toast.LENGTH_SHORT).show();
     }
 }
