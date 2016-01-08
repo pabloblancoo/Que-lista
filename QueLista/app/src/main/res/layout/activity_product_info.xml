@@ -167,20 +167,20 @@
                             android:layout_marginRight="-6dp"/>
 
                         <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="27dp"
+                            android:layout_height="27dp"
                             android:id="@+id/btnPlusPantry"
                             android:background="@null"
                             android:src="@drawable/arrow_up"
                             android:scaleType="centerCrop"
                             android:layout_toEndOf="@id/txUnitsPantry"
-                            android:layout_alignTop="@id/imgPantry"
+                            android:layout_alignTop="@id/txUnitsPantry"
                             android:layout_marginLeft="9dp"
                             android:onClick="aumentarPantry" />
 
                         <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="27dp"
+                            android:layout_height="27dp"
                             android:id="@+id/btnMinusPantry"
                             android:background="@null"
                             android:src="@drawable/arrow_down"
@@ -219,20 +219,20 @@
                             android:layout_marginRight="-6dp" />
 
                         <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="27dp"
+                            android:layout_height="27dp"
                             android:id="@+id/btnPlusShoppingList"
                             android:background="@null"
                             android:src="@drawable/arrow_up"
                             android:scaleType="centerCrop"
                             android:layout_toEndOf="@id/txUnitsShoppingList"
-                            android:layout_alignTop="@id/imgShoppingList"
+                            android:layout_alignTop="@id/txUnitsShoppingList"
                             android:layout_marginLeft="9dp"
                             android:onClick="aumentarShoppingList" />
 
                         <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="27dp"
+                            android:layout_height="27dp"
                             android:id="@+id/btnMinusShoppingList"
                             android:background="@null"
                             android:src="@drawable/arrow_down"
@@ -272,20 +272,20 @@
                             android:layout_marginRight="-6dp"/>
 
                         <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="27dp"
+                            android:layout_height="27dp"
                             android:id="@+id/btnPlusCart"
                             android:background="@null"
                             android:src="@drawable/arrow_up"
                             android:scaleType="centerCrop"
                             android:layout_toEndOf="@id/txUnitsCart"
-                            android:layout_alignTop="@id/imgCart"
+                            android:layout_alignTop="@id/txUnitsCart"
                             android:layout_marginLeft="9dp"
                             android:onClick="aumentarCartList" />
 
                         <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="27dp"
+                            android:layout_height="27dp"
                             android:id="@+id/btnMinusCart"
                             android:background="@null"
                             android:src="@drawable/arrow_down"
@@ -348,15 +348,15 @@
                             android:layout_marginLeft="6dp">
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
                                 android:id="@+id/btnPlusUnitsTakes"
                                 android:background="@drawable/arrow_up"
                                 android:onClick="aumentarUnitsDescontar" />
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
                                 android:id="@+id/btnMinusUnitsTakes"
                                 android:background="@drawable/arrow_down"
                                 android:onClick="disminuirUnitsDescontar" />
@@ -385,15 +385,15 @@
                             android:layout_marginLeft="6dp">
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
                                 android:id="@+id/btnPlusDaysTakes"
                                 android:background="@drawable/arrow_up"
                                 android:onClick="aumentarDays" />
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
                                 android:id="@+id/btnMinusDaysTakes"
                                 android:background="@drawable/arrow_down"
                                 android:onClick="disminuirDays" />
@@ -424,7 +424,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/switchAddToShoppingList"
-                        android:text="Añadir a la lista de la compra" />
+                        android:text="Añadir a la lista de la compra"
+                        android:layout_marginBottom="3dp"/>
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -451,15 +452,15 @@
                             android:layout_marginLeft="6dp">
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
                                 android:id="@+id/btnPlusWhenHave"
                                 android:background="@drawable/arrow_up"
                                 android:onClick="aumentarWhenHave" />
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
                                 android:id="@+id/btnMinusWhenHave"
                                 android:background="@drawable/arrow_down"
                                 android:onClick="disminuirWhenHave" />
@@ -505,15 +506,15 @@
                             android:layout_marginLeft="6dp">
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
                                 android:id="@+id/btnPlusAddWhenHave"
                                 android:background="@drawable/arrow_up"
                                 android:onClick="aumentarAddWhenHave" />
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
                                 android:id="@+id/btnMinusAddWhenHave"
                                 android:background="@drawable/arrow_down"
                                 android:onClick="disminuirAddWhenHave" />
