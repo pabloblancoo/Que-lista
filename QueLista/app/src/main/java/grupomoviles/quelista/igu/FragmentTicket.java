@@ -43,24 +43,18 @@ public class FragmentTicket extends Fragment {
         ArrayList lineas = (ArrayList) bundle.get(ScanNFCActivity.BUFFERED);
         int firstProduct = 1;
         List<Product> products = new ArrayList<Product>();
-        String[] codes = new String[lineas.size()];
-        GetProducts getProduct = new GetProducts();
-        for (int i = firstProduct; i < lineas.size() - 1; i++) {
-
-            String[] line = lineas.get(i).toString().split(";");
-            codes[i - firstProduct] = line[0];
+        for (int i = firstProduct; i< lineas.size()-1; i++){
+            try {
+                String[] line = lineas.get(i).toString().split(";");
+                Product p = GestorBD.FindProduct( line[0]);
+                p.setStock(Integer.parseInt(line[1]));
+                products.add(p);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-
-        try {
-            products = getProduct.execute(codes).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        products.add(new Product("5000127281752"));
-        products.add(new Product("8410014312495"));
         Stream.of(products).forEach(p -> ((ScanNFCActivity) getActivity()).getTicketAdapter().getTicket().getProducts().put(p.getCode(), p));
 
         recycler.setAdapter(((ScanNFCActivity) getActivity()).getTicketAdapter());

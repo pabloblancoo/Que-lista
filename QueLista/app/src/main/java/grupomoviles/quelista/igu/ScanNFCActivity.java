@@ -265,7 +265,7 @@ public class ScanNFCActivity extends AppCompatActivity {
     public void guardarTicket(View view){
 
                     Intent intent = new Intent();
-                    intent.putExtra(PRODUCTS, (Serializable) getTicketAdapter().getTicket().getProducts());
+        intent.putExtra(PRODUCTS, (Serializable) getTicketAdapter().getTicket().getProducts());
                     setResult(RESULT_OK, intent);
                     finish();
     }
