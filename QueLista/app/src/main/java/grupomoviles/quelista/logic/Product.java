@@ -3,7 +3,10 @@ package grupomoviles.quelista.logic;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
+import android.util.Log;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
@@ -117,6 +120,9 @@ public class Product implements Serializable {
         this.subcategory = subcategory;
         this.units = units;
     }
+
+
+
 
     //GETTERS and SETTERS
     public String getDescription() {
@@ -321,12 +327,31 @@ public class Product implements Serializable {
 
     public Bitmap getImage(Context context) {
         Bitmap bitmap = null;
+        Log.e("IMAGEN", this.code.toString());
+        Log.e("IMAGEN_RUTA "+this.code, Environment.getExternalStorageDirectory() +
+                "/QueLista/" + this.code + ".jpg");
+
 
         try {
-            FileInputStream fileInputStream =
-                    new FileInputStream(context.getApplicationContext().getFilesDir().getPath()+ "/" + this.code + ".png");
-            bitmap = BitmapFactory.decodeStream(fileInputStream);
-        } catch (IOException io){
+            File imagesFolder = new File(Environment.getExternalStorageDirectory(), "QueLista");
+            File from = new File(imagesFolder, this.code + ".jpg");
+
+            Log.e("IMAGEN_RUTA "+this.code, Environment.getExternalStorageDirectory() +
+                    "/QueLista/" + this.code + ".jpg");
+            if (!from.exists()) {
+                FileInputStream fileInputStream =
+                        new FileInputStream(context.getApplicationContext().getFilesDir().getPath() + "/" + this.code + ".png");
+
+                bitmap = BitmapFactory.decodeStream(fileInputStream);
+            } else {
+                bitmap = BitmapFactory.decodeFile(
+                        Environment.getExternalStorageDirectory() +
+                                "/QueLista/" + this.code + ".jpg");
+                Log.e("IMAGEN_RUTA", Environment.getExternalStorageDirectory() +
+                        "/QueLista/" + this.code + ".jpg");
+            }
+
+        } catch (IOException io) {
             io.printStackTrace();
         }
 

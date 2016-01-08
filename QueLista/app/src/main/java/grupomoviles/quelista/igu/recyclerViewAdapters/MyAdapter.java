@@ -34,7 +34,7 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
 
     public MyAdapter(Context context, List<Product> items) {
         this.context = context;
-        this.items = Stream.of(items).sortBy(i -> i.getDescription().charAt(0)).collect(Collectors.toList());
+        this.items = Stream.of(items).sortBy(i -> i.getDescription() + i.getNetValue()).collect(Collectors.toList());
 
         // Procesar valores actuales de las preferencias.
         sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -42,10 +42,14 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
     }
 
     public void onResultProductInfoActivity(Product product) {
-        items = Stream.of(items).sortBy(i -> i.getDescription().charAt(0)).collect(Collectors.toList());
+        items = Stream.of(items).sortBy(i -> i.getDescription() + i.getNetValue()).collect(Collectors.toList());
         notifyDataSetChanged();
     }
 
+    public void onResultNfcActivity(Product product){
+        items = Stream.of(items).sortBy(i -> i.getDescription() + i.getNetValue()).collect(Collectors.toList());
+        notifyDataSetChanged();
+    }
     @Override
     public int getItemCount() {
         return items.size();
@@ -79,6 +83,11 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
         viewHolder.description.setText(currentItem.getDescription());
         viewHolder.brand.setText(currentItem.getBrand());
         viewHolder.netValue.setText(currentItem.getNetValue());
+
+        if (position == getItemCount() - 1)
+            viewHolder.itemView.setPadding(0, 0, 0, 12);
+        else
+            viewHolder.itemView.setPadding(0, 0, 0, 0);
 
         mItemManger.bindView(viewHolder.itemView, position);
     }

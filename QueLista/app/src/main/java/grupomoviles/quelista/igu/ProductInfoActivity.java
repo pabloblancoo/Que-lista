@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -107,6 +109,11 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         if(!newProduct){
             findViewById(R.id.layoutButtonsNewProduct).setVisibility(View.GONE);
         }
+        //Mostrar o ocultar los textView al principio de la aplicacion
+        if(product.getStock()== -1){
+            unitsPantry.setVisibility(View.INVISIBLE);
+        }
+
         //Eventos
         switchCompatTakeUnits.setOnCheckedChangeListener(this);
         switchCompatAddToShoppingList.setOnCheckedChangeListener(this);
@@ -135,9 +142,9 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
             category.setText(product.getCategory());
 
 
-            unitsPantry.setText(product.getStock() + "");
-            unitsLista.setText(product.getShoppingListUnits() + "");
-            unitsCarrito.setText(product.getCartUnits() + "");
+            unitsPantry.setText(String.valueOf(product.getStock()));
+            unitsLista.setText(String.valueOf(product.getShoppingListUnits()));
+            unitsCarrito.setText(String.valueOf(product.getCartUnits()));
 
             Date date = product.getLastUpdate();
             if (date == null) {
@@ -174,24 +181,31 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
                 setResult(RESULT_OK, i);
                 onBackPressed();
                 return true;
+
+            case R.id.action_delete:
+                deleteProduct();
+                Intent o = new Intent();
+                o.putExtra(PRODUCT, product);
+                setResult(RESULT_OK, o);
+                onBackPressed();
+
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-
-    /*
     @Override
-    protected void onDestroy() {
-        Intent i = new Intent();
-        i.putExtra(PRODUCT, product);
-        setResult(RESULT_OK, i);
-        finish();
-        super.onDestroy();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_product_info, menu);
+        return true;
     }
-    */
 
     public void aumentarPantry(View view) {
+        if(unitsPantry.getVisibility()==View.INVISIBLE){
+            unitsPantry.setVisibility(View.VISIBLE);
+        }
         product.increaseStock();
         makeChanges(unitsPantry, "", true);
     }
@@ -202,6 +216,9 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
     }
 
     public void aumentarShoppingList(View view) {
+        if(unitsLista.getVisibility()==View.INVISIBLE){
+            unitsLista.setVisibility(View.VISIBLE);
+        }
         product.increaseShoppingListUnits();
         makeChanges(unitsLista, "", true);
     }
@@ -209,10 +226,12 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
     public void disminuirShoppingList(View view) {
         product.decreaseShoppingListUnits();
         makeChanges(unitsLista, "", false);
-
     }
 
     public void aumentarCartList(View view) {
+        if(unitsCarrito.getVisibility()==View.INVISIBLE){
+            unitsCarrito.setVisibility(View.VISIBLE);
+        }
         product.increaseCartUnits();
         makeChanges(unitsCarrito, "", true);
     }
@@ -288,6 +307,9 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
 
         if (switchCompatAddToShoppingList.isChecked()) {
             if (product.getStock() <= product.getMinStock() && product.getShoppingListUnits() < product.getUnitsToAdd()) {
+                if(unitsLista.getVisibility()==View.INVISIBLE){
+                    unitsLista.setVisibility(View.VISIBLE);
+                }
                 product.setShoppingListUnits(product.getShoppingListUnits() + product.getUnitsToAdd());
                 unitsPantry.setText(product.getStock() + "");
                 unitsLista.setText(product.getShoppingListUnits() + "");
@@ -362,5 +384,31 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
 
     public void cancel(View view){
         finish();
+    }
+
+    private void deleteProduct() {
+        product.setStock(-1);
+        product.setShoppingListUnits(0);
+        product.setCartUnits(0);
+
+        ProductDataSource database = new ProductDataSource(this);
+        database.openDatabase();
+        database.deleteProduct(product.getCode());
+        database.close();
+
+        guardarDatos();
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            Intent i = new Intent();
+            i.putExtra(PRODUCT, product);
+            setResult(RESULT_OK, i);
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 }

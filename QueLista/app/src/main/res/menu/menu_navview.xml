@@ -12,6 +12,10 @@
         android:id="@+id/nav_item_carrito"
         android:icon="@drawable/icon_button_cart"/>
 
+    <item android:title="Carrito"
+        android:id="@+id/nav_item_new_product"
+        android:icon="@android:drawable/ic_menu_add"/>
+
     <item android:title="Otras">
         <menu>
             <item

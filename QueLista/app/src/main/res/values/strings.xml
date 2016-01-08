@@ -101,5 +101,15 @@
     <string name="pref_title_vibrate">Vibrate</string>
 
     <string name="pref_description_miniaturas">Las imagenes que acompañas a los productos en los listados</string>
+    <string name="action_delete_product">Eliminar producto</string>
+    <string name="action_add_product">Añadir producto</string>
+    <string name="producto_nombre">Nombre del producto</string>
+    <string name="err_msg_vacio">No puede estár vacio</string>
+
+    <string name="nombre_transicion_imagen">imagen_compartida</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

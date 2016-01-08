@@ -5,11 +5,14 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -60,6 +63,8 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
             @Override
             public void onPageSelected(int position) {
                 setTab(position);
+                ((FloatingActionButton)getActivity().findViewById(R.id.fabScan)).show();
+
                 switch (position) {
                     case 0:
                         ((MainActivity) getActivity()).getPantryAdapter().notifyDataSetChanged();

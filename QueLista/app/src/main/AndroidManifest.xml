@@ -8,6 +8,9 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.NFC" />
 
+    <!-- Include following permission if you want to cache images on SD card -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
@@ -37,7 +40,21 @@
         </activity>
         <activity
             android:name=".igu.ProductInfoActivity"
-            android:label=""></activity>
+            android:label="" />
+        <activity
+            android:name=".igu.NewProductActivity"
+            android:label="">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="grupomoviles.quelista.igu.MainActivity" />
+        </activity>
+        <activity
+            android:name=".igu.Galeria"
+            android:label="">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="grupomoviles.quelista.igu.NewProductActivity" />
+        </activity>
         <activity
             android:name=".igu.SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -46,6 +63,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="grupomoviles.quelista.igu.MainActivity" />
         </activity>
+        <activity android:name=".igu.ScanNFCActivity" />
     </application>
 
 </manifest>

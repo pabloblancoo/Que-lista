@@ -43,6 +43,14 @@ public class CartAdapter extends MyAdapter {
             items.add(product);
         super.onResultProductInfoActivity(product);
     }
+    @Override
+    public void onResultNfcActivity(Product product) {
+        Stream.of(items).forEach(i -> {
+            if (i.getCode().equals(product.getCode()))
+                i.setStock(i.getStock() + product.getStock());
+        });
+        super.onResultNfcActivity(product);
+    }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

@@ -19,6 +19,7 @@ import com.daimajia.swipe.SwipeLayout;
 
 import grupomoviles.quelista.R;
 import grupomoviles.quelista.igu.MainActivity;
+import grupomoviles.quelista.igu.ScanNFCActivity;
 import grupomoviles.quelista.logic.Pantry;
 import grupomoviles.quelista.logic.Product;
 
@@ -35,6 +36,7 @@ public class PantryAdapter extends MyAdapter {
         return pantry;
     }
 
+
     @Override
     public void onResultProductInfoActivity(Product product) {
         items.remove(product);
@@ -43,8 +45,17 @@ public class PantryAdapter extends MyAdapter {
         super.onResultProductInfoActivity(product);
     }
 
+    @Override
+    public void onResultNfcActivity(Product product) {
+        Stream.of(items).forEach(i ->{
+            if(i.getCode().equals(product.getCode()))
+                i.setStock(i.getStock() + product.getStock());
+        });
+        super.onResultNfcActivity(product);
+    }
+
     public void swipeList() {
-        items = Stream.of(pantry.getProducts().values()).sortBy(p -> p.getDescription().charAt(0)).collect(Collectors.toList());
+        items = Stream.of(pantry.getProducts().values()).sortBy(p -> p.getDescription() + p.getNetValue()).collect(Collectors.toList());
     }
 
     @Override
