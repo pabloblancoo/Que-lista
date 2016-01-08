@@ -56,7 +56,7 @@ public class Pantry {
                     } else {
                         m.getValue().setStock(0);
                     }
-                    m.getValue().setLastUpdate(new Date());
+                    m.getValue().setLastUpdate(new Date()); 
                 }
             }
         });

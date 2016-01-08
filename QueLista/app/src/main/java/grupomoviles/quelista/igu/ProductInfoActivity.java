@@ -106,11 +106,11 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         buttonMinusAddWhenHave = (Button) findViewById(R.id.btnMinusAddWhenHave);
 
         //Mostrar u ocultar botones
-        if(!newProduct){
+        if (!newProduct) {
             findViewById(R.id.layoutButtonsNewProduct).setVisibility(View.GONE);
         }
         //Mostrar o ocultar los textView al principio de la aplicacion
-        if(product.getStock()== -1){
+        if (product.getStock() == -1) {
             unitsPantry.setVisibility(View.INVISIBLE);
         }
 
@@ -123,47 +123,47 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
 
     private void showAllProductProperties() {
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Bitmap bitmap = null;
-                    while (bitmap == null) {
-                        bitmap = product.getImage(getApplicationContext());
-                        productImage.setImageBitmap(bitmap);
-                    }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Bitmap bitmap = null;
+                while (bitmap == null) {
+                    bitmap = product.getImage(getApplicationContext());
+                    productImage.setImageBitmap(bitmap);
                 }
-            }).start();
-
-            productImage.setImageBitmap(product.getImage(getApplicationContext()));
-
-            description.setText(product.getDescription());
-            brand.setText(product.getBrand());
-            netValue.setText(product.getNetValue());
-            category.setText(product.getCategory());
-
-
-            unitsPantry.setText(String.valueOf(product.getStock()));
-            unitsLista.setText(String.valueOf(product.getShoppingListUnits()));
-            unitsCarrito.setText(String.valueOf(product.getCartUnits()));
-
-            Date date = product.getLastUpdate();
-            if (date == null) {
-                findViewById(R.id.layoutTakeUnitsSwitch).setVisibility(View.GONE);
-                switchCompatTakeUnits.setChecked(false);
-            } else {
-                switchCompatTakeUnits.setChecked(true);
-                unitsDescontar.setText(product.getConsumeUnits() + " unidad");
-                unitsDays.setText(product.getConsumeCycle() + " día");
             }
+        }).start();
 
-            if (product.getMinStock() == -1) {
-                findViewById(R.id.layoutAddToShoppingListSwitch).setVisibility(View.GONE);
-                switchCompatAddToShoppingList.setChecked(false);
-            } else {
-                switchCompatAddToShoppingList.setChecked(true);
-                unitsWhenHave.setText(product.getMinStock() + " unidades");
-                unitsAddWhenHave.setText(product.getUnitsToAdd() + " unidad");
-            }
+        productImage.setImageBitmap(product.getImage(getApplicationContext()));
+
+        description.setText(product.getDescription());
+        brand.setText(product.getBrand());
+        netValue.setText(product.getNetValue());
+        category.setText(product.getCategory());
+
+
+        unitsPantry.setText(String.valueOf(product.getStock()));
+        unitsLista.setText(String.valueOf(product.getShoppingListUnits()));
+        unitsCarrito.setText(String.valueOf(product.getCartUnits()));
+
+        Date date = product.getLastUpdate();
+        if (date == null) {
+            findViewById(R.id.layoutTakeUnitsSwitch).setVisibility(View.GONE);
+            switchCompatTakeUnits.setChecked(false);
+        } else {
+            switchCompatTakeUnits.setChecked(true);
+            unitsDescontar.setText(product.getConsumeUnits() + " unidad");
+            unitsDays.setText(product.getConsumeCycle() + " día");
+        }
+
+        if (product.getMinStock() == -1) {
+            findViewById(R.id.layoutAddToShoppingListSwitch).setVisibility(View.GONE);
+            switchCompatAddToShoppingList.setChecked(false);
+        } else {
+            switchCompatAddToShoppingList.setChecked(true);
+            unitsWhenHave.setText(product.getMinStock() + " unidades");
+            unitsAddWhenHave.setText(product.getUnitsToAdd() + " unidad");
+        }
 
     }
 
@@ -203,7 +203,7 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
     }
 
     public void aumentarPantry(View view) {
-        if(unitsPantry.getVisibility()==View.INVISIBLE){
+        if (unitsPantry.getVisibility() == View.INVISIBLE) {
             unitsPantry.setVisibility(View.VISIBLE);
         }
         product.increaseStock();
@@ -216,7 +216,7 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
     }
 
     public void aumentarShoppingList(View view) {
-        if(unitsLista.getVisibility()==View.INVISIBLE){
+        if (unitsLista.getVisibility() == View.INVISIBLE) {
             unitsLista.setVisibility(View.VISIBLE);
         }
         product.increaseShoppingListUnits();
@@ -229,7 +229,7 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
     }
 
     public void aumentarCartList(View view) {
-        if(unitsCarrito.getVisibility()==View.INVISIBLE){
+        if (unitsCarrito.getVisibility() == View.INVISIBLE) {
             unitsCarrito.setVisibility(View.VISIBLE);
         }
         product.increaseCartUnits();
@@ -297,7 +297,7 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         textView.setText(units + old);
         if (textView == unitsPantry)
             checkStockUnits();
-        if(!newProduct)
+        if (!newProduct)
             guardarDatos();
         showDatabaseData();
 
@@ -307,7 +307,7 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
 
         if (switchCompatAddToShoppingList.isChecked()) {
             if (product.getStock() <= product.getMinStock() && product.getShoppingListUnits() < product.getUnitsToAdd()) {
-                if(unitsLista.getVisibility()==View.INVISIBLE){
+                if (unitsLista.getVisibility() == View.INVISIBLE) {
                     unitsLista.setVisibility(View.VISIBLE);
                 }
                 product.setShoppingListUnits(product.getShoppingListUnits() + product.getUnitsToAdd());
@@ -377,12 +377,12 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         showDatabaseData();
     }
 
-    public void acept(View view){
+    public void acept(View view) {
         guardarDatos();
         finish();
     }
 
-    public void cancel(View view){
+    public void cancel(View view) {
         finish();
     }
 
@@ -401,8 +401,7 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
             Intent i = new Intent();
             i.putExtra(PRODUCT, product);
