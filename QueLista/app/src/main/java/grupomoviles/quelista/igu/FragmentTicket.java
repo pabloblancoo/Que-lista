@@ -1,5 +1,6 @@
 package grupomoviles.quelista.igu;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ public class FragmentTicket extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_ticket, container, false);
 
 

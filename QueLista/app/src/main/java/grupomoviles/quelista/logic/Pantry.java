@@ -40,7 +40,6 @@ public class Pantry {
     }
 
     public void actualizar() {
-//        if(!products.isEmpty())
         long currentDate = new Date().getTime();
 
         Stream.of(products).forEach(m -> {
@@ -60,6 +59,8 @@ public class Pantry {
                 }
             }
         });
+
+        System.out.println("Actualizado");
 
     }
 }

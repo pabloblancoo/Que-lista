@@ -55,8 +55,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.activity_ventana_carga);
+        long t1,t2;
+        t1 = System.currentTimeMillis();
         // Cargar valores por defecto
         PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
         PreferenceManager.setDefaultValues(this, R.xml.pref_data_sync, false);
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         task.execute("5449000000996", "8410297112041", "8410297170058", "8410188012092",
                 "5449000009067", "8410000826937", "8410014307682", "8410014312495", "5000127281752");
 
-
+        setContentView(R.layout.activity_main);
         setUpNavigationDrawer();
 
         /**
@@ -91,6 +92,11 @@ public class MainActivity extends AppCompatActivity {
             mFragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentTransaction.replace(R.id.fragment_container, fragment).commit();
         }
+
+
+
+        t2 = System.currentTimeMillis();
+        System.out.println("Tiempo total : " + (t2-t1) );
     }
 
     @Override

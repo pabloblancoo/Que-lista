@@ -2,6 +2,7 @@ package grupomoviles.quelista.igu;
 
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NdefMessage;
@@ -43,6 +44,7 @@ public class ScanNFCActivity extends AppCompatActivity {
     private NfcAdapter mNfcAdapter;
     private TicketAdapter ticketAdapter;
     private RelativeLayout relativeLayout;
+    ProgressDialog p;
 
     public TicketAdapter getTicketAdapter() {
         return ticketAdapter;
@@ -222,6 +224,14 @@ public class ScanNFCActivity extends AppCompatActivity {
             return new String(payload, languageCodeLength + 1, payload.length - languageCodeLength - 1, textEncoding);
         }
 
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//
+//            p = new ProgressDialog(ScanNFCActivity.this);
+//            p.setMessage("Descargando imágenes...");
+//            p.show();
+//        }
         /**
          * Esto es lo que hace cuando lee
          *
@@ -229,7 +239,6 @@ public class ScanNFCActivity extends AppCompatActivity {
          */
         @Override
         protected void onPostExecute(String result) {
-
             if (result != null) {
 
                 DownloadTicketFileTask downloadTicketFileTask = new DownloadTicketFileTask();
@@ -254,6 +263,7 @@ public class ScanNFCActivity extends AppCompatActivity {
                 } catch (Exception e) {
 
                 }
+//                p.dismiss();
             }
         }
 
@@ -265,7 +275,7 @@ public class ScanNFCActivity extends AppCompatActivity {
     public void guardarTicket(View view){
 
                     Intent intent = new Intent();
-        intent.putExtra(PRODUCTS, (Serializable) getTicketAdapter().getTicket().getProducts());
+                    intent.putExtra(PRODUCTS, (Serializable) getTicketAdapter().getTicket().getProducts());
                     setResult(RESULT_OK, intent);
                     finish();
     }
