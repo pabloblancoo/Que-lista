@@ -1,32 +1,54 @@
 package grupomoviles.quelista.igu.recyclerViewAdapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.daimajia.androidviewhover.BlurLayout;
 import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
+
+import java.util.List;
 
 import grupomoviles.quelista.R;
+import grupomoviles.quelista.igu.ProductInfoActivity;
 import grupomoviles.quelista.logic.Product;
 import grupomoviles.quelista.logic.Ticket;
 
 /**
  * Created by Pablo on 06/01/2016.
  */
-public class TicketAdapter extends MyAdapter {
+public class TicketAdapter extends RecyclerSwipeAdapter<TicketAdapter.TicketViewHolder> {
 
     private Ticket ticket;
+    static Context context;
+    List<Product> items;
+    SharedPreferences sharedPref;
+    boolean miniaturasPref;
 
     public TicketAdapter(Context context, Ticket ticket) {
-        super(context, Stream.of(ticket.getProducts().values()).collect(Collectors.toList()));
+        List<Product> items2 = Stream.of(ticket.getProducts().values()).collect(Collectors.toList());
+        this.context = context;
+        this.items = Stream.of(items2).sortBy(i -> i.getDescription() + i.getNetValue()).collect(Collectors.toList());
+
+        // Procesar valores actuales de las preferencias.
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        miniaturasPref = sharedPref.getBoolean("miniaturas", true);
+
         this.ticket = ticket;
     }
 
@@ -34,12 +56,18 @@ public class TicketAdapter extends MyAdapter {
         return ticket;
     }
 
-    @Override
+
     public void onResultProductInfoActivity(Product product) {
         items.remove(product);
         if(ticket.onResultProductInfoActivity(product))
             items.add(product);
-        super.onResultProductInfoActivity(product);
+        items = Stream.of(items).sortBy(i -> i.getDescription() + i.getNetValue()).collect(Collectors.toList());
+        notifyDataSetChanged();
+    }
+
+    public void onResultNfcActivity(Product product){
+        items = Stream.of(items).sortBy(i -> i.getDescription() + i.getNetValue()).collect(Collectors.toList());
+        notifyDataSetChanged();
     }
 
     public void swipeList() {
@@ -47,7 +75,7 @@ public class TicketAdapter extends MyAdapter {
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TicketViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.holder_product, parent, false);
 
@@ -74,14 +102,44 @@ public class TicketAdapter extends MyAdapter {
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder viewHolder, int position) {
+    public void onBindViewHolder(TicketViewHolder viewHolder, int position) {
         Product currentItem = items.get(position);
 
         ((TicketViewHolder)viewHolder).units.setText(String.valueOf(currentItem.getStock()));
         ((TicketViewHolder)viewHolder).unitsShoppingList.setText(String.valueOf(currentItem.getShoppingListUnits()));
         ((TicketViewHolder)viewHolder).unitsCart.setText(String.valueOf(currentItem.getCartUnits()));
-        super.onBindViewHolder(viewHolder, position);
+        viewHolder.blurLayout.dismissHover();
+        viewHolder.product = currentItem;
 
+        if(miniaturasPref) {
+            viewHolder.image.setVisibility(View.VISIBLE);
+            viewHolder.image.setImageBitmap(currentItem.getImage(context));
+        }
+        else{
+            viewHolder.image.setVisibility(View.GONE);
+        }
+
+        viewHolder.description.setText(currentItem.getDescription());
+        viewHolder.brand.setText(currentItem.getBrand());
+        viewHolder.netValue.setText(currentItem.getNetValue());
+
+        if (position == getItemCount() - 1)
+            viewHolder.itemView.setPadding(0, 0, 0, 12);
+        else
+            viewHolder.itemView.setPadding(0, 0, 0, 0);
+
+//        mItemManger.bindView(viewHolder.itemView, position);
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
+
+    @Override
+    public int getSwipeLayoutResourceId(int position) {
+        return 0;
     }
 
     public class TicketViewHolder extends MyViewHolder
@@ -138,6 +196,47 @@ public class TicketAdapter extends MyAdapter {
             adapter.items.remove(product);
             ticket.remove(product);
             adapter.notifyItemRemoved(getAdapterPosition());
+        }
+
+    }
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        Product product;
+        ImageView image;
+        TextView description;
+        TextView brand;
+        TextView netValue;
+        TextView units;
+        TicketAdapter adapter;
+        BlurLayout blurLayout;
+
+        public MyViewHolder(View v, TicketAdapter adapter, View hover) {
+            super(v);
+
+            image = (ImageView) v.findViewById(R.id.imgProduct);
+            description = (TextView) v.findViewById(R.id.txDescription);
+            brand = (TextView) v.findViewById(R.id.txBrand);
+            netValue = (TextView) v.findViewById(R.id.txNetValue);
+            units = (TextView) v.findViewById(R.id.txUnits);
+
+            blurLayout = (BlurLayout) v.findViewById(R.id.blurLayout);
+            v.findViewById(R.id.btnPlusStock).setOnClickListener(this);
+            v.findViewById(R.id.btnMinusStock).setOnClickListener(this);
+            v.findViewById(R.id.btnDelete).setOnClickListener(this);
+
+            hover.findViewById(R.id.btnMore).setOnClickListener(this);
+
+            this.adapter = adapter;
+            v.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (view.getId() == R.id.btnMore) {
+                Intent i = new Intent(context, ProductInfoActivity.class);
+                i.putExtra(ProductInfoActivity.PRODUCT, product);
+                ((Activity)context).startActivityForResult(i, ProductInfoActivity.REQUEST_CODE);
+            }
         }
     }
 }
