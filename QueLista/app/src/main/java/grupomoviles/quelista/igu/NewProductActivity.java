@@ -1,7 +1,6 @@
 package grupomoviles.quelista.igu;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -29,12 +28,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Date;
 
 import grupomoviles.quelista.R;
@@ -215,7 +211,6 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
             case R.id.action_add:
                 if (!validaciones())
                     return true;
-
                 confirmar();
                 return true;
         }
@@ -224,12 +219,7 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
     }
 
     private void finalizar() {
-        if (imagenTomada == true) {
-            renombradoFinal();
-        }
-        else {
-            copiadoFinal();
-        }
+        guardarImagen();
         guardarDatos();
         Intent i = new Intent();
         i.putExtra(PRODUCT, product);
@@ -471,26 +461,11 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
         }
     }
 
+    private boolean guardarImagen() {
+        int height;
+        int width;
+        float aspectRatio;
 
-
-    private boolean renombradoFinal() {
-        File imagesFolder = new File(
-                Environment.getExternalStorageDirectory(), "QueLista");
-
-        if(imagesFolder.exists()) {
-
-            File from = new File(imagesFolder,"foto.jpg");
-            File to = new File(imagesFolder,code.getText().toString()+".jpg");
-            if(from.exists()) {
-                from.renameTo(to);
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean copiadoFinal() {
         File imagesFolder = new File(
                 Environment.getExternalStorageDirectory(), "QueLista");
 
@@ -501,13 +476,35 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
         File to = new File(imagesFolder, code.getText().toString() + ".jpg");
 
         try {
+            if(bMapFinal.getHeight()>=bMapFinal.getWidth()) {
+                aspectRatio = bMapFinal.getHeight() /
+                        (float) bMapFinal.getWidth();
+                height = 250;
+                width =  Math.round(height / aspectRatio);
+            }
+            else {
+                aspectRatio = bMapFinal.getWidth() /
+                        (float) bMapFinal.getHeight();
+                width = 250;
+                height =  Math.round(width / aspectRatio);
+            }
+
+            bMapFinal = Bitmap.createScaledBitmap(bMapFinal,
+                    width, height, false);
+
             FileOutputStream fos = new FileOutputStream(to);
             bMapFinal.compress(Bitmap.CompressFormat.JPEG, 90, fos);
             fos.close();
+
         } catch (FileNotFoundException e) {
             Log.d("FILE", "File not found: " + e.getMessage());
         } catch (IOException e) {
             Log.d("FILE", "Error accessing file: " + e.getMessage());
+        }
+
+        if(imagenTomada==true) {
+            File from = new File(imagesFolder, "foto.jpg");
+            from.delete();
         }
 
         return true;
@@ -526,6 +523,8 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
             //mostrarlo por pantalla
             productImage.setImageBitmap(bMapFinal);
 
+            Log.i("IMAGEN", productImage.getMeasuredHeight() + "H");
+            Log.i("IMAGEN", productImage.getMeasuredWidth()+"W");
             imagenTomada = true;
         }
         else if (requestCode == SELECT_PICTURE && resultCode == RESULT_OK) {
