@@ -30,7 +30,9 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
@@ -95,6 +97,7 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
     int unitsToAdd = 1;
     private boolean imagenTomada = false;
     String imagePath;
+    private Bitmap bMapFinal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -213,21 +216,25 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
                 if (!validaciones())
                     return true;
 
-                if (imagenTomada = true) {
-                    renombradoFinal();
-                }
-                else {
-                    copiadoFinal();
-                }
-                guardarDatos();
-                Intent i = new Intent();
-                i.putExtra(PRODUCT, product);
-                setResult(RESULT_OK, i);
-                onBackPressed();
+                confirmar();
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void finalizar() {
+        if (imagenTomada == true) {
+            renombradoFinal();
+        }
+        else {
+            copiadoFinal();
+        }
+        guardarDatos();
+        Intent i = new Intent();
+        i.putExtra(PRODUCT, product);
+        setResult(RESULT_OK, i);
+        onBackPressed();
     }
 
     @Override
@@ -372,6 +379,25 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
     }
 
 
+    public void confirmar() {
+        String[] items = {"Sí", "No"};
+
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(NewProductActivity.this);
+
+        builder.setTitle("¿Desea guardar el producto? ")
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+                        Log.i("Dialogos", "Opción elegida: " + items[item]);
+                        if (items[item].equals("Sí")) {
+                            finalizar();
+                        }
+                    }
+                }).show();
+
+    }
+
+
     public void changeImage(View v) {
         String[] items = {"Cámara", "Galería"};
 
@@ -465,46 +491,27 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
     }
 
     private boolean copiadoFinal() {
-        try {
+        File imagesFolder = new File(
+                Environment.getExternalStorageDirectory(), "QueLista");
 
-            File imagesFolder = new File(
-                    Environment.getExternalStorageDirectory(), "QueLista");
-
-            if (imagesFolder.exists()) {
-
-
-                File a = new File(imagePath);
-                File b = new File(imagesFolder, code.getText().toString() + ".jpg");
-
-
-                InputStream in = new FileInputStream(a);
-                OutputStream out = new FileOutputStream(b);
-
-                // Copy the bits from instream to outstream
-                byte[] buf = new byte[1024];
-                int len;
-
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
-
-                in.close();
-                out.close();
-
-                Log.v("FILE", "Copy file successful.");
-
-            } else {
-                Log.v("FILE", "Copy file failed. Source file missing.");
-            }
-
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!imagesFolder.exists()) {
+            imagesFolder.mkdirs();
         }
 
+        File to = new File(imagesFolder, code.getText().toString() + ".jpg");
 
-        return false;
+        try {
+            FileOutputStream fos = new FileOutputStream(to);
+            bMapFinal.compress(Bitmap.CompressFormat.JPEG, 90, fos);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            Log.d("FILE", "File not found: " + e.getMessage());
+        } catch (IOException e) {
+            Log.d("FILE", "Error accessing file: " + e.getMessage());
+        }
+
+        return true;
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -512,12 +519,12 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
         if (requestCode == TAKE_PICTURE && resultCode == RESULT_OK) {
             //Creamos un bitmap con la imagen recientemente
             //almacenada en la memoria
-            Bitmap bMap = BitmapFactory.decodeFile(
+            bMapFinal = BitmapFactory.decodeFile(
                     Environment.getExternalStorageDirectory() +
                             "/QueLista/" + "foto.jpg");
             //Añadimos el bitmap al imageView para
             //mostrarlo por pantalla
-            productImage.setImageBitmap(bMap);
+            productImage.setImageBitmap(bMapFinal);
 
             imagenTomada = true;
         }
@@ -528,8 +535,8 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
             Uri selectedImageUri = data.getData();
             imagePath = getRealPathFromURI(selectedImageUri);
 
-            Bitmap bMap = BitmapFactory.decodeFile(imagePath);
-            productImage.setImageBitmap(bMap);
+            bMapFinal = BitmapFactory.decodeFile(imagePath);
+            productImage.setImageBitmap(bMapFinal);
             imagenTomada = false;
         }
     }
