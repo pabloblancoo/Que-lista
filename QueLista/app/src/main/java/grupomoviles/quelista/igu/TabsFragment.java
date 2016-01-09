@@ -2,7 +2,10 @@ package grupomoviles.quelista.igu;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -16,11 +19,23 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.lang.reflect.Field;
 
@@ -34,6 +49,55 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
     private static FragmentPagerAdapter myAdapter;
     private View v = null;
 
+    private MenuItem mSearchAction;
+    private boolean isSearchOpened = false;
+    private EditText edtSeach;
+    private View searchContainer;
+    private EditText toolbarSearchView;
+    private ImageView searchClearButton;
+    private ImageView botonBusqueda;
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+
+        MenuItem item = menu.findItem(R.id.action_search);
+
+        // get the searview
+        MenuItem mItem = menu.findItem(R.id.searchView);
+        SearchView mSearchView = (SearchView) mItem.getActionView();
+
+        // Execute this when searching
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String arg0) {
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String arg0) {
+
+                return false;
+            }
+        });
+
+        super.onCreateOptionsMenu(menu, inflater);
+        //searchView.setOnQueryTextListener(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_search:
+                //handleMenuSearch();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Nullable
     @Override
@@ -211,5 +275,54 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
 
             return cartFragment;
         }
+    }
+
+    public void buscador(boolean visible) {
+        if (visible) {
+            // Stops user from being able to open drawer while searching
+            //mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+            // Hide search button, display EditText
+            //menu.findItem(R.id.action_search).setVisible(false);
+            v.findViewById(R.id.search_button).setVisibility(View.GONE);
+            searchContainer.setVisibility(View.VISIBLE);
+
+            // Animate the home icon to the back arrow
+            //toggleActionBarIcon(ActionDrawableState.ARROW, mDrawerToggle, true);
+
+            // Shift focus to the search EditText
+            toolbarSearchView.requestFocus();
+
+            // Pop up the soft keyboard
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    toolbarSearchView.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, 0, 0, 0));
+                    toolbarSearchView.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, 0, 0));
+                }
+            }, 200);
+        } else {
+            // Allows user to open drawer again
+            //mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
+            // Hide the EditText and put the search button back on the Toolbar.
+            // This sometimes fails when it isn't postDelayed(), don't know why.
+            toolbarSearchView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    toolbarSearchView.setText("");
+                    searchContainer.setVisibility(View.GONE);
+                    //menu.findItem(R.id.action_search).setVisible(true);
+                    v.findViewById(R.id.search_button).setVisibility(View.VISIBLE);
+                }
+            }, 200);
+
+            // Turn the home button back into a drawer icon
+            //toggleActionBarIcon(ActionDrawableState.BURGER, mDrawerToggle, true);
+
+            // Hide the keyboard because the search box has been hidden
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(toolbarSearchView.getWindowToken(), 0);
+        }
+
     }
 }

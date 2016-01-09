@@ -253,4 +253,5 @@ public class MainActivity extends AppCompatActivity {
     public CartAdapter getCartAdapter() {
         return cartAdapter;
     }
+
 }
