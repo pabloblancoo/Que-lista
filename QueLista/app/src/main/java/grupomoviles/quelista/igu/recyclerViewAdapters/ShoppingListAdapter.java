@@ -42,6 +42,13 @@ public class ShoppingListAdapter extends MyAdapter {
         items = Stream.of(shoppingList.getProducts().values()).collect(Collectors.toList());
     }
 
+    public void filtrar(String cadena) {
+        items = Stream.of(shoppingList.getProducts().values())
+                .filter(p -> p.getDescription().contains(cadena))
+                .sortBy(p -> p.getDescription() + p.getNetValue())
+                .collect(Collectors.toList());
+    }
+
     @Override
     public void onResultProductInfoActivity(Product product) {
         items.remove(product);

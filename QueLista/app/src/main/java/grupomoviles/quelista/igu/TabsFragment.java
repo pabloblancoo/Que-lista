@@ -8,21 +8,16 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,10 +29,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import java.lang.reflect.Field;
 
 import grupomoviles.quelista.R;
 
@@ -57,33 +48,12 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
     private ImageView searchClearButton;
     private ImageView botonBusqueda;
 
+    private int posicion = 0;
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
-
-        MenuItem item = menu.findItem(R.id.action_search);
-
-        // get the searview
-        MenuItem mItem = menu.findItem(R.id.searchView);
-        SearchView mSearchView = (SearchView) mItem.getActionView();
-
-        // Execute this when searching
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String arg0) {
-
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String arg0) {
-
-                return false;
-            }
-        });
-
         super.onCreateOptionsMenu(menu, inflater);
-        //searchView.setOnQueryTextListener(this);
     }
 
     @Override
@@ -106,6 +76,42 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
         v =  inflater.inflate(R.layout.fragment_tabs,null);
         tabLayout = (TabLayout) v.findViewById(R.id.tab_layout);
         viewPager = (ViewPager) v.findViewById(R.id.viewpager);
+
+
+        SearchView mSearchView = (SearchView)v.findViewById(R.id.searchView);
+
+        // Execute this when searching
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String arg0) {
+                Log.i("SEARCH_SUBMIT", "Estoy buscando: " + arg0);
+                ((MainActivity) getActivity()).getPantryAdapter().filtrar(arg0);
+                ((MainActivity) getActivity()).getShoppingListAdapter().filtrar(arg0);
+                ((MainActivity) getActivity()).getCartAdapter().filtrar(arg0);
+
+
+                ((MainActivity) getActivity()).getPantryAdapter().notifyDataSetChanged();
+
+                ((MainActivity) getActivity()).getShoppingListAdapter().notifyDataSetChanged();
+
+                ((MainActivity) getActivity()).getCartAdapter().notifyDataSetChanged();
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String arg0) {
+                ((MainActivity) getActivity()).getPantryAdapter().filtrar(arg0);
+                ((MainActivity) getActivity()).getShoppingListAdapter().filtrar(arg0);
+                ((MainActivity) getActivity()).getCartAdapter().filtrar(arg0);
+                Log.i("SEARCH","Estoy buscando: " + arg0);
+                return false;
+            }
+        });
+
+
+
+
 
         /* Ya redefinido en el onAttach
         if(myAdapter == null)
@@ -170,6 +176,7 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
     }
 
     public void setTab(int tab) {
+        posicion = tab;
         viewPager.setCurrentItem(tab);
         ((MainActivity) getActivity()).getPantryAdapter().getPantry().actualizar();
         ((Toolbar)getActivity().findViewById(R.id.toolbar)).setTitle(myAdapter.getPageTitle(tab));

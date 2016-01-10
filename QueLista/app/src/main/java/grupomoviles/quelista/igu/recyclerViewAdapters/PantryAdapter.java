@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
+import com.annimon.stream.function.Function;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.androidviewhover.BlurLayout;
@@ -47,8 +48,8 @@ public class PantryAdapter extends MyAdapter {
 
     @Override
     public void onResultNfcActivity(Product product) {
-        Stream.of(items).forEach(i ->{
-            if(i.getCode().equals(product.getCode()))
+        Stream.of(items).forEach(i -> {
+            if (i.getCode().equals(product.getCode()))
                 i.setStock(i.getStock() + product.getStock());
         });
         super.onResultNfcActivity(product);
@@ -56,6 +57,13 @@ public class PantryAdapter extends MyAdapter {
 
     public void swipeList() {
         items = Stream.of(pantry.getProducts().values()).sortBy(p -> p.getDescription() + p.getNetValue()).collect(Collectors.toList());
+    }
+
+    public void filtrar(String cadena) {
+        items = Stream.of(pantry.getProducts().values())
+                .filter(p -> p.getDescription().contains(cadena))
+                .sortBy(p -> p.getDescription() + p.getNetValue())
+                .collect(Collectors.toList());
     }
 
     @Override

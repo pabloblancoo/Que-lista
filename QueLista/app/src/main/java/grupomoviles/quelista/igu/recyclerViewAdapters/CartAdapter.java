@@ -94,6 +94,13 @@ public class CartAdapter extends MyAdapter {
         items = Stream.of(items).sortBy(i -> i.getDescription().charAt(0)).collect(Collectors.toList());
     }
 
+    public void filtrar(String cadena) {
+        items = Stream.of(cart.getProducts().values())
+                .filter(p -> p.getDescription().contains(cadena))
+                .sortBy(p -> p.getDescription() + p.getNetValue())
+                .collect(Collectors.toList());
+    }
+
     public class CartViewHolder extends MyViewHolder{
 
         //Hover
