@@ -32,6 +32,11 @@ public class ShoppingListAdapter extends MyAdapter {
     public ShoppingListAdapter(Context context, ShoppingList shoppingList) {
         super(context, Stream.of(shoppingList.getProducts().values()).collect(Collectors.toList()));
         this.shoppingList = shoppingList;
+
+        List<Product> temp = cargarBDLocal();
+        if(temp!=null && !temp.isEmpty()) {
+            Stream.of(temp).forEach(p -> this.onResultProductInfoActivity(p));
+        }
     }
 
     public ShoppingList getShoppingList() {
@@ -106,8 +111,9 @@ public class ShoppingListAdapter extends MyAdapter {
     }
 
     public void addToShoppingList(Product product) {
-        shoppingList.add(product);
         product.setShoppingListUnits(Product.NOT_IN_SHOPPING_LIST + 1);
+        shoppingList.add(product);
+        guardarDatosBDLocal(product);
         items.add(product);
         items = Stream.of(items).sortBy(i -> i.getDescription().charAt(0)).collect(Collectors.toList());
     }
@@ -133,10 +139,13 @@ public class ShoppingListAdapter extends MyAdapter {
             switch (v.getId()) {
                 case R.id.btnPlusStock:
                     units.setText(String.valueOf(product.increaseShoppingListUnits()));
+                    guardarDatosBDLocal(product);
                     break;
                 case R.id.btnMinusStock:
-                    if (product.getShoppingListUnits() > 1)
+                    if (product.getShoppingListUnits() > 1) {
                         units.setText(String.valueOf(product.decreaseShoppingListUnits()));
+                        guardarDatosBDLocal(product);
+                    }
                     else {
                         AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
                         dialog.setTitle("¿Desea eliminar este producto de la lista de la compra?");
@@ -172,6 +181,8 @@ public class ShoppingListAdapter extends MyAdapter {
         private void removeProduct() {
             ((SwipeLayout)itemView).close(false);
             blurLayout.dismissHover();
+            product.setShoppingListUnits(0);
+            guardarDatosBDLocal(product);
             adapter.items.remove(product);
             shoppingList.remove(product);
             adapter.notifyItemRemoved(getAdapterPosition());

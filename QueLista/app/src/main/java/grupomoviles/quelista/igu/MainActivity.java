@@ -6,6 +6,7 @@ import android.nfc.NfcAdapter;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 
 import java.security.Permission;
@@ -72,10 +73,16 @@ public class MainActivity extends AppCompatActivity {
         shoppingListAdapter = new ShoppingListAdapter(this, new ShoppingList());
         cartAdapter = new CartAdapter(this, new Cart());
 
-        DownloadImageTask task;
-        task = new DownloadImageTask(this);
-        task.execute("5449000000996", "8410297112041", "8410297170058", "8410188012092",
-                "5449000009067", "8410000826937", "8410014307682", "8410014312495", "5000127281752");
+        if(pantryAdapter.getPantry().getProducts().size() == 0
+                && shoppingListAdapter.getShoppingList().getProducts().size() == 0
+                && cartAdapter.getCart().getProducts().size() == 0) {
+
+            DownloadImageTask task;
+            task = new DownloadImageTask(this);
+            task.execute("5449000000996", "8410297112041", "8410297170058", "8410188012092",
+                    "5449000009067", "8410000826937", "8410014307682", "8410014312495", "5000127281752");
+
+        }
 
         setContentView(R.layout.activity_main);
         setUpNavigationDrawer();
@@ -101,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i("requestCode", "Codigo: " + requestCode);
         if (ProductInfoActivity.REQUEST_CODE == requestCode && resultCode == RESULT_OK) {
             Product product = (Product) data.getExtras().get(ProductInfoActivity.PRODUCT);
             pantryAdapter.onResultProductInfoActivity(product);
@@ -109,7 +117,8 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (NewProductActivity.REQUEST_CODE == requestCode && resultCode == RESULT_OK) {
             Product product = (Product) data.getExtras().get(NewProductActivity.PRODUCT);
-            pantryAdapter.onResultProductInfoActivity(product);
+            Log.i("PRODUCTO_NEW", "Codigo: " + product.getCode() + " -- Unidades: " + product.getStock());
+            pantryAdapter.onResultNewProductActivity(product);
             shoppingListAdapter.onResultProductInfoActivity(product);
             cartAdapter.onResultProductInfoActivity(product);
         }

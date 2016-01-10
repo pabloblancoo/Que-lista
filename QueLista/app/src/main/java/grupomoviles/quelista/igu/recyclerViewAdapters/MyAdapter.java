@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import grupomoviles.quelista.R;
 import grupomoviles.quelista.igu.ProductInfoActivity;
+import grupomoviles.quelista.localDatabase.ProductDataSource;
 import grupomoviles.quelista.logic.Product;
 
 /**
@@ -140,5 +142,28 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
             notifyDataSetChanged();
         }
 
+    }
+
+    public List<Product> cargarBDLocal() {
+        List<Product> p = null;
+        ProductDataSource database = new ProductDataSource(context);
+        database.openDatabase();
+        p = database.getAllProducts();
+        database.close();
+
+        //Stream.of(p).forEach(x -> Log.i("PANTRY", "PRODUCTO " + x.getCode()));
+
+        return  p;
+    }
+
+    public void guardarDatosBDLocal(Product product) {
+        ProductDataSource database = new ProductDataSource(context);
+        database.openDatabase();
+        if(product.getStock()==-1 && product.getShoppingListUnits()==0 && product.getCartUnits()==0) {
+            database.deleteProduct(product.getCode());
+        } else {
+            database.insertProduct(product);
+        }
+        database.close();
     }
 }

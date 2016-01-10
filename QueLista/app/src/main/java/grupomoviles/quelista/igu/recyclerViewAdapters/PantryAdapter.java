@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.androidviewhover.BlurLayout;
 import com.daimajia.swipe.SwipeLayout;
+
+import java.util.List;
 
 import grupomoviles.quelista.R;
 import grupomoviles.quelista.igu.MainActivity;
@@ -31,6 +34,15 @@ public class PantryAdapter extends MyAdapter {
     public PantryAdapter(Context context, Pantry pantry) {
         super(context, Stream.of(pantry.getProducts().values()).collect(Collectors.toList()));
         this.pantry = pantry;
+        
+        List<Product> temp = cargarBDLocal();
+        if(temp!=null && !temp.isEmpty()) {
+            Stream.of(temp).forEach(p -> this.onResultProductInfoActivity(p));
+        }
+
+        Stream.of(this.items).forEach(x -> Log.i("PANTRY", "PRODUCTO " + x.getCode() + " -- Unidades: " + x.getStock()));
+        //Stream.of(items).forEach(p -> pantry.getProducts().put(p.getCode(), p));
+        //Stream.of(items).forEach(p -> Log.i("PANTRY", "PRODUCTO " + p.getCode()));
     }
 
     public Pantry getPantry() {
@@ -43,6 +55,29 @@ public class PantryAdapter extends MyAdapter {
         items.remove(product);
         if(pantry.onResultProductInfoActivity(product))
             items.add(product);
+        super.onResultProductInfoActivity(product);
+    }
+
+    //@Override
+    public void onResultNewProductActivity(Product product) {
+        boolean encontrado = false;
+       /* Stream.of(items).forEach(i -> {
+            if (i.getCode().equals(product.getCode()))
+                i.setStock(i.getStock() + product.getStock());
+        });*/
+
+        /*for (Product i :items) {
+            if (i.getCode().equals(product.getCode())) {
+                i.setStock(i.getStock() + product.getStock());
+                encontrado = true;
+            }
+        }
+
+        if(!encontrado) {
+            items.add(product);
+        }*/
+
+        items.add(product);
         super.onResultProductInfoActivity(product);
     }
 
@@ -131,10 +166,13 @@ public class PantryAdapter extends MyAdapter {
             switch(v.getId()) {
                 case R.id.btnPlusStock:
                     units.setText(String.valueOf(product.increaseStock()));
+                    guardarDatosBDLocal(product);
                     break;
                 case R.id.btnMinusStock:
-                    if (product.getStock() > 0)
+                    if (product.getStock() > 0) {
                         units.setText(String.valueOf(product.decreaseStock()));
+                        guardarDatosBDLocal(product);
+                    }
                     else {
                         AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
                         dialog.setMessage("¿Desea eliminar este producto de la despensa?");
@@ -170,6 +208,8 @@ public class PantryAdapter extends MyAdapter {
         private void removeProduct() {
             ((SwipeLayout)itemView).close(false);
             blurLayout.dismissHover();
+            product.setStock(-1);
+            guardarDatosBDLocal(product);
             adapter.items.remove(product);
             pantry.remove(product);
             adapter.notifyItemRemoved(getAdapterPosition());

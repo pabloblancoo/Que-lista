@@ -34,6 +34,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         p.show();
     }
 
+
     public Bitmap doInBackground(String... product) {
         FTPClient f = new FTPClient();
 

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -145,6 +146,7 @@ public class ProductDataSource {
                     product = getProductWithDate(cursor);
             } catch (ParseException e) {
                 System.out.println("Error en la fecha");
+                Log.e("LOCALDATABASE", "Error en la fecha");
             }
 
 

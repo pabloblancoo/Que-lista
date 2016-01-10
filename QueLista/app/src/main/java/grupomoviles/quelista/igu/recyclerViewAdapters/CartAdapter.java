@@ -15,6 +15,8 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.androidviewhover.BlurLayout;
 import com.daimajia.swipe.SwipeLayout;
 
+import java.util.List;
+
 import grupomoviles.quelista.R;
 import grupomoviles.quelista.logic.Cart;
 import grupomoviles.quelista.logic.Product;
@@ -26,6 +28,11 @@ public class CartAdapter extends MyAdapter {
     public CartAdapter(Context context, Cart cart) {
         super(context, Stream.of(cart.getProducts().values()).collect(Collectors.toList()));
         this.cart = cart;
+
+        List<Product> temp = cargarBDLocal();
+        if(temp!=null && !temp.isEmpty()) {
+            Stream.of(temp).forEach(p -> this.onResultProductInfoActivity(p));
+        }
     }
 
     public Cart getCart() {
@@ -88,8 +95,9 @@ public class CartAdapter extends MyAdapter {
     }
 
     public void addToCart(Product product) {
-        cart.add(product);
         product.setCartUnits(Product.NOT_IN_CART + 1);
+        cart.add(product);
+        guardarDatosBDLocal(product);
         items.add(product);
         items = Stream.of(items).sortBy(i -> i.getDescription().charAt(0)).collect(Collectors.toList());
     }
@@ -120,10 +128,13 @@ public class CartAdapter extends MyAdapter {
             switch (v.getId()) {
                 case R.id.btnPlusStock:
                     units.setText(String.valueOf(product.increaseCartUnits()));
+                    guardarDatosBDLocal(product);
                     break;
                 case R.id.btnMinusStock:
-                    if (product.getCartUnits() > 1)
+                    if (product.getCartUnits() > 1) {
                         units.setText(String.valueOf(product.decreaseCartUnits()));
+                        guardarDatosBDLocal(product);
+                    }
                     else {
                         AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
                         dialog.setTitle("¿Desea eliminar este producto del carrito?");
@@ -148,6 +159,8 @@ public class CartAdapter extends MyAdapter {
         private void removeProduct() {
             ((SwipeLayout)itemView).close(false);
             blurLayout.dismissHover();
+            product.setCartUnits(0);
+            guardarDatosBDLocal(product);
             adapter.items.remove(product);
             cart.remove(product);
             adapter.notifyItemRemoved(getAdapterPosition());

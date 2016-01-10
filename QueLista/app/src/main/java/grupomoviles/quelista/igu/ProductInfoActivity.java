@@ -396,7 +396,7 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         database.deleteProduct(product.getCode());
         database.close();
 
-        guardarDatos();
+        //guardarDatos();
 
     }
 

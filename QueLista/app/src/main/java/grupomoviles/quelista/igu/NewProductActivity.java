@@ -42,7 +42,7 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
     public static final String PRODUCT = "PRODUCT";
     public static final String NEWPRODUCT = "NEWPRODUCT";
     public static final String NEWPRODUCTCODE = "NEWPRODUCTCODE";
-    public static final int REQUEST_CODE = 1;
+    public static final int REQUEST_CODE = 22;
     private boolean newProduct = true;
 
     private static int TAKE_PICTURE = 1;
@@ -321,10 +321,10 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
                 brand.getText().toString(),
                 netValue.getText().toString(),
                 category.getText().toString(),
-                category.getText().toString(),
-                Integer.parseInt(unitsPantry.getText().toString())
+                category.getText().toString()
         );
 
+        product.setStock(Integer.parseInt(unitsPantry.getText().toString()));
         product.setShoppingListUnits(Integer.parseInt(unitsLista.getText().toString()));
         product.setCartUnits(Integer.parseInt(unitsCarrito.getText().toString()));
 
