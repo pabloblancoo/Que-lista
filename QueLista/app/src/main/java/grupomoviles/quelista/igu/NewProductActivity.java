@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -168,7 +170,7 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
             }
         });
 
-        productImage.setImageResource(R.drawable.cereales_miel_pops);
+        productImage.setImageResource(R.drawable.defecto);
 
         unitsPantry.setText(0 + "");
         unitsLista.setText(0 + "");
@@ -476,6 +478,11 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
         File to = new File(imagesFolder, code.getText().toString() + ".jpg");
 
         try {
+            if(bMapFinal == null){
+                bMapFinal = BitmapFactory.decodeResource(getResources(),R.drawable.defecto);
+                productImage.setImageBitmap(bMapFinal);
+                imagenTomada = false;
+            }
             if(bMapFinal.getHeight()>=bMapFinal.getWidth()) {
                 aspectRatio = bMapFinal.getHeight() /
                         (float) bMapFinal.getWidth();
@@ -538,6 +545,7 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
             productImage.setImageBitmap(bMapFinal);
             imagenTomada = false;
         }
+
     }
     public String getRealPathFromURI(Uri contentURI) {
         Uri contentUri = contentURI;

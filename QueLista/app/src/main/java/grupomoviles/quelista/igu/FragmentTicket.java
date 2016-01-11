@@ -57,8 +57,9 @@ public class FragmentTicket extends Fragment {
                 e.printStackTrace();
             }
         }
-        Stream.of(products).forEach(p -> ((ScanNFCActivity) getActivity()).getTicketAdapter().getTicket().getProducts().put(p.getCode(), p));
-
+        if(products != null) {
+            Stream.of(products).forEach(p -> ((ScanNFCActivity) getActivity()).getTicketAdapter().getTicket().getProducts().put(p.getCode(), p));
+        }
         recycler.setAdapter(((ScanNFCActivity) getActivity()).getTicketAdapter());
         ((ScanNFCActivity) getActivity()).getTicketAdapter().swipeList();
 
