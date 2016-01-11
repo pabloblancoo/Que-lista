@@ -381,8 +381,18 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="1 unidad"
+                            android:text="1"
                             android:id="@+id/txUnitsTakes"
+                            android:layout_gravity="center"
+                            android:gravity="center_vertical"
+                            android:focusable="true" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="2dp"
+                            android:text="unidad"
+                            android:id="@+id/txUnitsTakesLabel"
                             android:layout_gravity="center"
                             android:gravity="center_vertical" />
 
@@ -393,15 +403,15 @@
                             android:layout_marginLeft="6dp">
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
                                 android:id="@+id/btnPlusUnitsTakes"
                                 android:background="@drawable/arrow_up"
                                 android:onClick="aumentarUnitsDescontar" />
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
                                 android:id="@+id/btnMinusUnitsTakes"
                                 android:background="@drawable/arrow_down"
                                 android:onClick="disminuirUnitsDescontar" />
@@ -419,9 +429,18 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="1 día"
+                            android:text="1"
                             android:id="@+id/txDaysTakes"
                             android:gravity="center_vertical" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="dia"
+                            android:id="@+id/txDaysTakesLabel"
+                            android:layout_gravity="center"
+                            android:gravity="center_vertical"
+                            android:layout_marginLeft="2dp" />
 
                         <LinearLayout
                             android:orientation="vertical"
@@ -430,15 +449,15 @@
                             android:layout_marginLeft="6dp">
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
                                 android:id="@+id/btnPlusDaysTakes"
                                 android:background="@drawable/arrow_up"
                                 android:onClick="aumentarDays" />
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
                                 android:id="@+id/btnMinusDaysTakes"
                                 android:background="@drawable/arrow_down"
                                 android:onClick="disminuirDays" />
@@ -469,7 +488,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/switchAddToShoppingList"
-                        android:text="Añadir a la lista de la compra" />
+                        android:text="Añadir a la lista de la compra"
+                        android:layout_marginBottom="3dp"/>
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -496,15 +516,15 @@
                             android:layout_marginLeft="6dp">
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
                                 android:id="@+id/btnPlusWhenHave"
                                 android:background="@drawable/arrow_up"
                                 android:onClick="aumentarWhenHave" />
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
                                 android:id="@+id/btnMinusWhenHave"
                                 android:background="@drawable/arrow_down"
                                 android:onClick="disminuirWhenHave" />
@@ -513,12 +533,23 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0 unidades"
+                            android:text="0"
                             android:id="@+id/txUnitsWhenHave"
+                            android:gravity="center_vertical"
+                            android:layout_alignParentTop="true"
+                            android:layout_toStartOf="@+id/txUnitsWhenHaveLabel"
+                            android:layout_alignBottom="@+id/txUnitsWhenHaveLabel" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="unidades"
+                            android:id="@+id/txUnitsWhenHaveLabel"
                             android:layout_toStartOf="@+id/linearLayout"
                             android:gravity="center_vertical"
                             android:layout_alignTop="@+id/linearLayout"
-                            android:layout_alignBottom="@+id/linearLayout" />
+                            android:layout_alignBottom="@+id/linearLayout"
+                            android:layout_marginLeft="2dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -532,12 +563,23 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1 unidad"
+                            android:text="1"
                             android:id="@+id/txUnitsAddWhenHave"
+                            android:gravity="center_vertical"
+                            android:layout_alignTop="@+id/txUnitsAddWhenHaveLabel"
+                            android:layout_toStartOf="@+id/txUnitsAddWhenHaveLabel"
+                            android:layout_alignBottom="@+id/txUnitsAddWhenHaveLabel" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="unidad"
+                            android:id="@+id/txUnitsAddWhenHaveLabel"
                             android:gravity="center_vertical"
                             android:layout_alignTop="@+id/linearLayout2"
                             android:layout_toStartOf="@+id/linearLayout2"
-                            android:layout_alignBottom="@+id/linearLayout2" />
+                            android:layout_alignBottom="@+id/linearLayout2"
+                            android:layout_marginLeft="2dp" />
 
                         <LinearLayout
                             android:orientation="vertical"
@@ -550,15 +592,15 @@
                             android:layout_marginLeft="6dp">
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
                                 android:id="@+id/btnPlusAddWhenHave"
                                 android:background="@drawable/arrow_up"
                                 android:onClick="aumentarAddWhenHave" />
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
                                 android:id="@+id/btnMinusAddWhenHave"
                                 android:background="@drawable/arrow_down"
                                 android:onClick="disminuirAddWhenHave" />

@@ -111,6 +111,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search">Buscar</string>
+    <string name="unitsTakes">unidad</string>
+    <string name="unitsTakesMore">unidades</string>
+    <string name="dayTakes">dia</string>
+    <string name="dayTakesMore">dias</string>
+
 
 
 </resources>

@@ -172,9 +172,9 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
 
         productImage.setImageResource(R.drawable.defecto);
 
-        unitsPantry.setText(0 + "");
-        unitsLista.setText(0 + "");
-        unitsCarrito.setText(0 + "");
+        unitsPantry.setText(String.valueOf(0));
+        unitsLista.setText(String.valueOf(0));
+        unitsCarrito.setText(String.valueOf(0));
 
         //Date date = product.getLastUpdate();
         Date date = null;
@@ -183,8 +183,8 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
             switchCompatTakeUnits.setChecked(false);
         } else {
             switchCompatTakeUnits.setChecked(true);
-            unitsDescontar.setText(product.getConsumeUnits() + " unidad");
-            unitsDays.setText(product.getConsumeCycle() + " día");
+            unitsDescontar.setText(String.valueOf(product.getConsumeUnits()));
+            unitsDays.setText(String.valueOf(product.getConsumeCycle()));
         }
 
         minStock = -1;
@@ -193,8 +193,8 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
             switchCompatAddToShoppingList.setChecked(false);
         } else {
             switchCompatAddToShoppingList.setChecked(true);
-            unitsWhenHave.setText(0 + " unidades");
-            unitsAddWhenHave.setText(0 + " unidad");
+            unitsWhenHave.setText(String.valueOf(0));
+            unitsAddWhenHave.setText(String.valueOf(0));
         }
 
     }
@@ -237,74 +237,73 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
     }
 
     public void aumentarPantry(View view) {
-        makeChanges(unitsPantry, "", true);
+        makeChanges(unitsPantry, true);
     }
 
     public void disminuirPantry(View view) {
-        makeChanges(unitsPantry, "", false);
+        makeChanges(unitsPantry, false);
     }
 
     public void aumentarShoppingList(View view) {
-        makeChanges(unitsLista, "", true);
+        makeChanges(unitsLista,  true);
     }
 
     public void disminuirShoppingList(View view) {
-        makeChanges(unitsLista, "", false);
+        makeChanges(unitsLista, false);
     }
 
     public void aumentarCartList(View view) {
-        makeChanges(unitsCarrito, "", true);
+        makeChanges(unitsCarrito, true);
     }
 
     public void disminuirCartList(View view) {
-        makeChanges(unitsCarrito, "", false);
+        makeChanges(unitsCarrito, false);
     }
 
     public void aumentarUnitsDescontar(View view) {
-        makeChanges(unitsDescontar, " unidad", true);
+        makeChanges(unitsDescontar, true);
     }
 
     public void disminuirUnitsDescontar(View view) {
-        makeChanges(unitsDescontar, " unidad", false);
+        makeChanges(unitsDescontar, false);
     }
 
     public void aumentarDays(View view) {
-        makeChanges(unitsDays, " día", true);
+        makeChanges(unitsDays, true);
     }
 
     public void disminuirDays(View view) {
-        makeChanges(unitsDays, " día", false);
+        makeChanges(unitsDays,  false);
     }
 
     public void aumentarWhenHave(View view) {
         //int num = Integer.parseInt(unitsWhenHave.getText().toString());
         //unitsWhenHave.setText(String.valueOf(num++));
-        makeChanges(unitsWhenHave, " unidades", true);
-        minStock = Integer.parseInt(unitsWhenHave.getText().toString().replace(" unidades", ""));
+        makeChanges(unitsWhenHave,  true);
+        minStock = Integer.parseInt(unitsWhenHave.getText().toString());
     }
 
     public void disminuirWhenHave(View view) {
         //int num = Integer.parseInt(unitsWhenHave.getText().toString());
         //unitsWhenHave.setText(String.valueOf(num--));
-        makeChanges(unitsWhenHave, " unidades", false);
-        minStock = Integer.parseInt(unitsWhenHave.getText().toString().replace(" unidades", ""));
+        makeChanges(unitsWhenHave, false);
+        minStock = Integer.parseInt(unitsWhenHave.getText().toString());
     }
 
     public void aumentarAddWhenHave(View view) {
         //int num = Integer.parseInt(unitsAddWhenHave.getText().toString());
         //unitsAddWhenHave.setText(String.valueOf(num++));
-        makeChanges(unitsAddWhenHave, " unidad", true);
+        makeChanges(unitsAddWhenHave, true);
     }
 
     public void disminuirAddWhenHave(View view) {
         //int num = Integer.parseInt(unitsAddWhenHave.getText().toString());
         // unitsAddWhenHave.setText(String.valueOf(num--));
-        makeChanges(unitsAddWhenHave, " unidad", false);
+        makeChanges(unitsAddWhenHave, false);
     }
 
-    private void makeChanges(TextView textView, String old, boolean sum) {
+    private void makeChanges(TextView textView, boolean sum) {
         String texto = textView.getText().toString();
-        texto = texto.replace(old, "");
         int units = Integer.parseInt(texto);
         if (sum)
             units++;
@@ -312,7 +311,7 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
             if (units > 0)
                 units--;
         }
-        textView.setText(units + old);
+        textView.setText(String.valueOf(units));
 
     }
 
@@ -333,12 +332,12 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
 
         if (date != null) {
             product.setLastUpdate(date);
-            product.setConsumeUnits(Integer.parseInt(unitsDescontar.getText().toString().replace(" unidad", "")));
-            product.setConsumeCycle(Integer.parseInt(unitsDays.getText().toString().replace(" día", "")));
+            product.setConsumeUnits(Integer.parseInt(unitsDescontar.getText().toString()));
+            product.setConsumeCycle(Integer.parseInt(unitsDays.getText().toString()));
         }
         if (minStock > -1) {
             product.setMinStock(minStock);
-            product.setUnitsToAdd(Integer.parseInt(unitsAddWhenHave.getText().toString().replace(" unidad", "")));
+            product.setUnitsToAdd(Integer.parseInt(unitsAddWhenHave.getText().toString()));
         }
 
         ProductDataSource database = new ProductDataSource(this);
@@ -362,7 +361,7 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
         else if (compoundButton.getId() == switchCompatAddToShoppingList.getId()) {
             if (b) {
                 findViewById(R.id.layoutAddToShoppingListSwitch).setVisibility(View.VISIBLE);
-                minStock = Integer.parseInt(unitsWhenHave.getText().toString().replace(" unidades", ""));
+                minStock = Integer.parseInt(unitsWhenHave.getText().toString());
             } else {
                 findViewById(R.id.layoutAddToShoppingListSwitch).setVisibility(View.GONE);
                 minStock = -1;
@@ -479,7 +478,7 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
 
         try {
             if(bMapFinal == null){
-                bMapFinal = BitmapFactory.decodeResource(getResources(),R.drawable.defecto);
+                bMapFinal = BitmapFactory.decodeResource(getResources(), R.drawable.defecto);
                 productImage.setImageBitmap(bMapFinal);
                 imagenTomada = false;
             }
