@@ -3,6 +3,7 @@ package grupomoviles.quelista.igu;
 
 import android.app.Activity;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -14,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
@@ -79,6 +81,7 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
 
 
         SearchView mSearchView = (SearchView)v.findViewById(R.id.searchView);
+        mSearchView.setQueryHint("Buscar...");
 
         // Execute this when searching
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -89,11 +92,8 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
                 ((MainActivity) getActivity()).getShoppingListAdapter().filtrar(arg0);
                 ((MainActivity) getActivity()).getCartAdapter().filtrar(arg0);
 
-
                 ((MainActivity) getActivity()).getPantryAdapter().notifyDataSetChanged();
-
                 ((MainActivity) getActivity()).getShoppingListAdapter().notifyDataSetChanged();
-
                 ((MainActivity) getActivity()).getCartAdapter().notifyDataSetChanged();
 
                 return true;
@@ -104,21 +104,13 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
                 ((MainActivity) getActivity()).getPantryAdapter().filtrar(arg0);
                 ((MainActivity) getActivity()).getShoppingListAdapter().filtrar(arg0);
                 ((MainActivity) getActivity()).getCartAdapter().filtrar(arg0);
-                Log.i("SEARCH","Estoy buscando: " + arg0);
+                Log.i("SEARCH", "Estoy buscando: " + arg0);
+
                 return false;
             }
         });
 
-
-
-
-
-        /* Ya redefinido en el onAttach
-        if(myAdapter == null)
-            myAdapter = new MyAdapter(getFragmentManager());
-        */
         viewPager.setAdapter(myAdapter);
-
         tabLayout.setOnTabSelectedListener(null);
 
         //Soluciona error de destrucción de fragmentos...

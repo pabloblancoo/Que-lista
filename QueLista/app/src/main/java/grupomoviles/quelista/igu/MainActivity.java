@@ -1,11 +1,13 @@
 package grupomoviles.quelista.igu;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ventana_carga);
+        setContentView(R.layout.activity_main);
         long t1,t2;
         t1 = System.currentTimeMillis();
         // Cargar valores por defecto
@@ -146,12 +148,19 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (product == null) {
-                Intent intent = new Intent(MainActivity.this, NewProductActivity.class);
-                intent.putExtra(NewProductActivity.NEWPRODUCTCODE, content);
-                startActivityForResult(intent, NewProductActivity.REQUEST_CODE);
-                /*AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setMessage("El producto no se encuentra registrado y tampoco está en la base de datos online...");
-                dialog.show();*/
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setMessage("El producto no se encuentra en la base de datos online..."
+                                    + "\n\n¿Desea registrarlo manualmente?");
+                dialog.setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(MainActivity.this, NewProductActivity.class);
+                        intent.putExtra(NewProductActivity.NEWPRODUCTCODE, content);
+                        startActivityForResult(intent, NewProductActivity.REQUEST_CODE);
+                    }
+                });
+                dialog.setNegativeButton("CANCELAR", null);
+                dialog.show();
             }
             else {
                 Intent intent = new Intent(MainActivity.this, ProductInfoActivity.class);

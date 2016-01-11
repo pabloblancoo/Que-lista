@@ -88,7 +88,7 @@ public class CartAdapter extends MyAdapter {
         Product currentItem = items.get(position);
 
         ((CartViewHolder)viewHolder).units.setText(String.valueOf(currentItem.getCartUnits()));
-        ((CartViewHolder)viewHolder).unitsPantry.setText(String.valueOf(currentItem.getStock()));
+        ((CartViewHolder)viewHolder).unitsPantry.setText(String.valueOf(currentItem.getStock() == Product.NOT_IN_PANTRY ? 0:currentItem.getStock()));
         ((CartViewHolder)viewHolder).unitsShoppinglist.setText(String.valueOf(currentItem.getShoppingListUnits()));
 
         super.onBindViewHolder(viewHolder, position);

@@ -101,7 +101,7 @@ public class ShoppingListAdapter extends MyAdapter {
         Product currentItem = items.get(position);
 
         ((ShoppingListViewHolder)viewHolder).units.setText(String.valueOf(currentItem.getShoppingListUnits()));
-        ((ShoppingListViewHolder)viewHolder).unitsPantry.setText(String.valueOf(currentItem.getStock()));
+        ((ShoppingListViewHolder)viewHolder).unitsPantry.setText(String.valueOf(currentItem.getStock() == Product.NOT_IN_PANTRY ? 0 : currentItem.getStock()));
         ((ShoppingListViewHolder)viewHolder).unitsCart.setText(String.valueOf(currentItem.getCartUnits()));
 
         if (currentItem.getCartUnits() == Product.NOT_IN_CART)

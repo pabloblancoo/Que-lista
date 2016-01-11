@@ -1,6 +1,6 @@
 package grupomoviles.quelista.igu;
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -186,11 +186,20 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
                 return true;
 
             case R.id.action_delete:
-                deleteProduct();
-                Intent o = new Intent();
-                o.putExtra(PRODUCT, product);
-                setResult(RESULT_OK, o);
-                onBackPressed();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setMessage("¿Desea eliminar este producto por completo?");
+                dialog.setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        deleteProduct();
+                        Intent o = new Intent();
+                        o.putExtra(PRODUCT, product);
+                        setResult(RESULT_OK, o);
+                        onBackPressed();
+                    }
+                });
+                dialog.setNegativeButton("CANCELAR", null);
+                dialog.show();
 
                 return true;
         }

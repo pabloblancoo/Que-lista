@@ -27,7 +27,11 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable">
             </meta-data>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <!-- Activity para escanear códigos -->
@@ -65,11 +69,7 @@
         </activity>
         <activity android:name=".igu.ScanNFCActivity" />
         <activity android:name=".igu.VentanaCarga">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
