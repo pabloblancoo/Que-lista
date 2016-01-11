@@ -104,7 +104,9 @@ public class CartAdapter extends MyAdapter {
 
     public void filtrar(String cadena) {
         items = Stream.of(cart.getProducts().values())
-                .filter(p -> p.getDescription().contains(cadena))
+                .filter(p -> p.getDescription().trim().replace("-", "").toLowerCase().concat(" ")
+                        .concat(p.getBrand().trim().toLowerCase()).concat(" ")
+                        .concat(p.getNetValue().trim().toLowerCase()).contains(cadena))
                 .sortBy(p -> p.getDescription() + p.getNetValue())
                 .collect(Collectors.toList());
     }

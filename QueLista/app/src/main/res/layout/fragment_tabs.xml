@@ -32,7 +32,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/searchView"
                     android:baselineAligned="false"
-                    android:gravity="end" />
+                    android:gravity="end"
+                    android:layout_gravity="right"
+                    />
             </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout
