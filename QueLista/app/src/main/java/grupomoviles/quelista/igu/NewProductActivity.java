@@ -371,16 +371,16 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
 
 
     public void confirmar() {
-        String[] items = {"Sí", "No"};
+        String[] items = {getString(R.string.si), getString(R.string.no)};
 
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(NewProductActivity.this);
 
-        builder.setTitle("¿Desea guardar el producto? ")
+        builder.setTitle(getString(R.string.Desea_guardar_producto))
                 .setItems(items, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
                         Log.i("Dialogos", "Opción elegida: " + items[item]);
-                        if (items[item].equals("Sí")) {
+                        if (items[item].equals(getString(R.string.si))) {
                             finalizar();
                         }
                     }
@@ -390,17 +390,17 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
 
 
     public void changeImage(View v) {
-        String[] items = {"Cámara", "Galería"};
+        String[] items = {getString(R.string.Camara), getString(R.string.Galeria)};
 
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(NewProductActivity.this);
 
-        builder.setTitle("Seleccione la fuente de origen de la imágen")
+        builder.setTitle(getString(R.string.seleccionar_fuente_imagen))
                 .setItems(items, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
                         Log.i("Dialogos", "Opción elegida: " + items[item]);
-                        if (items[item].equals("Galería")) {
-                           galeria();
+                        if (items[item].equals(getString(R.string.Galeria))) {
+                            galeria();
                         } else {
                             camara();
 
@@ -457,7 +457,7 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
             }
         } catch (android.content.ActivityNotFoundException ex) {
             // Potentially direct the user to the Market with a Dialog
-            Toast.makeText(this, "Por favor, instala un explorador de archivos",
+            Toast.makeText(this, getString(R.string.instala_explorador_archivo),
                     Toast.LENGTH_SHORT).show();
         }
     }

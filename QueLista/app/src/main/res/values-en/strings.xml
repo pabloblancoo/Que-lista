@@ -43,4 +43,11 @@
     <string name="ayuda">Help</string>
     <string name="opciones">Options</string>
     <string name="codigo_barras">Barcode</string>
+    <string name="no">No</string>
+    <string name="si">Yes</string>
+    <string name="Desea_guardar_producto">Do you want to save this product?</string>
+    <string name="Camara">Camera</string>
+    <string name="Galeria">Gallery</string>
+    <string name="seleccionar_fuente_imagen">Select image from</string>
+    <string name="instala_explorador_archivo">Please, install file explorer</string>
 </resources>

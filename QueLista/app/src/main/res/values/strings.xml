@@ -142,6 +142,13 @@
     <string name="ayuda">Ayuda</string>
     <string name="opciones">Opciones</string>
     <string name="codigo_barras">Codigo de barras</string>
+    <string name="si">Sí</string>
+    <string name="no">No</string>
+    <string name="Desea_guardar_producto">¿Desea guardar el producto?</string>
+    <string name="Camara">Cámara</string>
+    <string name="Galeria">Galería</string>
+    <string name="seleccionar_fuente_imagen">Seleccione la fuente de origen de la imágen</string>
+    <string name="instala_explorador_archivo">Por favor, instala un explorador de archivos</string>
 
 
 </resources>
