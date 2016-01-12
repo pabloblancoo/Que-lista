@@ -149,9 +149,9 @@ public class MainActivity extends AppCompatActivity {
 
             if (product == null) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setMessage("El producto no se encuentra en la base de datos online..."
-                                    + "\n\n¿Desea registrarlo manualmente?");
-                dialog.setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
+                dialog.setMessage(getString(R.string.producto_no_esta_online)
+                                    + "\n\n"+getString(R.string.desea_registrarlo));
+                dialog.setPositiveButton(getString(R.string.Aceptar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent(MainActivity.this, NewProductActivity.class);
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivityForResult(intent, NewProductActivity.REQUEST_CODE);
                     }
                 });
-                dialog.setNegativeButton("CANCELAR", null);
+                dialog.setNegativeButton(getString(R.string.Cancelar), null);
                 dialog.show();
             }
             else {

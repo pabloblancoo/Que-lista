@@ -81,7 +81,7 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
 
 
         SearchView mSearchView = (SearchView)v.findViewById(R.id.searchView);
-        mSearchView.setQueryHint("Buscar...");
+        mSearchView.setQueryHint(getString(R.string.searching));
 
         // Execute this when searching
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -208,6 +208,19 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
         }
     }
 
+    public CharSequence getPageTitle(int position) {
+        switch (position){
+            case 0 :
+                return getString(R.string.Despensa);
+            case 1 :
+                return getString(R.string.Lista);
+            case 2 :
+                return getString(R.string.carrito);
+        }
+
+        return null;
+    }
+
     static class MyAdapter extends FragmentPagerAdapter {
 
         private static PantryFragment pantryFragment;
@@ -245,6 +258,8 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
             switch (position){
                 case 0 :
                     return "Despensa";
+                //NAUCE AQUI
+//                    return getString(R.string.Despensa);
                 case 1 :
                     return "Lista";
                 case 2 :

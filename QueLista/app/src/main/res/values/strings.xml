@@ -124,6 +124,24 @@
     <string name="escanear">Escanear</string>
     <string name="guardarCompra">Guardar compra</string>
     <string name="acerqueDispoNFC">Acerque dispositivo al lector NFC</string>
+    <string name="searching">Buscar...</string>
+    <string name="despensa">Despensa</string>
+    <string name="Lista">Lista</string>
+    <string name="carrito">Carrito</string>
+    <string name="Despensa">Despensa</string>
+    <string name="buscando">buscando:</string>
+    <string name="se_han_añadido">Se han añadido</string>
+    <string name="productos_a_la_lista_compra">productos a la lista de la compra</string>
+    <string name="Aceptar">Aceptar</string>
+    <string name="desea_eliminar_producto_completo">¿Desea eliminar este producto por completo?</string>
+    <string name="Cancelar">Cancelar</string>
+    <string name="producto_no_esta_online">El producto no se encuentra en nuestra base de datos</string>
+    <string name="desea_registrarlo">¿Desea registrarlo manualmente?</string>
+    <string name="shopping_list">Lista de la compra</string>
+    <string name="otras">Otras</string>
+    <string name="ayuda">Ayuda</string>
+    <string name="opciones">Opciones</string>
+    <string name="codigo_barras">Codigo de barras</string>
 
 
 </resources>

@@ -187,8 +187,8 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
 
             case R.id.action_delete:
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setMessage("¿Desea eliminar este producto por completo?");
-                dialog.setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
+                dialog.setMessage(getString(R.string.desea_eliminar_producto_completo));
+                dialog.setPositiveButton(getString(R.string.Aceptar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         deleteProduct();
@@ -198,7 +198,7 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
                         onBackPressed();
                     }
                 });
-                dialog.setNegativeButton("CANCELAR", null);
+                dialog.setNegativeButton(R.string.Cancelar, null);
                 dialog.show();
 
                 return true;
@@ -337,12 +337,12 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
                     unitsLista.setVisibility(View.VISIBLE);
                 }
                 product.setShoppingListUnits(product.getShoppingListUnits() + product.getUnitsToAdd());
-                unitsPantry.setText(product.getStock() + "");
-                unitsLista.setText(product.getShoppingListUnits() + "");
+                unitsPantry.setText(String.valueOf(product.getStock()));
+                unitsLista.setText(String.valueOf(product.getShoppingListUnits()));
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setTitle("Se han añadido " + product.getUnitsToAdd() + " productos a la lista de la compra");
-                dialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                dialog.setTitle(getString(R.string.se_han_añadido)+" " + product.getUnitsToAdd() + " "+ getString(R.string.productos_a_la_lista_compra));
+                dialog.setPositiveButton(getString((R.string.Aceptar)), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                     }
@@ -382,8 +382,8 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
             if (b) {
                 findViewById(R.id.layoutTakeUnitsSwitch).setVisibility(View.VISIBLE);
                 product.setLastUpdate(new Date());
-                product.setConsumeUnits(Integer.parseInt(unitsDescontar.getText().toString().replace(" unidad", "")));
-                product.setConsumeCycle(Integer.parseInt(unitsDays.getText().toString().replace(" día", "")));
+                product.setConsumeUnits(Integer.parseInt(unitsDescontar.getText().toString()));
+                product.setConsumeCycle(Integer.parseInt(unitsDays.getText().toString()));
             } else {
                 findViewById(R.id.layoutTakeUnitsSwitch).setVisibility(View.GONE);
 
@@ -392,8 +392,8 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         else if (compoundButton.getId() == switchCompatAddToShoppingList.getId()) {
             if (b) {
                 findViewById(R.id.layoutAddToShoppingListSwitch).setVisibility(View.VISIBLE);
-                product.setMinStock(Integer.parseInt(unitsWhenHave.getText().toString().replace(" unidades", "")));
-                product.setUnitsToAdd(Integer.parseInt(unitsAddWhenHave.getText().toString().replace(" unidad", "")));
+                product.setMinStock(Integer.parseInt(unitsWhenHave.getText().toString()));
+                product.setUnitsToAdd(Integer.parseInt(unitsAddWhenHave.getText().toString()));
             } else {
                 findViewById(R.id.layoutAddToShoppingListSwitch).setVisibility(View.GONE);
                 product.setMinStock(-1);

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QueLista</string>
+    <string name="action_settings">Options</string>
+    <string name="action_add_product">Add product</string>
+    <string name="action_delete_product">Delete product</string>
+    <string name="añadir">Add</string>
+    <string name="añadirListaCompra">Add to shopping list</string>
+    <string name="close_drawer"></string>
+    <string name="cuandoQueden">When have:</string>
+    <string name="dayTakes">day</string>
+    <string name="dayTakesMore">days</string>
+    <string name="descontarUnidades">Discount units</string>
+    <string name="err_msg_vacio">Can not be empty</string>
+    <string name="escanear">Scan</string>
+    <string name="guardarCompra">Save purchase</string>
+    <string name="producto">Product</string>
+    <string name="producto_nombre">Product name</string>
+    <string name="que_lista">QueLista, your shopping asistant</string>
+    <string name="search">Search</string>
+    <string name="title_activity_settings">Options</string>
+    <string name="units">Unit</string>
+    <string name="unitsTakes">Unit</string>
+    <string name="unitsTakesMore">Units</string>
+    <string name="pref_numArticulos_titulo">Number of articles</string>
+    <string name="pref_numArticulos_resumen">Max number of articles</string>
+    <string name="searching">Search...</string>
+    <string name="despensa">Pantry</string>
+    <string name="carrito">Cart</string>
+    <string name="Lista">List</string>
+    <string name="Despensa">Pantry</string>
+    <string name="acerqueDispoNFC">Bring the device to the NFC reader</string>
+    <string name="buscando">searching: </string>
+    <string name="se_han_añadido">They were added </string>
+    <string name="productos_a_la_lista_compra"> products to the shopping list</string>
+    <string name="Aceptar">Ok</string>
+    <string name="desea_eliminar_producto_completo">Do you want to delete this product?</string>
+    <string name="Cancelar">Cancel</string>
+    <string name="producto_no_esta_online">This product is not available in our database</string>
+    <string name="desea_registrarlo">Do you want to register manually?</string>
+    <string name="shopping_list">Shopping list</string>
+    <string name="otras">Others</string>
+    <string name="ayuda">Help</string>
+    <string name="opciones">Options</string>
+    <string name="codigo_barras">Barcode</string>
+</resources>
