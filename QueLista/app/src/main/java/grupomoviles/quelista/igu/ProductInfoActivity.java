@@ -365,7 +365,8 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
                         "; ShoppingList: " + p.getShoppingListUnits() +
                         "; CartUnits: " + p.getCartUnits() +
                         ";LastUpdate: " + p.getLastUpdate() +
-                        "; Minstock: " + p.getMinStock()));
+                        "; Minstock: " + p.getMinStock() +
+                        "; Añadir: " + p.getUnitsToAdd()));
     }
 
     private void guardarDatos() {

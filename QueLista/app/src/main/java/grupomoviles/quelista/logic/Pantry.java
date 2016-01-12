@@ -49,8 +49,9 @@ public class Pantry {
                 long hours = time / 1000 / 60 / 60;
                 long hoursConsume = m.getValue().getConsumeCycle() * 24;
                 if (hours >= hoursConsume) {
+                    int vecesADescontar = (int)(hours / hoursConsume);
                     if (m.getValue().getStock() >= m.getValue().getConsumeUnits()) {
-                        m.getValue().setStock(m.getValue().getStock() - m.getValue().getConsumeUnits());
+                        m.getValue().setStock(m.getValue().getStock() - (m.getValue().getConsumeUnits()*vecesADescontar));
 
                     } else {
                         m.getValue().setStock(0);
