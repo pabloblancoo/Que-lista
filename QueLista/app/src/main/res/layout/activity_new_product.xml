@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/txTitleProducto"
             android:layout_alignParentStart="true"
-            android:text="Producto"
+            android:text="@string/producto"
             android:textStyle="bold"
             android:textSize="20dp"
             android:textColor="#ffffff" />
@@ -391,7 +391,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="2dp"
-                            android:text="unidad"
+                            android:text="@string/unitsTakes"
                             android:id="@+id/txUnitsTakesLabel"
                             android:layout_gravity="center"
                             android:gravity="center_vertical" />
@@ -436,7 +436,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="dia"
+                            android:text="@string/dayTakes"
                             android:id="@+id/txDaysTakesLabel"
                             android:layout_gravity="center"
                             android:gravity="center_vertical"
@@ -488,7 +488,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/switchAddToShoppingList"
-                        android:text="Añadir a la lista de la compra"
+                        android:text="@string/añadirListaCompra"
                         android:layout_marginBottom="3dp"/>
 
                     <RelativeLayout
@@ -499,7 +499,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Cuando queden:"
+                            android:text="@string/cuandoQueden"
                             android:id="@+id/txWhenHave"
                             android:gravity="center_vertical"
                             android:layout_alignTop="@+id/linearLayout"
@@ -543,7 +543,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="unidades"
+                            android:text="@string/unitsTakesMore"
                             android:id="@+id/txUnitsWhenHaveLabel"
                             android:layout_toStartOf="@+id/linearLayout"
                             android:gravity="center_vertical"
@@ -554,7 +554,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Añadir:"
+                            android:text="@string/añadir"
                             android:id="@+id/txAddWhenHave"
                             android:layout_alignBottom="@+id/linearLayout2"
                             android:layout_alignTop="@+id/linearLayout2"
@@ -573,7 +573,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="unidad"
+                            android:text="@string/units"
                             android:id="@+id/txUnitsAddWhenHaveLabel"
                             android:gravity="center_vertical"
                             android:layout_alignTop="@+id/linearLayout2"
