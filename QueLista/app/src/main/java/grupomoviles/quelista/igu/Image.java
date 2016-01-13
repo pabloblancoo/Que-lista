@@ -32,7 +32,6 @@ public class Image {
             new Image("Jaguar F-Type 2014", R.drawable.cereales_miel_pops)
     };
 
-
     /**
      * Obtiene item basado en su identificador
      *

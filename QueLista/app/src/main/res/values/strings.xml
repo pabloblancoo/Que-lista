@@ -149,6 +149,11 @@
     <string name="Galeria">Galería</string>
     <string name="seleccionar_fuente_imagen">Seleccione la fuente de origen de la imágen</string>
     <string name="instala_explorador_archivo">Por favor, instala un explorador de archivos</string>
+    <string name="productos">Productos</string>
+    <string name="ticket">Ticket</string>
+    <string name="producto_nuevo">Producto nuevo</string>
+    <string name="escanear_codigo">Escanear código</string>
+    <string name="acerca_de">Acerca de</string>
 
 
 </resources>

@@ -189,6 +189,9 @@ public class MainActivity extends AppCompatActivity {
                     fragmentTransaction.replace(R.id.fragment_container, fragment).commit();
                     fragment.setTab(2);
                     break;
+                case R.id.nav_item_scan_product:
+                    scan(null);
+                    break;
                 case R.id.nav_item_new_product:
                     Intent i = new Intent(this, NewProductActivity.class);
                     startActivityForResult(i, NewProductActivity.REQUEST_CODE);

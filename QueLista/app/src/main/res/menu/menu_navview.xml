@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="@string/Despensa"
-          android:id="@+id/nav_item_despensa"
-          android:icon="@drawable/icon_button_home"/>
 
-    <item android:title="@string/shopping_list"
-          android:id="@+id/nav_item_lista"
-          android:icon="@drawable/icon_button_shopping_list"/>
+    <item android:title="@string/productos">
+        <menu>
+            <item android:title="@string/Despensa"
+                android:id="@+id/nav_item_despensa"
+                android:icon="@drawable/icon_button_home"/>
 
-    <item android:title="@string/carrito"
-        android:id="@+id/nav_item_carrito"
-        android:icon="@drawable/icon_button_cart"/>
+            <item android:title="@string/shopping_list"
+                android:id="@+id/nav_item_lista"
+                android:icon="@drawable/icon_button_shopping_list"/>
 
-    <item android:title="@string/carrito"
-        android:id="@+id/nav_item_new_product"
-        android:icon="@android:drawable/ic_menu_add"/>
+            <item android:title="@string/carrito"
+                android:id="@+id/nav_item_carrito"
+                android:icon="@drawable/icon_button_cart"/>
 
-    <item android:title="@string/otras">
+            <item android:title="@string/escanear_codigo"
+                android:id="@+id/nav_item_scan_product"
+                android:icon="@drawable/ic_menu_scan"/>
+
+            <item android:title="@string/producto_nuevo"
+                android:id="@+id/nav_item_new_product"
+                android:icon="@android:drawable/ic_menu_add"/>
+        </menu>
+    </item>
+
+    <item android:title="@string/ticket">
         <menu>
             <item
                 android:title="QR"
@@ -32,12 +41,11 @@
     <group android:id="@+id/group_settings_id">
 
         <item android:title="@string/opciones"
-              android:id="@+id/nav_item_opciones"
-              android:icon="@drawable/settings"/>
-        <item android:title="@string/ayuda"
-              android:id="@+id/nav_item_ayuda"
-              android:icon="@drawable/help"/>
+            android:id="@+id/nav_item_opciones"
+            android:icon="@drawable/settings"/>
+        <item android:title="@string/acerca_de"
+            android:id="@+id/nav_item_ayuda"
+            android:icon="@drawable/help"/>
     </group>
-
 
 </menu>

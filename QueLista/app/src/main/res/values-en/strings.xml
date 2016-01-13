@@ -50,4 +50,9 @@
     <string name="Galeria">Gallery</string>
     <string name="seleccionar_fuente_imagen">Select image from</string>
     <string name="instala_explorador_archivo">Please, install file explorer</string>
+    <string name="productos">Products</string>
+    <string name="ticket">Ticket</string>
+    <string name="producto_nuevo">New product</string>
+    <string name="escanear_codigo">Scan code</string>
+    <string name="acerca_de">About</string>
 </resources>
