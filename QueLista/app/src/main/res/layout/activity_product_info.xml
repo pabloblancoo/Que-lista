@@ -320,7 +320,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/switchTakeUnits"
-                        android:checked="false"
+                        android:checked="true"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:text="@string/descontarUnidades"
@@ -444,7 +444,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/switchAddToShoppingList"
                         android:text="@string/añadirListaCompra"
-                        android:layout_marginBottom="3dp"/>
+                        android:layout_marginBottom="3dp"
+                        android:checked="true" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"

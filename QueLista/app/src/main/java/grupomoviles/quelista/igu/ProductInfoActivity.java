@@ -154,7 +154,7 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
             findViewById(R.id.layoutTakeUnitsSwitch).setVisibility(View.GONE);
             switchCompatTakeUnits.setChecked(false);
         } else {
-            switchCompatTakeUnits.setChecked(true);
+//            switchCompatTakeUnits.setChecked(true);
             unitsDescontar.setText(String.valueOf(product.getConsumeUnits()));
             unitsDays.setText(String.valueOf(product.getConsumeCycle()));
         }
@@ -163,7 +163,7 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
             findViewById(R.id.layoutAddToShoppingListSwitch).setVisibility(View.GONE);
             switchCompatAddToShoppingList.setChecked(false);
         } else {
-            switchCompatAddToShoppingList.setChecked(true);
+//            switchCompatAddToShoppingList.setChecked(true);
             unitsWhenHave.setText(String.valueOf(product.getMinStock()));
             unitsAddWhenHave.setText(String.valueOf(product.getUnitsToAdd()));
         }
