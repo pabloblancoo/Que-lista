@@ -208,24 +208,11 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
         }
     }
 
-    public CharSequence getPageTitle(int position) {
-        switch (position){
-            case 0 :
-                return getString(R.string.Despensa);
-            case 1 :
-                return getString(R.string.Lista);
-            case 2 :
-                return getString(R.string.carrito);
-        }
+    class MyAdapter extends FragmentPagerAdapter {
 
-        return null;
-    }
-
-    static class MyAdapter extends FragmentPagerAdapter {
-
-        private static PantryFragment pantryFragment;
-        private static ShoppingListFragment shoppingListFragment;
-        private static CartFragment cartFragment;
+        private PantryFragment pantryFragment;
+        private ShoppingListFragment shoppingListFragment;
+        private CartFragment cartFragment;
 
         public MyAdapter(FragmentManager childFragmentManager) {
             super(childFragmentManager);
@@ -257,13 +244,11 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
         public CharSequence getPageTitle(int position) {
             switch (position){
                 case 0 :
-                    return "Despensa";
-                //NAUCE AQUI
-//                    return getString(R.string.Despensa);
+                    return getString(R.string.despensa);
                 case 1 :
-                    return "Lista";
+                    return getString(R.string.Lista);
                 case 2 :
-                    return "Carrito";
+                    return getString(R.string.carrito);
             }
             
             return null;
