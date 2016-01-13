@@ -73,7 +73,12 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
 
         product = (Product) getIntent().getExtras().get(PRODUCT);
         if (getIntent().getExtras().get(NEWPRODUCT) != null)
-            newProduct = (boolean) getIntent().getExtras().get(NEWPRODUCT);     //Usa esta key para mandar el boolean
+            newProduct = (boolean) getIntent().getExtras().get(NEWPRODUCT);
+
+        if (newProduct)
+            getSupportActionBar().setTitle("Producto nuevo");
+        else
+            getSupportActionBar().setTitle(product.getCode());
 
         productImage = (ImageView) findViewById(R.id.imgProduct);
 
@@ -177,9 +182,11 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
 
         switch (id) {
             case android.R.id.home:
-                Intent i = new Intent();
-                i.putExtra(PRODUCT, product);
-                setResult(RESULT_OK, i);
+                if (!newProduct) {
+                    Intent i = new Intent();
+                    i.putExtra(PRODUCT, product);
+                    setResult(RESULT_OK, i);
+                }
                 onBackPressed();
                 return true;
 
@@ -207,8 +214,9 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_product_info, menu);
+        if (!newProduct)
+            getMenuInflater().inflate(R.menu.menu_product_info, menu);
+
         return true;
     }
 
@@ -422,7 +430,6 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         database.close();
 
         //guardarDatos();
-
     }
 
     @Override

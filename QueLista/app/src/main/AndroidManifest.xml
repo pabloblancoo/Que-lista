@@ -44,10 +44,10 @@
         </activity>
         <activity
             android:name=".igu.ProductInfoActivity"
-            android:label="" />
+            android:label="Producto" />
         <activity
             android:name=".igu.NewProductActivity"
-            android:label="">
+            android:label="Producto nuevo">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="grupomoviles.quelista.igu.MainActivity" />
