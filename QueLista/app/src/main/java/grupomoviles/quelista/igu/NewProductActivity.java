@@ -52,49 +52,47 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
 
     private static final int FILE_SELECT_CODE = 0;
 
-    ImageView productImage;
+    private ImageView productImage;
 
-    EditText code;
-    EditText description;
-    EditText brand;
-    EditText netValue;
-    EditText category;
-    EditText subcategory;
+    private EditText code;
+    private EditText description;
+    private EditText brand;
+    private EditText netValue;
+    private EditText category;
+    private EditText subcategory;
 
+    private TextInputLayout codeLayout;
+    private TextInputLayout descriptionLayout;
+    private TextInputLayout brandLayout;
+    private TextInputLayout netValueLayout;
+    private TextInputLayout categoryLayout;
+    private TextInputLayout subcategoryLayout;
 
-    TextInputLayout codeLayout;
-    TextInputLayout descriptionLayout;
-    TextInputLayout brandLayout;
-    TextInputLayout netValueLayout;
-    TextInputLayout categoryLayout;
-    TextInputLayout subcategoryLayout;
+    private TextView unitsPantry;
+    private TextView unitsLista;
+    private TextView unitsCarrito;
+    private TextView unitsDescontar;
+    private TextView unitsDays;
+    private TextView unitsWhenHave;
+    private TextView unitsAddWhenHave;
+    private SwitchCompat switchCompatTakeUnits;
+    private SwitchCompat switchCompatAddToShoppingList;
+    private Button buttonPlusDescontar;
+    private Button buttonMinusDescontar;
+    private Button buttonPlusDays;
+    private Button buttonMinusDays;
 
+    private Button buttonPlusWhenHave;
+    private Button buttonMinusWhenHave;
+    private Button buttonPlusAddWhenHave;
+    private Button buttonMinusAddWhenHave;
 
-    TextView unitsPantry;
-    TextView unitsLista;
-    TextView unitsCarrito;
-    TextView unitsDescontar;
-    TextView unitsDays;
-    TextView unitsWhenHave;
-    TextView unitsAddWhenHave;
-    SwitchCompat switchCompatTakeUnits;
-    SwitchCompat switchCompatAddToShoppingList;
-    Button buttonPlusDescontar;
-    Button buttonMinusDescontar;
-    Button buttonPlusDays;
-    Button buttonMinusDays;
-
-    Button buttonPlusWhenHave;
-    Button buttonMinusWhenHave;
-    Button buttonPlusAddWhenHave;
-    Button buttonMinusAddWhenHave;
-
-    Product product;
-    Date date = null;
-    int minStock = -1;
-    int unitsToAdd = 1;
+    private Product product;
+    private Date date = null;
+    private int minStock = -1;
+    private int unitsToAdd = 1;
     private boolean imagenTomada = false;
-    String imagePath;
+    private String imagePath;
     private Bitmap bMapFinal;
 
     @Override

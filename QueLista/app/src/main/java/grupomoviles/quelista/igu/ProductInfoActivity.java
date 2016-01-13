@@ -33,36 +33,34 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
     public static final int REQUEST_CODE = 1;
     private boolean newProduct = false;
 
-    ImageView productImage;
+    private ImageView productImage;
 
-    TextView description;
-    TextView brand;
-    TextView netValue;
-    TextView category;
+    private TextView description;
+    private TextView brand;
+    private TextView netValue;
+    private TextView category;
 
-    TextView unitsPantry;
-    TextView unitsLista;
-    TextView unitsCarrito;
-    TextView unitsDescontar;
-    TextView unitsDays;
-    TextView unitsWhenHave;
-    TextView unitsAddWhenHave;
+    private TextView unitsPantry;
+    private TextView unitsLista;
+    private TextView unitsCarrito;
+    private TextView unitsDescontar;
+    private TextView unitsDays;
+    private TextView unitsWhenHave;
+    private TextView unitsAddWhenHave;
 
+    private SwitchCompat switchCompatTakeUnits;
+    private SwitchCompat switchCompatAddToShoppingList;
+    private Button buttonPlusDescontar;
+    private Button buttonMinusDescontar;
+    private Button buttonPlusDays;
+    private Button buttonMinusDays;
 
+    private Button buttonPlusWhenHave;
+    private Button buttonMinusWhenHave;
+    private Button buttonPlusAddWhenHave;
+    private Button buttonMinusAddWhenHave;
 
-    SwitchCompat switchCompatTakeUnits;
-    SwitchCompat switchCompatAddToShoppingList;
-    Button buttonPlusDescontar;
-    Button buttonMinusDescontar;
-    Button buttonPlusDays;
-    Button buttonMinusDays;
-
-    Button buttonPlusWhenHave;
-    Button buttonMinusWhenHave;
-    Button buttonPlusAddWhenHave;
-    Button buttonMinusAddWhenHave;
-
-    Product product;
+    private Product product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

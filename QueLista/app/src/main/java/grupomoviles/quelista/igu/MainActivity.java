@@ -40,6 +40,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 
 import com.annimon.stream.Stream;
+import com.google.zxing.BarcodeFormat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,8 +60,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        long t1,t2;
-        t1 = System.currentTimeMillis();
+
         // Cargar valores por defecto
         PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
         PreferenceManager.setDefaultValues(this, R.xml.pref_data_sync, false);
@@ -75,25 +75,9 @@ public class MainActivity extends AppCompatActivity {
         shoppingListAdapter = new ShoppingListAdapter(this, new ShoppingList());
         cartAdapter = new CartAdapter(this, new Cart());
 
-        if(pantryAdapter.getPantry().getProducts().size() == 0
-                && shoppingListAdapter.getShoppingList().getProducts().size() == 0
-                && cartAdapter.getCart().getProducts().size() == 0) {
-
-            DownloadImageTask task;
-            task = new DownloadImageTask(this);
-            task.execute("5449000000996", "8410297112041", "8410297170058", "8410188012092",
-                    "5449000009067", "8410000826937", "8410014307682", "8410014312495", "5000127281752");
-
-        }
-
         setContentView(R.layout.activity_main);
         setUpNavigationDrawer();
 
-        /**
-         * Inflamos el primer fragmento que vamos a mostrar.
-         * En este caso decidimos que el primero que mostramos es el fragmento con las pestañas,
-         * pero solo si no hay instancias anteriores.
-         */
         fragment = new TabsFragment();
         mFragmentManager = getSupportFragmentManager();
 
@@ -102,16 +86,12 @@ public class MainActivity extends AppCompatActivity {
             mFragmentTransaction.replace(R.id.fragment_container, fragment).commit();
         }
 
-
-
-        t2 = System.currentTimeMillis();
-        System.out.println("Tiempo total : " + (t2-t1) );
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.i("requestCode", "Codigo: " + requestCode);
-        if (ProductInfoActivity.REQUEST_CODE == requestCode && resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK && ProductInfoActivity.REQUEST_CODE == requestCode) {
             Product product = (Product) data.getExtras().get(ProductInfoActivity.PRODUCT);
             pantryAdapter.onResultProductInfoActivity(product);
             shoppingListAdapter.onResultProductInfoActivity(product);
@@ -192,9 +172,6 @@ public class MainActivity extends AppCompatActivity {
             mNavigationView.getMenu().removeItem(R.id.nav_item_nfc);
         }
 
-        /**
-         * Establecemos los eventos de click en los elementos del Navigation Drawer
-         */
         mNavigationView.setNavigationItemSelectedListener(menuItem -> {
             FragmentTransaction fragmentTransaction;
 
@@ -217,7 +194,10 @@ public class MainActivity extends AppCompatActivity {
                     startActivityForResult(i, NewProductActivity.REQUEST_CODE);
                     break;
                 case R.id.nav_item_qr:
-
+                    IntentCaptureActivity ica = new IntentCaptureActivity();
+                    ica.setBarcodeFormat(BarcodeFormat.QR_CODE);
+                    ica.setReverseCamera(false);
+                    ica.initScan(this);
                     break;
                 case R.id.nav_item_nfc:
                     Intent intent = new Intent(this,ScanNFCActivity.class);
