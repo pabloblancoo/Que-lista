@@ -6,7 +6,7 @@
     <string name="action_delete_product">Delete product</string>
     <string name="añadir">Add</string>
     <string name="añadirListaCompra">Add to shopping list</string>
-    <string name="close_drawer"></string>
+    <string name="close_drawer">Close Drawer</string>
     <string name="cuandoQueden">When have:</string>
     <string name="dayTakes">day</string>
     <string name="dayTakesMore">days</string>
@@ -57,4 +57,27 @@
     <string name="acerca_de">About</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="pref_miniaturas">Show thumbnail</string>
+    <string name="categoria_apariencia">Appearance</string>
+    <string name="etiqueta_info_usuario">Developers</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="info_imagen">Click on the picture to change it</string>
+    <string name="open_drawer">Open Drawer</string>
+    <string name="pref_description_miniaturas">The images that accompany the products listings</string>
+    <string name="alumno1">Carlos Alperi Meana</string>
+    <string name="email1">uo240679@uniovi.es</string>
+    <string name="alumno2">Daniel Toimil</string>
+    <string name="email2">uoXXXXXX@uniovi.es</string>
+    <string name="alumno3">Naucé López González</string>
+    <string name="email3">uo240371@uniovi.es</string>
+    <string name="alumno4">Pablo Blanco Pacho</string>
+    <string name="email4">uoXXXXXX@uniovi.es</string>
+    <string name="AddCarro">Add to cart</string>
+    <string name="AddListCompra">Add to shopping list</string>
+    <string name="Categoria">Category</string>
+    <string name="Codigo_barras">Barcode</string>
+    <string name="Contenido">Content</string>
+    <string name="Eliminar">Remove</string>
+    <string name="Marca">Brand</string>
+    <string name="Unidades">Units</string>
+    <string name="producto_existe">There is already a product with that barcode</string>
 </resources>

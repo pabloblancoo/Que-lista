@@ -437,8 +437,6 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
     }
 
     private void galeria(){
-        /*Intent i = new Intent(this, Galeria.class);
-        startActivityForResult(i, Galeria.REQUEST_CODE);*/
 
         boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         try {
@@ -528,8 +526,8 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
             //mostrarlo por pantalla
             productImage.setImageBitmap(bMapFinal);
 
-            Log.i("IMAGEN", productImage.getMeasuredHeight() + "H");
-            Log.i("IMAGEN", productImage.getMeasuredWidth()+"W");
+            //Log.i("IMAGEN", productImage.getMeasuredHeight() + "H");
+            //Log.i("IMAGEN", productImage.getMeasuredWidth()+"W");
             imagenTomada = true;
         }
         else if (requestCode == SELECT_PICTURE && resultCode == RESULT_OK) {
@@ -607,7 +605,7 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
         database.close();
 
         if(existe){
-            codeLayout.setError("Ya existe un producto con ese código de barras");
+            codeLayout.setError(getString(R.string.producto_existe));
             code.requestFocus();
         }
         else{
