@@ -245,8 +245,6 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                         dialog.setMessage("No tiene conexión a internet");
-                        dialog.setPositiveButton(getString(R.string.Aceptar), null);
-                        dialog.setNegativeButton(getString(R.string.Cancelar), null);
                         dialog.show();
                     }
                     break;
@@ -257,8 +255,6 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                         dialog.setMessage("No tiene conexión a internet");
-                        dialog.setPositiveButton(getString(R.string.Aceptar), null);
-                        dialog.setNegativeButton(getString(R.string.Cancelar), null);
                         dialog.show();
                     }
                     break;
