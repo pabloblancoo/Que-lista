@@ -114,8 +114,8 @@ public class MainActivity extends AppCompatActivity {
             Product product = (Product) data.getExtras().get(NewProductActivity.PRODUCT);
             Log.i("PRODUCTO_NEW", "Codigo: " + product.getCode() + " -- Unidades: " + product.getStock());
             pantryAdapter.onResultNewProductActivity(product);
-            shoppingListAdapter.onResultProductInfoActivity(product);
-            cartAdapter.onResultProductInfoActivity(product);
+            shoppingListAdapter.onResultNewProductActivity(product);
+            cartAdapter.onResultNewProductActivity(product);
         }
         else if (resultCode == RESULT_OK && IntentCaptureActivity.CODE_CAPTURE_ACTIVITY == requestCode &&
                 data.getExtras().getString(CaptureActivity.SCAN_FORMAT).toString().equals(BarcodeFormat.EAN_13.toString())) {
@@ -171,17 +171,31 @@ public class MainActivity extends AppCompatActivity {
         }
 
         else if(resultCode == RESULT_OK && ScanNFCActivity.REQUEST_CODE == requestCode) {
-            Intent intent = new Intent(MainActivity.this, TicketActivity.class);
-            intent.putExtra(ScanNFCActivity.URLTAG ,data.getExtras().getString(ScanNFCActivity.URLTAG));
-            startActivityForResult(intent, TicketActivity.REQUEST_CODE);
+            if (isOnline()) {
+                Intent intent = new Intent(MainActivity.this, TicketActivity.class);
+                intent.putExtra(ScanNFCActivity.URLTAG, data.getExtras().getString(ScanNFCActivity.URLTAG));
+                startActivityForResult(intent, TicketActivity.REQUEST_CODE);
+            }
+            else {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setMessage("No tiene conexión a internet");
+                dialog.show();
+            }
         }
 
         else if (resultCode == RESULT_OK &&
                 IntentCaptureActivity.CODE_CAPTURE_ACTIVITY == requestCode
                 && data.getExtras().getString(CaptureActivity.SCAN_FORMAT).toString().equals(BarcodeFormat.QR_CODE.toString())) {
-            Intent intent = new Intent(MainActivity.this, TicketActivity.class);
-            intent.putExtra(ScanNFCActivity.URLTAG, data.getExtras().getString(CaptureActivity.SCAN_CONTENT));
-            startActivityForResult(intent, TicketActivity.REQUEST_CODE);
+            if (isOnline()) {
+                Intent intent = new Intent(MainActivity.this, TicketActivity.class);
+                intent.putExtra(ScanNFCActivity.URLTAG, data.getExtras().getString(CaptureActivity.SCAN_CONTENT));
+                startActivityForResult(intent, TicketActivity.REQUEST_CODE);
+            }
+            else {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setMessage("No tiene conexión a internet");
+                dialog.show();
+            }
         }
 
         else if(resultCode == RESULT_OK && TicketActivity.REQUEST_CODE == requestCode){
@@ -203,11 +217,6 @@ public class MainActivity extends AppCompatActivity {
     private void setUpNavigationDrawer() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.navview);
-
-        if(NfcAdapter.getDefaultAdapter(this) == null) {
-            mNavigationView.getMenu().findItem(R.id.nav_item_nfc).setVisible(false);
-            mNavigationView.getMenu().removeItem(R.id.nav_item_nfc);
-        }
 
         mNavigationView.setNavigationItemSelectedListener(menuItem -> {
             FragmentTransaction fragmentTransaction;
@@ -246,7 +255,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case R.id.nav_item_nfc:
-                    if (isOnline()) {
+                    if(NfcAdapter.getDefaultAdapter(this) == null) {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                        dialog.setMessage("Este dispostivo no tiene NFC");
+                        dialog.show();
+                    }
+                    else if (isOnline()) {
                         Intent intent = new Intent(this, ScanNFCActivity.class);
                         startActivityForResult(intent, ScanNFCActivity.REQUEST_CODE);
                     } else {
@@ -262,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.nav_item_about:
                     startActivity(new Intent(this, AboutActivity.class));
-                    Log.i("MENU","about");
+                    Log.i("MENU", "about");
                     break;
             }
 
@@ -306,8 +320,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void acceptShop(View view) {
-        getCartAdapter().getCart().acceptShopCart();
-        getCartAdapter().refresh();
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setMessage("¿Desea confirmar su compra?");
+        dialog.setPositiveButton(getString(R.string.Aceptar), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                getCartAdapter().getCart().acceptShopCart();
+                getCartAdapter().refresh();
+            }
+        });
+        dialog.setNegativeButton(getString(R.string.Cancelar), null);
+        dialog.show();
     }
 
     public List<Product> cargarBDLocal() {

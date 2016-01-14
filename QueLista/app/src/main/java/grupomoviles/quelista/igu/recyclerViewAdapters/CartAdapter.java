@@ -49,6 +49,12 @@ public class CartAdapter extends MyAdapter {
         super.onResultProductInfoActivity(product);
     }
 
+    public void onResultNewProductActivity(Product product) {
+        cart.getProducts().put(product.getCode(), product);
+        items.add(product);
+        notifyDataSetChanged();
+    }
+
     public void onResultNfcActivity(Product product) {
         cart.onResultNfcActivity(product);
     }

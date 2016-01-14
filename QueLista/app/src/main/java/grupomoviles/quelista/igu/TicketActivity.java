@@ -1,8 +1,11 @@
 package grupomoviles.quelista.igu;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -50,51 +53,59 @@ public class TicketActivity extends AppCompatActivity {
         List<String> barcodes = new ArrayList<String>();
         String s = null;
 
-        try {
-            s = new DownloadTicketFileTask().execute(getIntent().getExtras().getString(ScanNFCActivity.URLTAG).toString()).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        if (s != null) {
-            String[] lineas = s.split("\n");
-            for (int i = 1; i < lineas.length - 1; i++)
-                barcodes.add(lineas[i].split(";")[0]);
-
-            new DownloadImageTask(this).execute(barcodes.toArray(new String[barcodes.size()]));
-
+        if (isOnline()) {
             try {
-                products = GestorBD.FindProducts(barcodes.toArray(new String[barcodes.size()]));
-            } catch (ExecutionException e) {
-                e.printStackTrace();
+                s = new DownloadTicketFileTask().execute(getIntent().getExtras().getString(ScanNFCActivity.URLTAG).toString()).get();
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
             }
+
+            if (s != null) {
+                String[] lineas = s.split("\n");
+                for (int i = 1; i < lineas.length - 1; i++)
+                    barcodes.add(lineas[i].split(";")[0]);
+
+                new DownloadImageTask(this).execute(barcodes.toArray(new String[barcodes.size()]));
+
+                try {
+                    products = GestorBD.FindProducts(barcodes.toArray(new String[barcodes.size()]));
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if (products != null) {
+                    for (int i = 1; i < lineas.length - 1; i++)
+                        products.get(i - 1).setStock(Integer.parseInt(lineas[i].split(";")[1]));
+                }
+            }
+
+            RecyclerView recycler = (RecyclerView) findViewById(R.id.recyclerView);
+            recycler.setHasFixedSize(true);
+            // Usar un administrador para LinearLayout
+            recycler.setLayoutManager(new LinearLayoutManager(this));
+
+            Ticket ticket = new Ticket();
 
             if (products != null) {
-                for (int i = 1; i < lineas.length - 1; i++)
-                    products.get(i-1).setStock(Integer.parseInt(lineas[i].split(";")[1]));
+                Stream.of(products).forEach(p -> {
+                    ticket.getProducts().put(p.getCode(), p);
+                });
             }
+            ticketAdapter = new TicketAdapter(this, ticket);
+            recycler.setAdapter(ticketAdapter);
+            ticketAdapter.swipeList();
+            ticketAdapter.notifyDataSetChanged();
         }
-
-        RecyclerView recycler = (RecyclerView) findViewById(R.id.recyclerView);
-        recycler.setHasFixedSize(true);
-        // Usar un administrador para LinearLayout
-        recycler.setLayoutManager(new LinearLayoutManager(this));
-
-        Ticket ticket = new Ticket();
-
-        if (products != null) {
-            Stream.of(products).forEach(p -> {
-                ticket.getProducts().put(p.getCode(), p);
-            });
+        else {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setMessage("No tiene conexión a internet");
+            dialog.show();
+            finish();
         }
-        ticketAdapter = new TicketAdapter(this, ticket);
-        recycler.setAdapter(ticketAdapter);
-        ticketAdapter.swipeList();
-        ticketAdapter.notifyDataSetChanged();
 
         pd.dismiss();
     }
@@ -120,6 +131,19 @@ public class TicketActivity extends AppCompatActivity {
         intent.putExtra(PRODUCTS, (Serializable) ticketAdapter.getTicket().getProducts());
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    public boolean isOnline() {
+        NetworkInfo i = ((ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+
+        if (i == null)
+            return false;
+        if (!i.isConnected())
+            return false;
+        if (!i.isAvailable())
+            return false;
+
+        return true;
     }
 
 }

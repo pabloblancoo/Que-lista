@@ -579,7 +579,8 @@
         app:elevation="4dp"
         app:layout_anchorGravity="bottom|right|end"
         app:layout_behavior="grupomoviles.quelista.igu.ScrollAwareFABBehavior"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:src="@drawable/ic_check_white_24dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabCancel"
@@ -593,5 +594,6 @@
         app:elevation="4dp"
         app:layout_anchorGravity="bottom|left|end"
         app:layout_behavior="grupomoviles.quelista.igu.ScrollAwareFABBehavior"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:src="@drawable/ic_close" />
 </android.support.design.widget.CoordinatorLayout>

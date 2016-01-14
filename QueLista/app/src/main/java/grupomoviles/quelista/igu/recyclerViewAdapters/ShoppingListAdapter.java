@@ -59,6 +59,11 @@ public class ShoppingListAdapter extends MyAdapter {
         super.onResultProductInfoActivity(product);
     }
 
+    public void onResultNewProductActivity(Product product) {
+        shoppingList.getProducts().put(product.getCode(), product);
+        items.add(product);
+        notifyDataSetChanged();
+    }
 
     public void onResultNfcActivity(Product product) {
         shoppingList.onResultNfcActivity(product);

@@ -1,6 +1,6 @@
 package grupomoviles.quelista.igu;
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -436,15 +436,15 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(NewProductActivity.this);
 
-        builder.setTitle(getString(R.string.Desea_guardar_producto))
-                .setItems(items, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int item) {
-                        Log.i("Dialogos", "Opción elegida: " + items[item]);
-                        if (items[item].equals(getString(R.string.si))) {
-                            finalizar();
-                        }
-                    }
-                }).show();
+        builder.setMessage(getString(R.string.Desea_guardar_producto));
+        builder.setPositiveButton(getString(R.string.Aceptar), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finalizar();
+            }
+        });
+        builder.setNegativeButton(getString(R.string.Cancelar), null);
+        builder.show();
 
     }
 

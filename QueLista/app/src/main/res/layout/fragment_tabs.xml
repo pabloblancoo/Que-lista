@@ -40,9 +40,9 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
             android:background="@color/color_rojo_app"
-            app:tabIndicatorColor="@color/black"
-            app:tabSelectedTextColor="@color/black"
-            app:tabTextColor="@color/white"
+            app:tabIndicatorColor="@color/white"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </android.support.design.widget.TabLayout>
@@ -60,7 +60,7 @@
         app:backgroundTint="#8BC34A"
         app:elevation="4dp"
         app:layout_anchorGravity="bottom|left|end"
-        app:layout_behavior="grupomoviles.quelista.igu.ScrollAwareFABBehavior" />
+        android:src="@drawable/icon_checkout" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabScan"

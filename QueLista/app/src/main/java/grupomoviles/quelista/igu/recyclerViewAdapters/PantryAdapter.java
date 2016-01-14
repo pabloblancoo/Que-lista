@@ -49,29 +49,11 @@ public class PantryAdapter extends MyAdapter {
         super.onResultProductInfoActivity(product);
     }
 
-    //@Override
     public void onResultNewProductActivity(Product product) {
-        boolean encontrado = false;
-       /* Stream.of(items).forEach(i -> {
-            if (i.getCode().equals(product.getCode()))
-                i.setStock(i.getStock() + product.getStock());
-        });*/
-
-        /*for (Product i :items) {
-            if (i.getCode().equals(product.getCode())) {
-                i.setStock(i.getStock() + product.getStock());
-                encontrado = true;
-            }
-        }
-
-        if(!encontrado) {
-            items.add(product);
-        }*/
-
+        pantry.getProducts().put(product.getCode(), product);
         items.add(product);
-        super.onResultProductInfoActivity(product);
+        notifyDataSetChanged();
     }
-
 
     public void onResultNfcActivity(Product product) {
         pantry.onResultNfcActivity(product);
