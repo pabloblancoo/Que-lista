@@ -31,25 +31,24 @@ public class GetMongoLab {
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json;charset=UTF-8");
 
-            if (conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : "
-                        + conn.getResponseCode());
+            if (conn.getResponseCode() == 200) {
+
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(
+                        (conn.getInputStream()), HTTP.UTF_8));
+
+                while ((temp_output = br.readLine()) != null) {
+                    server_output = temp_output;
+                }
+
+                // create a basic db list
+                String mongoarray = "{ artificial_basicdb_list: " + server_output + "}";
+                Object o = com.mongodb.util.JSON.parse(mongoarray);
+
+                DBObject dbObj = (DBObject) o;
+
+                return (BasicDBList) dbObj.get("artificial_basicdb_list");
             }
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    (conn.getInputStream()), HTTP.UTF_8));
-
-            while ((temp_output = br.readLine()) != null) {
-                server_output = temp_output;
-            }
-
-            // create a basic db list
-            String mongoarray = "{ artificial_basicdb_list: " + server_output + "}";
-            Object o = com.mongodb.util.JSON.parse(mongoarray);
-
-            DBObject dbObj = (DBObject) o;
-
-            return (BasicDBList) dbObj.get("artificial_basicdb_list");
         } catch(Exception e) {
             e.printStackTrace();
         }
