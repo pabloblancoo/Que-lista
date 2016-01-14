@@ -139,7 +139,13 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if (product != null)
-                        new DownloadImageTask(this).execute(product.getCode());
+                        try {
+                            new DownloadImageTask(this).execute(product.getCode()).get();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
                 }
             }
 

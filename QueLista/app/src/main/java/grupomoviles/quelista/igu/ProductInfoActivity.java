@@ -131,16 +131,7 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
 
     private void showAllProductProperties() {
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Bitmap bitmap = null;
-                while (bitmap == null) {
-                    bitmap = product.getImage(getApplicationContext());
-                }
-                productImage.setImageBitmap(bitmap);
-            }
-        }).start();
+        productImage.setImageBitmap(product.getImage(getApplicationContext()));
 
         productImage.setImageBitmap(product.getImage(getApplicationContext()));
 
