@@ -18,22 +18,23 @@ import grupomoviles.quelista.onlineDatabase.GestorBD;
 /**
  * Created by Nauce on 4/1/16.
  */
-public class DownloadTicketFileTask extends AsyncTask<String, Void, List<Product>> {
+public class DownloadTicketFileTask extends AsyncTask<String, Void, String> {
     @Override
-    protected List<Product> doInBackground(String... url) {
-        List array = null;
+    protected String doInBackground(String... url) {;
         try {
 
             HttpURLConnection conn = (HttpURLConnection) new URL(url[0]).openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
             BufferedReader bf = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+            StringBuilder sb = new StringBuilder();
+            String line;
+
             if (bf != null) {
-                array = new ArrayList<String>();
-                String line;
                 try {
                     while ((line = bf.readLine()) != null) {
-                        array.add(line);
+                        sb.append(line).append("\n");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -43,22 +44,22 @@ public class DownloadTicketFileTask extends AsyncTask<String, Void, List<Product
             int firstProduct = 1;
             List<Product> products = new ArrayList<Product>();
 
-            if (array != null) {
-                for (int i = firstProduct; i < array.size() - 1; i++) {
-                    try {
-                        String[] line = array.get(i).toString().split(";");
-                        Product p = GestorBD.FindProduct(line[0]);
-                        p.setStock(Integer.parseInt(line[1]));
-                        products.add(p);
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+//            if (array != null) {
+//                for (int i = firstProduct; i < array.size() - 1; i++) {
+//                    try {
+//                        String[] line = array.get(i).toString().split(";");
+//                        Product p = GestorBD.FindProduct(line[0]);
+//                        p.setStock(Integer.parseInt(line[1]));
+//                        products.add(p);
+//                    } catch (ExecutionException e) {
+//                        e.printStackTrace();
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
 
-            return products;
+            return sb.toString();
         } catch (IOException e) {
             e.printStackTrace();
         }

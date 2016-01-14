@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
             cartAdapter.onResultProductInfoActivity(product);
         }
         else if (resultCode == RESULT_OK && IntentCaptureActivity.CODE_CAPTURE_ACTIVITY == requestCode &&
-                data.getExtras().getString(CaptureActivity.SCAN_FORMAT).equals(BarcodeFormat.EAN_13)) {
+                data.getExtras().getString(CaptureActivity.SCAN_FORMAT).toString().equals(BarcodeFormat.EAN_13.toString())) {
             String content = data.getExtras().getString(CaptureActivity.SCAN_CONTENT);
             Product product;
             boolean newProduct = false;

@@ -34,7 +34,7 @@ import grupomoviles.quelista.onlineDatabase.GestorBD;
 public class TicketActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE = 6;
-    TicketAdapter ticketAdapter = new TicketAdapter(this, new Ticket());
+    TicketAdapter ticketAdapter;
     public static final String PRODUCTS = "products";
 
     @Override
@@ -42,25 +42,53 @@ public class TicketActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket);
 
-        RecyclerView recycler = (RecyclerView) findViewById(R.id.recyclerView);
-        recycler.setHasFixedSize(true);
-        // Usar un administrador para LinearLayout
-        recycler.setLayoutManager(new LinearLayoutManager(this));
-
         List<Product> products = null;
+        List<String> barcodes = new ArrayList<String>();
+        String s = null;
+
         try {
-            products = new DownloadTicketFileTask().execute(getIntent().getExtras().getString(ScanNFCActivity.URLTAG).toString()).get();
+            s = new DownloadTicketFileTask().execute(getIntent().getExtras().getString(ScanNFCActivity.URLTAG).toString()).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
-        if(products != null) {
-            Stream.of(products).forEach(p -> ticketAdapter.getTicket().getProducts().put(p.getCode(), p));
+        if (s != null) {
+            String[] lineas = s.split("\n");
+            for (int i = 1; i < lineas.length - 1; i++)
+                barcodes.add(lineas[i].split(";")[0]);
+
+            try {
+                products = GestorBD.FindProducts(barcodes.toArray(new String[barcodes.size()]));
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            if (products != null) {
+                for (int i = 1; i < lineas.length - 1; i++)
+                    products.get(i-1).setStock(Integer.parseInt(lineas[i].split(";")[1]));
+            }
         }
+
+        RecyclerView recycler = (RecyclerView) findViewById(R.id.recyclerView);
+        recycler.setHasFixedSize(true);
+        // Usar un administrador para LinearLayout
+        recycler.setLayoutManager(new LinearLayoutManager(this));
+
+        Ticket ticket = new Ticket();
+
+        if (products != null) {
+            Stream.of(products).forEach(p -> {
+                ticket.getProducts().put(p.getCode(), p);
+             });
+        }
+        ticketAdapter = new TicketAdapter(this, ticket);
         recycler.setAdapter(ticketAdapter);
         ticketAdapter.swipeList();
+        ticketAdapter.notifyDataSetChanged();
     }
 
     public void accept(View view) {
