@@ -87,7 +87,7 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
     private Button buttonPlusAddWhenHave;
     private Button buttonMinusAddWhenHave;
 
-    private Product product;
+    private Product product = new Product();
     private Date date = null;
     private int minStock = -1;
     private int unitsToAdd = 1;
@@ -195,6 +195,11 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
             unitsAddWhenHave.setText(String.valueOf(0));
         }
 
+        changeTextUnits((TextView) findViewById(R.id.txUnitsTakesLabel), unitsDescontar);
+        changeTextDays((TextView) findViewById(R.id.txDaysTakesLabel), unitsDays);
+        changeTextUnits((TextView) findViewById(R.id.txUnitsWhenHaveLabel), unitsWhenHave);
+        changeTextUnits((TextView) findViewById(R.id.txUnitsAddWhenHaveLabel), unitsAddWhenHave);
+
     }
 
     @Override
@@ -235,69 +240,125 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
     }
 
     public void aumentarPantry(View view) {
+        if (unitsPantry.getVisibility() == View.INVISIBLE) {
+            unitsPantry.setVisibility(View.VISIBLE);
+        }
+        product.increaseStock();
         makeChanges(unitsPantry, true);
     }
 
     public void disminuirPantry(View view) {
+        product.decreaseStock();
         makeChanges(unitsPantry, false);
     }
 
     public void aumentarShoppingList(View view) {
-        makeChanges(unitsLista,  true);
+        if (unitsLista.getVisibility() == View.INVISIBLE) {
+            unitsLista.setVisibility(View.VISIBLE);
+        }
+        product.increaseShoppingListUnits();
+        makeChanges(unitsLista, true);
     }
 
     public void disminuirShoppingList(View view) {
+        product.decreaseShoppingListUnits();
         makeChanges(unitsLista, false);
     }
 
     public void aumentarCartList(View view) {
+        if (unitsCarrito.getVisibility() == View.INVISIBLE) {
+            unitsCarrito.setVisibility(View.VISIBLE);
+        }
+        product.increaseCartUnits();
         makeChanges(unitsCarrito, true);
     }
 
     public void disminuirCartList(View view) {
+        product.decreaseCartUnits();
         makeChanges(unitsCarrito, false);
+
     }
 
     public void aumentarUnitsDescontar(View view) {
+        product.increaseConsumeUnits();
+
         makeChanges(unitsDescontar, true);
+        changeTextUnits((TextView) findViewById(R.id.txUnitsTakesLabel), unitsDescontar);
+    }
+
+    private void changeTextUnits(TextView textView, TextView txUnits) {
+        int units = Integer.parseInt(txUnits.getText().toString());
+        if(units == 1)
+            textView.setText(R.string.unitsTakes);
+        else
+            textView.setText(R.string.unitsTakesMore);
+    }
+
+    private void changeTextDays(TextView textView, TextView txUnits) {
+        int units = Integer.parseInt(txUnits.getText().toString());
+        if (units == 1)
+            textView.setText(R.string.dayTakes);
+        else
+            textView.setText(R.string.dayTakesMore);
     }
 
     public void disminuirUnitsDescontar(View view) {
-        makeChanges(unitsDescontar, false);
+        if (product.getConsumeUnits() > 1) {
+            product.decreaseConsumeUnits();
+            makeChanges(unitsDescontar, false);
+            changeTextUnits((TextView) findViewById(R.id.txUnitsTakesLabel), unitsDescontar);
+        }
     }
 
     public void aumentarDays(View view) {
+        product.increaseConsumeCycle();
         makeChanges(unitsDays, true);
+        changeTextDays((TextView) findViewById(R.id.txDaysTakesLabel), unitsDays);
     }
 
+
     public void disminuirDays(View view) {
-        makeChanges(unitsDays,  false);
+        if (product.getConsumeCycle() > 1) {
+            product.decreaseConsumeCycle();
+            makeChanges(unitsDays, false);
+            changeTextDays((TextView) findViewById(R.id.txDaysTakesLabel), unitsDays);
+        }
     }
 
     public void aumentarWhenHave(View view) {
         //int num = Integer.parseInt(unitsWhenHave.getText().toString());
         //unitsWhenHave.setText(String.valueOf(num++));
-        makeChanges(unitsWhenHave,  true);
+        product.increaseMinStock();
+        makeChanges(unitsWhenHave, true);
+        changeTextUnits((TextView) findViewById(R.id.txUnitsWhenHaveLabel), unitsWhenHave);
         minStock = Integer.parseInt(unitsWhenHave.getText().toString());
     }
 
     public void disminuirWhenHave(View view) {
         //int num = Integer.parseInt(unitsWhenHave.getText().toString());
         //unitsWhenHave.setText(String.valueOf(num--));
+        product.decreaseMinStock();
         makeChanges(unitsWhenHave, false);
+        changeTextUnits((TextView) findViewById(R.id.txUnitsWhenHaveLabel), unitsWhenHave);
         minStock = Integer.parseInt(unitsWhenHave.getText().toString());
     }
 
     public void aumentarAddWhenHave(View view) {
         //int num = Integer.parseInt(unitsAddWhenHave.getText().toString());
         //unitsAddWhenHave.setText(String.valueOf(num++));
+        product.increaseUnitsToAdd();
         makeChanges(unitsAddWhenHave, true);
+        changeTextUnits((TextView) findViewById(R.id.txUnitsAddWhenHaveLabel), unitsAddWhenHave);
     }
 
     public void disminuirAddWhenHave(View view) {
         //int num = Integer.parseInt(unitsAddWhenHave.getText().toString());
         // unitsAddWhenHave.setText(String.valueOf(num--));
-        makeChanges(unitsAddWhenHave, false);
+        if (product.getUnitsToAdd() > 1) {
+            product.decreaseUnitsToAdd();
+            makeChanges(unitsAddWhenHave, false);
+            changeTextUnits((TextView) findViewById(R.id.txUnitsAddWhenHaveLabel), unitsAddWhenHave);
+        }
     }
 
     private void makeChanges(TextView textView, boolean sum) {
