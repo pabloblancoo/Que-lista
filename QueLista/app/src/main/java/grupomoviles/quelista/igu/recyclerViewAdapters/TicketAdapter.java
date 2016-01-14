@@ -116,6 +116,7 @@ public class TicketAdapter extends RecyclerSwipeAdapter<TicketAdapter.TicketView
 //            viewHolder.image.setVisibility(View.GONE);
 //        }
 
+        viewHolder.image.setImageBitmap(currentItem.getImage(context));
         viewHolder.units.setText(String.valueOf(currentItem.getStock()));
         System.out.println(currentItem.getDescription());
         viewHolder.description.setText(currentItem.getDescription());
@@ -123,7 +124,7 @@ public class TicketAdapter extends RecyclerSwipeAdapter<TicketAdapter.TicketView
         viewHolder.netValue.setText(currentItem.getNetValue());
 
         if (position == getItemCount() - 1)
-            viewHolder.itemView.setPadding(0, 0, 0, 12);
+            viewHolder.itemView.setPadding(0, 0, 0, 120);
         else
             viewHolder.itemView.setPadding(0, 0, 0, 0);
 
@@ -165,7 +166,6 @@ public class TicketAdapter extends RecyclerSwipeAdapter<TicketAdapter.TicketView
             v.findViewById(R.id.btnDeleteTicket).setOnClickListener(this);
 
             this.adapter = adapter;
-            v.setOnClickListener(this);
         }
 
         @Override
@@ -176,11 +176,11 @@ public class TicketAdapter extends RecyclerSwipeAdapter<TicketAdapter.TicketView
                     units.setText(String.valueOf(product.increaseStock()));
                     break;
                 case R.id.btnMinusStockTicket:
-                    if (product.getStock() > 0)
+                    if (product.getStock() > 1)
                         units.setText(String.valueOf(product.decreaseStock()));
                     else {
                         AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
-                        dialog.setMessage("¿Desea eliminar este producto de los que has comprado?");
+                        dialog.setMessage("¿Desea eliminar este producto del ticket?");
                         dialog.setNegativeButton("Cancelar", null);
                         dialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                             @Override

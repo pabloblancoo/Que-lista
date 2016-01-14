@@ -28,11 +28,6 @@ public class CartAdapter extends MyAdapter {
     public CartAdapter(Context context, Cart cart) {
         super(context, Stream.of(cart.getProducts().values()).collect(Collectors.toList()));
         this.cart = cart;
-
-        List<Product> temp = cargarBDLocal();
-        if(temp!=null && !temp.isEmpty()) {
-            Stream.of(temp).forEach(p -> this.onResultProductInfoActivity(p));
-        }
     }
 
     public Cart getCart() {
@@ -50,19 +45,16 @@ public class CartAdapter extends MyAdapter {
             items.add(product);
         super.onResultProductInfoActivity(product);
     }
-    @Override
+
     public void onResultNfcActivity(Product product) {
-        Stream.of(items).forEach(i -> {
-            if (i.getCode().equals(product.getCode()))
-                i.setStock(i.getStock() + product.getStock());
-        });
-        super.onResultNfcActivity(product);
+        cart.onResultNfcActivity(product);
     }
 
     @Override
     public void refresh() {
         cart.refresh();
         swipeList();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -101,7 +93,7 @@ public class CartAdapter extends MyAdapter {
     }
 
     public void addToCart(Product product) {
-        product.setCartUnits(Product.NOT_IN_CART + 1);
+        product.setCartUnits(product.getShoppingListUnits());
         cart.add(product);
         guardarDatosBDLocal(product);
         items.add(product);

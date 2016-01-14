@@ -169,6 +169,14 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
 
     public void setTab(int tab) {
         posicion = tab;
+        if (tab == 2 && ((MainActivity) getActivity()).getCartAdapter().getItemCount() > 0) {
+            getActivity().findViewById(R.id.fabAcceptShop).setEnabled(true);
+            getActivity().findViewById(R.id.fabAcceptShop).setVisibility(View.VISIBLE);
+        }
+        else {
+            getActivity().findViewById(R.id.fabAcceptShop).setEnabled(false);
+            getActivity().findViewById(R.id.fabAcceptShop).setVisibility(View.GONE);
+        }
         viewPager.setCurrentItem(tab);
         ((MainActivity) getActivity()).getPantryAdapter().getPantry().refresh();
         ((Toolbar)getActivity().findViewById(R.id.toolbar)).setTitle(myAdapter.getPageTitle(tab));

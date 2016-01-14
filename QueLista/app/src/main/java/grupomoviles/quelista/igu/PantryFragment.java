@@ -55,14 +55,6 @@ public class PantryFragment extends Fragment {
             Log.i("VACIA", "LO ESTA");
             List<Product> products = null;
 
-//            try {
-//                products = GestorBD.FindProducts("5449000000996", "8410297112041", "8410297170058",
-//                        "8410188012092", "5449000009067", "8410000826937", "8410014307682", "8410014312495", "5000127281752");
-//            } catch (ExecutionException e) {
-//                e.printStackTrace();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
             if(products !=  null) {
                 Stream.of(products).forEach(p -> {
                     ((MainActivity) getActivity()).getPantryAdapter().onResultProductInfoActivity(p);

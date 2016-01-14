@@ -1,31 +1,27 @@
 package grupomoviles.quelista.igu;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
-import android.nfc.Tag;
-import android.nfc.tech.Ndef;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.annimon.stream.Stream;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import grupomoviles.quelista.R;
 import grupomoviles.quelista.igu.recyclerViewAdapters.TicketAdapter;
+import grupomoviles.quelista.logic.DownloadImageTask;
 import grupomoviles.quelista.logic.DownloadTicketFileTask;
 import grupomoviles.quelista.logic.Product;
 import grupomoviles.quelista.logic.Ticket;
@@ -35,12 +31,20 @@ public class TicketActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE = 6;
     TicketAdapter ticketAdapter;
-    public static final String PRODUCTS = "products";
+    public static final String PRODUCTS = "PRODUCTS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket);
+
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar_ticket));
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("Descargando datos y procesando ticket");
+        pd.show();
 
         List<Product> products = null;
         List<String> barcodes = new ArrayList<String>();
@@ -58,6 +62,8 @@ public class TicketActivity extends AppCompatActivity {
             String[] lineas = s.split("\n");
             for (int i = 1; i < lineas.length - 1; i++)
                 barcodes.add(lineas[i].split(";")[0]);
+
+            new DownloadImageTask(this).execute(barcodes.toArray(new String[barcodes.size()]));
 
             try {
                 products = GestorBD.FindProducts(barcodes.toArray(new String[barcodes.size()]));
@@ -83,12 +89,30 @@ public class TicketActivity extends AppCompatActivity {
         if (products != null) {
             Stream.of(products).forEach(p -> {
                 ticket.getProducts().put(p.getCode(), p);
-             });
+            });
         }
         ticketAdapter = new TicketAdapter(this, ticket);
         recycler.setAdapter(ticketAdapter);
         ticketAdapter.swipeList();
         ticketAdapter.notifyDataSetChanged();
+
+        pd.dismiss();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void accept(View view) {

@@ -20,7 +20,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
     private Activity activity;
 
-    public DownloadImageTask(MainActivity activity) {
+    public DownloadImageTask(Activity activity) {
         this.activity = activity;
     }
 

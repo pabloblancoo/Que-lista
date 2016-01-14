@@ -48,11 +48,6 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
         notifyDataSetChanged();
     }
 
-    public void onResultNfcActivity(Product product){
-        items = Stream.of(items).sortBy(i -> i.getDescription() + i.getNetValue()).collect(Collectors.toList());
-        notifyDataSetChanged();
-    }
-
     public abstract void refresh();
 
     @Override
@@ -145,18 +140,6 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
             notifyDataSetChanged();
         }
 
-    }
-
-    public List<Product> cargarBDLocal() {
-        List<Product> p = null;
-        ProductDataSource database = new ProductDataSource(context);
-        database.openDatabase();
-        p = database.getAllProducts();
-        database.close();
-
-        //Stream.of(p).forEach(x -> Log.i("PANTRY", "PRODUCTO " + x.getCode()));
-
-        return  p;
     }
 
     public void guardarDatosBDLocal(Product product) {
