@@ -328,13 +328,14 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
         product.setCartUnits(Integer.parseInt(unitsCarrito.getText().toString()));
 
 
+        product.setLastUpdate(date);
         if (date != null) {
-            product.setLastUpdate(date);
             product.setConsumeUnits(Integer.parseInt(unitsDescontar.getText().toString()));
             product.setConsumeCycle(Integer.parseInt(unitsDays.getText().toString()));
         }
+
+        product.setMinStock(minStock);
         if (minStock > -1) {
-            product.setMinStock(minStock);
             product.setUnitsToAdd(Integer.parseInt(unitsAddWhenHave.getText().toString()));
         }
 
