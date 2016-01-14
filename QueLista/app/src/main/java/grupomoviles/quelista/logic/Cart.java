@@ -87,7 +87,7 @@ public class Cart {
         database.openDatabase();
 
         Stream.of(products.values()).forEach(p -> {
-            p.setStock(p.getStock() + p.getCartUnits());
+            p.setStock(p.getStock() + (p.getCartUnits()*p.getUnits()));
             p.setCartUnits(Product.NOT_IN_CART);
             ((MainActivity)context).getShoppingListAdapter().getShoppingList().remove(p);
             ((MainActivity)context).getShoppingListAdapter().getShoppingList().refresh();

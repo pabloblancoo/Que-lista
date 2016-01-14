@@ -74,7 +74,7 @@ public class Pantry {
         database.openDatabase();
 
         if (p != null) {
-            p.setStock(p.getStock() + product.getStock());
+            p.setStock(p.getStock() + (product.getStock()*p.getUnits()));
             database.update(p);
         }
         else {
