@@ -106,6 +106,8 @@
     <string name="AddCarro">Añadir Carro</string>
     <string name="AddListCompra">Añadir Lista Compra</string>
     <string name="producto_existe">Ya existe un producto con ese código de barras</string>
+    <string name="sin_conexion">No tiene conexión a internet</string>
+    <string name="quieres_manualmente">¿Desea registrar el producto manualmente?</string>
 
 
 </resources>

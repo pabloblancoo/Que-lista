@@ -148,8 +148,8 @@ public class MainActivity extends AppCompatActivity {
                     dialog.setMessage(getString(R.string.producto_no_esta_online)
                             + "\n\n" + getString(R.string.desea_registrarlo));
                 else
-                    dialog.setMessage("No tiene conexión a internet"
-                            + "\n\n" + "¿Desea registrar el producto manualmente?");
+                    dialog.setMessage(getString(R.string.sin_conexion)
+                            + "\n\n" + getString(R.string.quieres_manualmente));
                 dialog.setPositiveButton(getString(R.string.Aceptar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
