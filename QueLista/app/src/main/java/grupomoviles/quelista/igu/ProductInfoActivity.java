@@ -112,8 +112,10 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         buttonMinusAddWhenHave = (Button) findViewById(R.id.btnMinusAddWhenHave);
 
         //Mostrar u ocultar botones
-        if (!newProduct) {
-            findViewById(R.id.layoutButtonsNewProduct).setVisibility(View.GONE);
+        if (newProduct) {
+            findViewById(R.id.fabAccept).setVisibility(View.VISIBLE);
+            findViewById(R.id.fabCancel).setVisibility(View.VISIBLE);
+            findViewById(R.id.linearLayoutWithPadding).setPadding(0, 0, 0, 120);
         }
         //Mostrar o ocultar los textView al principio de la aplicacion
         if (product.getStock() == -1) {
@@ -135,8 +137,8 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
                 Bitmap bitmap = null;
                 while (bitmap == null) {
                     bitmap = product.getImage(getApplicationContext());
-                    productImage.setImageBitmap(bitmap);
                 }
+                productImage.setImageBitmap(bitmap);
             }
         }).start();
 
@@ -406,12 +408,16 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
                 product.setMinStock(-1);
             }
         }
-        guardarDatos();
+        if (!newProduct)
+            guardarDatos();
         showDatabaseData();
     }
 
-    public void acept(View view) {
+    public void accept(View view) {
         guardarDatos();
+        Intent i = new Intent();
+        i.putExtra(PRODUCT, product);
+        setResult(RESULT_OK, i);
         finish();
     }
 
@@ -435,9 +441,11 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            Intent i = new Intent();
-            i.putExtra(PRODUCT, product);
-            setResult(RESULT_OK, i);
+            if (!newProduct) {
+                Intent i = new Intent();
+                i.putExtra(PRODUCT, product);
+                setResult(RESULT_OK, i);
+            }
         }
 
         return super.onKeyDown(keyCode, event);
