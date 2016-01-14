@@ -28,11 +28,6 @@ public class CartAdapter extends MyAdapter {
     public CartAdapter(Context context, Cart cart) {
         super(context, Stream.of(cart.getProducts().values()).collect(Collectors.toList()));
         this.cart = cart;
-
-        List<Product> temp = cargarBDLocal();
-        if(temp!=null && !temp.isEmpty()) {
-            Stream.of(temp).forEach(p -> this.onResultProductInfoActivity(p));
-        }
     }
 
     public Cart getCart() {

@@ -32,11 +32,6 @@ public class ShoppingListAdapter extends MyAdapter {
     public ShoppingListAdapter(Context context, ShoppingList shoppingList) {
         super(context, Stream.of(shoppingList.getProducts().values()).collect(Collectors.toList()));
         this.shoppingList = shoppingList;
-
-        List<Product> temp = cargarBDLocal();
-        if(temp!=null && !temp.isEmpty()) {
-            Stream.of(temp).forEach(p -> this.onResultProductInfoActivity(p));
-        }
     }
 
     public ShoppingList getShoppingList() {

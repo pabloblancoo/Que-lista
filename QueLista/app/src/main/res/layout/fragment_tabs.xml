@@ -50,6 +50,19 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabAcceptShop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_margin="12dp"
+        android:onClick="acceptShop"
+        android:scaleType="centerCrop"
+        app:backgroundTint="#8BC34A"
+        app:elevation="4dp"
+        app:layout_anchorGravity="bottom|left|end"
+        app:layout_behavior="grupomoviles.quelista.igu.ScrollAwareFABBehavior" />
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

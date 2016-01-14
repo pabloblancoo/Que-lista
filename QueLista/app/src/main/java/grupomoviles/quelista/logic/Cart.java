@@ -80,4 +80,18 @@ public class Cart {
                 products.put(product.getCode(), product);
 
     }
+
+    public void acceptShopCart() {
+        ProductDataSource database = new ProductDataSource(context);
+        database.openDatabase();
+
+        Stream.of(products.values()).forEach(p -> {
+            p.setStock(p.getStock() + p.getCartUnits());
+            p.setCartUnits(0);
+        });
+
+        products.clear();
+
+        database.close();
+    }
 }

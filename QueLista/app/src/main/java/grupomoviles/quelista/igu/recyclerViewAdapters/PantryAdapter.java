@@ -34,15 +34,6 @@ public class PantryAdapter extends MyAdapter {
     public PantryAdapter(Context context, Pantry pantry) {
         super(context, Stream.of(pantry.getProducts().values()).collect(Collectors.toList()));
         this.pantry = pantry;
-        
-        List<Product> temp = cargarBDLocal();
-        if(temp!=null && !temp.isEmpty()) {
-            Stream.of(temp).forEach(p -> this.onResultProductInfoActivity(p));
-        }
-
-        Stream.of(this.items).forEach(x -> Log.i("PANTRY", "PRODUCTO " + x.getCode() + " -- Unidades: " + x.getStock()));
-        //Stream.of(items).forEach(p -> pantry.getProducts().put(p.getCode(), p));
-        //Stream.of(items).forEach(p -> Log.i("PANTRY", "PRODUCTO " + p.getCode()));
     }
 
     public Pantry getPantry() {
