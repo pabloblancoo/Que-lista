@@ -37,17 +37,17 @@
         <!-- Activity para escanear códigos -->
         <activity
             android:name=".captureCodes.CaptureActivity"
-            android:label="Escaner"
+            android:label="@string/escanear"
             android:screenOrientation="portrait">
 
             <!-- android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" -->
         </activity>
         <activity
             android:name=".igu.ProductInfoActivity"
-            android:label="Producto" />
+            android:label="@string/producto" />
         <activity
             android:name=".igu.NewProductActivity"
-            android:label="Producto nuevo">
+            android:label="@string/producto_nuevo">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="grupomoviles.quelista.igu.MainActivity" />
@@ -65,7 +65,7 @@
         <activity android:name=".igu.TicketActivity" />
         <activity
             android:name=".igu.AboutActivity"
-            android:label="@string/title_activity_about"
+            android:label="@string/acerca_de"
             android:configChanges=""
             android:screenOrientation="portrait"
             android:parentActivityName=".igu.MainActivity">

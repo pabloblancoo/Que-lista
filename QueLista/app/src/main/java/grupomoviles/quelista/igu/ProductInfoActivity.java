@@ -76,7 +76,7 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
             newProduct = (boolean) getIntent().getExtras().get(NEWPRODUCT);
 
         if (newProduct)
-            getSupportActionBar().setTitle("Producto nuevo");
+            getSupportActionBar().setTitle(getString(R.string.producto_nuevo));
         else
             getSupportActionBar().setTitle(product.getCode());
 
