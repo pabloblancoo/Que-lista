@@ -137,8 +137,8 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
                 Bitmap bitmap = null;
                 while (bitmap == null) {
                     bitmap = product.getImage(getApplicationContext());
-                    productImage.setImageBitmap(bitmap);
                 }
+                productImage.setImageBitmap(bitmap);
             }
         }).start();
 
