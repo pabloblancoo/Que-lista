@@ -63,19 +63,17 @@ public class ShoppingListAdapter extends MyAdapter {
             items.add(product);
         super.onResultProductInfoActivity(product);
     }
-    @Override
+
+
     public void onResultNfcActivity(Product product) {
-        Stream.of(items).forEach(i -> {
-            if (i.getCode().equals(product.getCode()))
-                i.setStock(i.getStock() + product.getStock());
-        });
-        super.onResultNfcActivity(product);
+        shoppingList.onResultNfcActivity(product);
     }
 
     @Override
     public void refresh() {
         shoppingList.refresh();
         swipeList();
+        notifyDataSetChanged();
     }
 
     @Override

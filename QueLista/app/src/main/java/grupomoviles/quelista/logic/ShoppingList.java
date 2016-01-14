@@ -43,10 +43,15 @@ public class ShoppingList {
         product.setShoppingListUnits(Product.NOT_IN_SHOPPING_LIST);
         products.remove(product.getCode());
 
-        if(product.getStock() == Product.NOT_IN_PANTRY && product.getCartUnits() == Product.NOT_IN_CART && product.getShoppingListUnits() == Product.NOT_IN_SHOPPING_LIST)
-            new ProductDataSource(context).deleteProduct(product.getCode());
+        ProductDataSource database = new ProductDataSource(context);
+        database.openDatabase();
+
+        if (product.getStock() == Product.NOT_IN_PANTRY && product.getCartUnits() == Product.NOT_IN_CART && product.getShoppingListUnits() == Product.NOT_IN_SHOPPING_LIST)
+            database.deleteProduct(product.getCode());
         else
-            new ProductDataSource(context).update(product);
+            database.update(product);
+
+        database.close();
     }
 
     public Product find(String content) {
@@ -63,5 +68,14 @@ public class ShoppingList {
         Stream.of(products).forEach(m -> {
             m.getValue().spendUnits();
         });
+    }
+
+    public void onResultNfcActivity(Product product) {
+        Product p = products.get(product.getCode());
+
+        if (p == null)
+            if (product.getShoppingListUnits() != Product.NOT_IN_SHOPPING_LIST)
+                products.put(product.getCode(), product);
+
     }
 }

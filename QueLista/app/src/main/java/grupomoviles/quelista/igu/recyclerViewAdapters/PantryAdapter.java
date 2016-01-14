@@ -81,13 +81,9 @@ public class PantryAdapter extends MyAdapter {
         super.onResultProductInfoActivity(product);
     }
 
-    @Override
+
     public void onResultNfcActivity(Product product) {
-        Stream.of(items).forEach(i -> {
-            if (i.getCode().equals(product.getCode()))
-                i.setStock(i.getStock() + product.getStock());
-        });
-        super.onResultNfcActivity(product);
+        pantry.onResultNfcActivity(product);
     }
 
     public void swipeList() {
@@ -107,6 +103,7 @@ public class PantryAdapter extends MyAdapter {
     public void refresh() {
         pantry.refresh();
         swipeList();
+        notifyDataSetChanged();
     }
 
     @Override

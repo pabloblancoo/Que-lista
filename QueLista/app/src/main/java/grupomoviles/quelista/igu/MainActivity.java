@@ -171,18 +171,21 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(ScanNFCActivity.URLTAG, data.getExtras().getString(CaptureActivity.SCAN_CONTENT));
             startActivityForResult(intent, TicketActivity.REQUEST_CODE);
         }
-//
-//        else if(ScanNFCActivity.REQUEST_CODE == requestCode && resultCode == RESULT_OK){
-//
-//            Map<String,Product> map = (Map<String, Product>) data.getExtras().get(ScanNFCActivity.PRODUCTS);
-//            Stream.of(map).forEach(m ->
-//            {
-//                pantryAdapter.onResultNfcActivity(m.getValue());
-//                shoppingListAdapter.onResultNfcActivity(m.getValue());
-//                cartAdapter.onResultNfcActivity(m.getValue());
-//            });
-//
-//        }
+
+        else if(resultCode == RESULT_OK && TicketActivity.REQUEST_CODE == requestCode){
+
+            Map<String,Product> map = (Map<String, Product>) data.getExtras().get(TicketActivity.PRODUCTS);
+            Stream.of(map).forEach(m ->
+            {
+                pantryAdapter.onResultNfcActivity(m.getValue());
+                shoppingListAdapter.onResultNfcActivity(m.getValue());
+                cartAdapter.onResultNfcActivity(m.getValue());
+            });
+
+            pantryAdapter.refresh();
+            shoppingListAdapter.refresh();
+            cartAdapter.refresh();
+        }
     }
 
     private void setUpNavigationDrawer() {

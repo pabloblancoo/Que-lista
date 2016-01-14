@@ -44,10 +44,15 @@ public class Pantry {
         product.setStock(Product.NOT_IN_PANTRY);
         products.remove(product.getCode());
 
+        ProductDataSource database = new ProductDataSource(context);
+        database.openDatabase();
+
         if(product.getStock() == Product.NOT_IN_PANTRY && product.getCartUnits() == Product.NOT_IN_CART && product.getShoppingListUnits() == Product.NOT_IN_SHOPPING_LIST)
-            new ProductDataSource(context).deleteProduct(product.getCode());
+            database.deleteProduct(product.getCode());
         else
-            new ProductDataSource(context).update(product);
+            database.update(product);
+
+        database.close();
     }
 
     public Product find(String code) {
@@ -60,5 +65,23 @@ public class Pantry {
         Stream.of(products).forEach(m -> {
             m.getValue().spendUnits();
         });
+    }
+
+    public void onResultNfcActivity(Product product) {
+        Product p = products.get(product.getCode());
+
+        ProductDataSource database = new ProductDataSource(context);
+        database.openDatabase();
+
+        if (p != null) {
+            p.setStock(p.getStock() + product.getStock());
+            database.update(p);
+        }
+        else {
+            products.put(product.getCode(), product);
+            database.insertProduct(product);
+        }
+
+        database.close();
     }
 }

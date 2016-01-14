@@ -48,11 +48,6 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
         notifyDataSetChanged();
     }
 
-    public void onResultNfcActivity(Product product){
-        items = Stream.of(items).sortBy(i -> i.getDescription() + i.getNetValue()).collect(Collectors.toList());
-        notifyDataSetChanged();
-    }
-
     public abstract void refresh();
 
     @Override
