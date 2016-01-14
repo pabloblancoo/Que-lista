@@ -80,6 +80,24 @@ public class ProductDataSource {
         }
     }
 
+    /**
+     * Buscamos un producto de la base de datos local
+     * @param barcode Codigo del elemento a buscar
+     */
+    public int findProduct(String barcode) {
+        String[] campos = new String[]{LocalDatabase.PRODUCT_COLUMN_BARCODE};
+        Cursor c = database.query(LocalDatabase.PRODUCT_TABLE_NAME,
+                campos,
+                LocalDatabase.PRODUCT_COLUMN_BARCODE + "=" + barcode, null, null, null, null);
+
+        //Nos aseguramos de que existe al menos un registro
+        if (c.moveToFirst()) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
 
     /**
      * Elimina un producto de la base de datos local

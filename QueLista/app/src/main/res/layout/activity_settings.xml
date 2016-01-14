@@ -11,7 +11,7 @@
         android:background="@color/color_rojo_app"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:title="@string/app_name"
+        app:title="@string/title_activity_settings"
         app:layout_scrollFlags="scroll|enterAlways" />
 
     <FrameLayout

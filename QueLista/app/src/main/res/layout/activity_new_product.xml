@@ -64,6 +64,17 @@
                         android:src="@drawable/cereales_miel_pops"
                         android:onClick="changeImage"
                         android:layout_marginRight="12dp" />
+                    <TextView
+                        android:layout_width="116dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:id="@+id/info_imagen"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/info_imagen"
+                        android:textAlignment="center"
+                        android:singleLine="false"
+                        android:gravity="center_vertical|center_horizontal" />
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/input_layout_txDescripcion"
