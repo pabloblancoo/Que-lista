@@ -41,49 +41,19 @@ public class TicketActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket);
-        BufferedReader bf = null;
-        List<String> array = null;
-
-        try {
-            bf = new DownloadTicketFileTask().execute(getIntent().getStringExtra(ScanNFCActivity.URLTAG)).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        if (bf != null) {
-            array = new ArrayList<String>();
-            String line;
-            try {
-                while ((line = bf.readLine()) != null) {
-                    array.add(line);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
         RecyclerView recycler = (RecyclerView) findViewById(R.id.recyclerView);
         recycler.setHasFixedSize(true);
         // Usar un administrador para LinearLayout
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
-        int firstProduct = 1;
-        List<Product> products = new ArrayList<Product>();
-
-        if (array != null) {
-            for (int i = firstProduct; i < array.size() - 1; i++) {
-                try {
-                    String[] line = array.get(i).toString().split(";");
-                    Product p = GestorBD.FindProduct(line[0]);
-                    p.setStock(Integer.parseInt(line[1]));
-                    products.add(p);
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+        List<Product> products = null;
+        try {
+            products = new DownloadTicketFileTask().execute(getIntent().getExtras().getString(ScanNFCActivity.URLTAG).toString()).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
 
         if(products != null) {
