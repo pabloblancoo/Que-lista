@@ -121,11 +121,11 @@ public class ScanNFCActivity extends AppCompatActivity {
 
             for (String tech : techList) {
                 if (searchedTech.equals(tech)) {
-                    //new NdefReaderTask().execute(tag);
-                    Intent i = new Intent();
-                    i.putExtra(URLTAG, tag);
-                    setResult(RESULT_OK);
-                    finish();
+                    new NdefReaderTask().execute(tag);
+//                    Intent i = new Intent();
+//                    i.putExtra(URLTAG, tag);
+//                    setResult(RESULT_OK);
+//                    finish();
                     break;
                 }
             }
@@ -246,29 +246,33 @@ public class ScanNFCActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             if (result != null) {
 
-                DownloadTicketFileTask downloadTicketFileTask = new DownloadTicketFileTask();
-                BufferedReader bufferedReader;
-                try {
+//                DownloadTicketFileTask downloadTicketFileTask = new DownloadTicketFileTask();
+//                BufferedReader bufferedReader;
+//                try {
+//
+//                    bufferedReader = downloadTicketFileTask.execute(result).get();
+//                    ArrayList array = new ArrayList<String>();
+//                    String line;
+//                    while ((line = bufferedReader.readLine()) != null) {
+//                        array.add(line);
+//                    }
+//                    android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//                    FragmentTicket fragmentTicket = new FragmentTicket();
+//                    Bundle bundle = new Bundle();
+//                    bundle.putSerializable(BUFFERED, array);
+//                    fragmentTicket.setArguments(bundle);
+//                    fragmentTransaction.replace(R.id.contenedor, fragmentTicket);
+//                    fragmentTransaction.commit();
+//                    relativeLayout.setVisibility(View.VISIBLE);
+//
+//                } catch (Exception e) {
+//
+//                }
 
-                    bufferedReader = downloadTicketFileTask.execute(result).get();
-                    ArrayList array = new ArrayList<String>();
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null) {
-                        array.add(line);
-                    }
-                    android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    FragmentTicket fragmentTicket = new FragmentTicket();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(BUFFERED, array);
-                    fragmentTicket.setArguments(bundle);
-                    fragmentTransaction.replace(R.id.contenedor, fragmentTicket);
-                    fragmentTransaction.commit();
-                    relativeLayout.setVisibility(View.VISIBLE);
-
-                } catch (Exception e) {
-
-                }
-//                p.dismiss();
+                Intent i = new Intent();
+                i.putExtra(URLTAG, result);
+                setResult(RESULT_OK);
+                finish();
             }
         }
 
