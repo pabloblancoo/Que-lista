@@ -91,6 +91,7 @@ public class Cart {
             p.setCartUnits(Product.NOT_IN_CART);
             ((MainActivity)context).getShoppingListAdapter().getShoppingList().remove(p);
             ((MainActivity)context).getShoppingListAdapter().getShoppingList().refresh();
+            ((MainActivity)context).getShoppingListAdapter().notifyDataSetChanged();
             database.update(p);
         });
 
