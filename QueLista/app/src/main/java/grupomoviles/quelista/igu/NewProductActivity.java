@@ -586,13 +586,35 @@ public class NewProductActivity extends AppCompatActivity implements CompoundBut
 
 
         private boolean validaciones(){
-        if(!validate(description, descriptionLayout)) return false;
-        if(!validate(brand, brandLayout)) return false;
-        if(!validate(netValue, netValueLayout)) return false;
-        if(!validate(category, categoryLayout)) return false;
-        if(!validate(code, codeLayout)) return false;
+            if (!validate(description, descriptionLayout)) return false;
+            if (!validate(brand, brandLayout)) return false;
+            if (!validate(netValue, netValueLayout)) return false;
+            if (!validate(category, categoryLayout)) return false;
+            if (!validate(code, codeLayout)) return false;
+
+            if (existeProducto())
+                return false;
 
         return true;
+    }
+
+    private boolean existeProducto() {
+        boolean existe = false;
+        ProductDataSource database = new ProductDataSource(this);
+        database.openDatabase();
+        if(database.findProduct(code.getText().toString()) == 1)
+            existe = true;
+        database.close();
+
+        if(existe){
+            codeLayout.setError("Ya existe un producto con ese código de barras");
+            code.requestFocus();
+        }
+        else{
+            codeLayout.setErrorEnabled(false);
+        }
+
+        return existe;
     }
 
     private boolean validate(EditText editText, TextInputLayout textInputLayout) {
