@@ -129,13 +129,13 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
 
                 switch (position) {
                     case 0:
-                        ((MainActivity) getActivity()).getPantryAdapter().notifyDataSetChanged();
+                        ((MainActivity) getActivity()).getPantryAdapter().refresh();
                         break;
                     case 1:
-                        ((MainActivity) getActivity()).getShoppingListAdapter().notifyDataSetChanged();
+                        ((MainActivity) getActivity()).getShoppingListAdapter().refresh();
                         break;
                     case 2:
-                        ((MainActivity) getActivity()).getCartAdapter().notifyDataSetChanged();
+                        ((MainActivity) getActivity()).getCartAdapter().refresh();
                         break;
                 }
             }

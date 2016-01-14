@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import grupomoviles.quelista.igu.MainActivity;
 import grupomoviles.quelista.localDatabase.ProductDataSource;
 
 /**
@@ -87,7 +88,10 @@ public class Cart {
 
         Stream.of(products.values()).forEach(p -> {
             p.setStock(p.getStock() + p.getCartUnits());
-            p.setCartUnits(0);
+            p.setCartUnits(Product.NOT_IN_CART);
+            ((MainActivity)context).getShoppingListAdapter().getShoppingList().remove(p);
+            ((MainActivity)context).getShoppingListAdapter().getShoppingList().refresh();
+            database.update(p);
         });
 
         products.clear();
