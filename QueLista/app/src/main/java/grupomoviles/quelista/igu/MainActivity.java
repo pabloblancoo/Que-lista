@@ -29,6 +29,7 @@ import grupomoviles.quelista.logic.DownloadImageTask;
 import grupomoviles.quelista.logic.Pantry;
 import grupomoviles.quelista.logic.Product;
 import grupomoviles.quelista.logic.ShoppingList;
+import grupomoviles.quelista.logic.Ticket;
 import grupomoviles.quelista.onlineDatabase.GestorBD;
 import grupomoviles.quelista.onlineDatabase.GetProducts;
 
@@ -155,7 +156,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         else if(ScanNFCActivity.REQUEST_CODE == requestCode && resultCode == RESULT_OK){
-//            startActivityForResult(new Intent(MainActivity.this));
+            Intent intent = new Intent(MainActivity.this, TicketActivity.class);
+            intent.putExtra(ScanNFCActivity.URLTAG ,data.getExtras().getString(ScanNFCActivity.URLTAG));
+            startActivityForResult(intent, TicketActivity.REQUEST_CODE);
         }
 //
 //        else if(ScanNFCActivity.REQUEST_CODE == requestCode && resultCode == RESULT_OK){

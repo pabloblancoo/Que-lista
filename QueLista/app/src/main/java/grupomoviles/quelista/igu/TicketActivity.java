@@ -31,6 +31,7 @@ import grupomoviles.quelista.onlineDatabase.GestorBD;
 
 public class TicketActivity extends AppCompatActivity {
 
+    public static final int REQUEST_CODE = 6;
     TicketAdapter ticketAdapter = new TicketAdapter(this, new Ticket());
 
     @Override
