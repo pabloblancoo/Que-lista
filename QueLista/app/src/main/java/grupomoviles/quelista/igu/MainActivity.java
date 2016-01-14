@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
             mFragmentTransaction.replace(R.id.fragment_container, fragment).commit();
         }
 
+        pantryAdapter.refresh();
     }
 
     @Override

@@ -108,6 +108,6 @@
     <string name="producto_existe">Ya existe un producto con ese código de barras</string>
     <string name="sin_conexion">No tiene conexión a internet</string>
     <string name="quieres_manualmente">¿Desea registrar el producto manualmente?</string>
-
+    <string name="nfc">NFC</string>
 
 </resources>

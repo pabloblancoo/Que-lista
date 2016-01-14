@@ -82,4 +82,6 @@
     <string name="producto_existe">There is already a product with that barcode</string>
     <string name="sin_conexion"> No internet access.</string>
     <string name="quieres_manualmente">Do you want to register the product manually?</string>
+    <string name="nfc">NFC</string>
+
 </resources>

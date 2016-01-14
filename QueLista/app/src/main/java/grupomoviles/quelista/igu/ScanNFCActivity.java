@@ -13,7 +13,9 @@ import android.nfc.tech.Ndef;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -40,10 +42,8 @@ public class ScanNFCActivity extends AppCompatActivity {
     public static final String MIME_TEXT_PLAIN = "text/plain";
     public static final String TAG = "NfcDemo";
 
-    private TextView mTextView;
     private NfcAdapter mNfcAdapter;
     private TicketAdapter ticketAdapter;
-    private RelativeLayout relativeLayout;
     ProgressDialog p;
     public static final String URLTAG = "URL";
 
@@ -55,16 +55,32 @@ public class ScanNFCActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_nfc);
-        mTextView = (TextView) findViewById(R.id.txIfno);
+
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbarNFC));
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         ticketAdapter = new TicketAdapter(this, new Ticket());
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        relativeLayout = (RelativeLayout) findViewById(R.id.layoutBotonTicket);
-
-        relativeLayout.setVisibility(View.GONE);
 
         handleIntent(getIntent());
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onResume() {
