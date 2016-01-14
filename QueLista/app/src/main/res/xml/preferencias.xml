@@ -1,0 +1,12 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="categoria_notificaciones"
+        android:title="@string/categoria_apariencia">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="miniaturas"
+            android:summary="@string/pref_description_miniaturas"
+            android:title="@string/pref_miniaturas" />
+    </PreferenceCategory>
+</PreferenceScreen>

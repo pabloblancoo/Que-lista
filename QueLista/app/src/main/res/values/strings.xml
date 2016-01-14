@@ -154,6 +154,7 @@
     <string name="producto_nuevo">Producto nuevo</string>
     <string name="escanear_codigo">Escanear código</string>
     <string name="acerca_de">Acerca de</string>
+    <string name="categoria_apariencia">Apariencia</string>
 
 
 </resources>
