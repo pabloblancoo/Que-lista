@@ -45,7 +45,6 @@ public class CaptureActivity extends AppCompatActivity {
         ica = (IntentCaptureActivity) getIntent().getExtras().get("this");
 
         barcodeView = (CompoundBarcodeView) findViewById(R.id.view);
-        barcodeView.setStatusText(getString(R.string.codigo_barras));       //Se usa esto para poder interncionalizar
         reconfig();
         beepManager = new BeepManager(this);
 

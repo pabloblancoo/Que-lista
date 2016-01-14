@@ -109,7 +109,8 @@ public class MainActivity extends AppCompatActivity {
             shoppingListAdapter.onResultProductInfoActivity(product);
             cartAdapter.onResultProductInfoActivity(product);
         }
-        else if (IntentCaptureActivity.CODE_CAPTURE_ACTIVITY == requestCode && resultCode == RESULT_OK) {
+        else if (resultCode == RESULT_OK && IntentCaptureActivity.CODE_CAPTURE_ACTIVITY == requestCode &&
+                data.getExtras().getString(CaptureActivity.SCAN_FORMAT).equals(BarcodeFormat.EAN_13)) {
             String content = data.getExtras().getString(CaptureActivity.SCAN_CONTENT);
             Product product;
             boolean newProduct = false;
@@ -155,9 +156,19 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        else if(ScanNFCActivity.REQUEST_CODE == requestCode && resultCode == RESULT_OK){
+        else if(resultCode == RESULT_OK && ScanNFCActivity.REQUEST_CODE == requestCode) {
             Intent intent = new Intent(MainActivity.this, TicketActivity.class);
             intent.putExtra(ScanNFCActivity.URLTAG ,data.getExtras().getString(ScanNFCActivity.URLTAG));
+            startActivityForResult(intent, TicketActivity.REQUEST_CODE);
+
+        }
+
+        else if (resultCode == RESULT_OK &&
+                IntentCaptureActivity.CODE_CAPTURE_ACTIVITY == requestCode
+                && data.getExtras().getString(CaptureActivity.SCAN_FORMAT).toString().equals(BarcodeFormat.QR_CODE.toString())) {
+            System.out.println(data.getExtras().getString(CaptureActivity.SCAN_CONTENT));
+            Intent intent = new Intent(MainActivity.this, TicketActivity.class);
+            intent.putExtra(ScanNFCActivity.URLTAG, data.getExtras().getString(CaptureActivity.SCAN_CONTENT));
             startActivityForResult(intent, TicketActivity.REQUEST_CODE);
         }
 //

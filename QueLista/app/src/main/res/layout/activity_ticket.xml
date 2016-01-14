@@ -24,15 +24,20 @@
         app:title="@string/app_name">
     </android.support.v7.widget.Toolbar>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/recyclerView"
+                android:background="#ffffff"
+                android:paddingBottom="12dp"
+                app:layout_behavior="@+id/app_bar_layout">
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
     </android.support.design.widget.AppBarLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recyclerView"
-        android:background="#ffffff"
-        android:paddingBottom="12dp">
-    </android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabScan"
