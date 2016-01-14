@@ -63,9 +63,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Cargar valores por defecto
-        PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
-        PreferenceManager.setDefaultValues(this, R.xml.pref_data_sync, false);
-        PreferenceManager.setDefaultValues(this, R.xml.pref_notification, false);
+        PreferenceManager.setDefaultValues(this, R.xml.preferencias, false);
 
         // Procesar valores actuales de las preferencias.
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
