@@ -73,6 +73,12 @@ public class ShoppingListAdapter extends MyAdapter {
     }
 
     @Override
+    public void refresh() {
+        shoppingList.refresh();
+        swipeList();
+    }
+
+    @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.holder_product, parent, false);

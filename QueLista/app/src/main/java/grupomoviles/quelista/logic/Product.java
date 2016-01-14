@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
 
+import com.annimon.stream.Stream;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -356,6 +358,27 @@ public class Product implements Serializable {
         }
 
         return bitmap;
+    }
+
+    public void spendUnits(){
+        long currentDate = new Date().getTime();
+            if (getLastUpdate() != null) {
+                Long productLastDate = getLastUpdate().getTime();
+                long time = currentDate - productLastDate;
+                long hours = time / 1000 / 60 / 60;
+                long hoursConsume = getConsumeCycle() * 24;
+                if (hours >= hoursConsume) {
+                    int vecesADescontar = (int)(hours / hoursConsume);
+                    if (getStock() >= getConsumeUnits()) {
+                        setStock(getStock() - (getConsumeUnits()*vecesADescontar));
+
+                    } else {
+                        setStock(0);
+                    }
+                    setLastUpdate(new Date());
+                }
+            }
+
     }
 
     @Override

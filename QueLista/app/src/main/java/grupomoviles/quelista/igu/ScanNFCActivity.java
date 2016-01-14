@@ -45,6 +45,7 @@ public class ScanNFCActivity extends AppCompatActivity {
     private TicketAdapter ticketAdapter;
     private RelativeLayout relativeLayout;
     ProgressDialog p;
+    public static final String URLTAG = "URL";
 
     public TicketAdapter getTicketAdapter() {
         return ticketAdapter;
@@ -120,7 +121,11 @@ public class ScanNFCActivity extends AppCompatActivity {
 
             for (String tech : techList) {
                 if (searchedTech.equals(tech)) {
-                    new NdefReaderTask().execute(tag);
+                    //new NdefReaderTask().execute(tag);
+                    Intent i = new Intent();
+                    i.putExtra(URLTAG, tag);
+                    setResult(RESULT_OK);
+                    finish();
                     break;
                 }
             }

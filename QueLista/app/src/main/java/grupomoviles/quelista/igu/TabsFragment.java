@@ -170,7 +170,7 @@ public class TabsFragment extends Fragment implements AppBarLayout.OnOffsetChang
     public void setTab(int tab) {
         posicion = tab;
         viewPager.setCurrentItem(tab);
-        ((MainActivity) getActivity()).getPantryAdapter().getPantry().actualizar();
+        ((MainActivity) getActivity()).getPantryAdapter().getPantry().refresh();
         ((Toolbar)getActivity().findViewById(R.id.toolbar)).setTitle(myAdapter.getPageTitle(tab));
     }
 

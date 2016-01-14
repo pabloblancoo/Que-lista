@@ -71,9 +71,9 @@ public class MainActivity extends AppCompatActivity {
         boolean miniaturasPref = sharedPref.getBoolean("miniaturas", true);
         cantidadItems = Integer.parseInt(sharedPref.getString("numArticulos", "8"));
 
-        pantryAdapter = new PantryAdapter(this, new Pantry());
-        shoppingListAdapter = new ShoppingListAdapter(this, new ShoppingList());
-        cartAdapter = new CartAdapter(this, new Cart());
+        pantryAdapter = new PantryAdapter(this, new Pantry(this));
+        shoppingListAdapter = new ShoppingListAdapter(this, new ShoppingList(this));
+        cartAdapter = new CartAdapter(this, new Cart(this));
 
         setContentView(R.layout.activity_main);
         setUpNavigationDrawer();
@@ -91,6 +91,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.i("requestCode", "Codigo: " + requestCode);
+        getPantryAdapter().refresh();
+        getCartAdapter().refresh();
+        getShoppingListAdapter().refresh();
+
         if (resultCode == RESULT_OK && ProductInfoActivity.REQUEST_CODE == requestCode) {
             Product product = (Product) data.getExtras().get(ProductInfoActivity.PRODUCT);
             pantryAdapter.onResultProductInfoActivity(product);
@@ -151,16 +155,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         else if(ScanNFCActivity.REQUEST_CODE == requestCode && resultCode == RESULT_OK){
-
-            Map<String,Product> map = (Map<String, Product>) data.getExtras().get(ScanNFCActivity.PRODUCTS);
-            Stream.of(map).forEach(m ->
-            {
-                pantryAdapter.onResultNfcActivity(m.getValue());
-                shoppingListAdapter.onResultNfcActivity(m.getValue());
-                cartAdapter.onResultNfcActivity(m.getValue());
-            });
-
+//            startActivityForResult(new Intent(MainActivity.this));
         }
+//
+//        else if(ScanNFCActivity.REQUEST_CODE == requestCode && resultCode == RESULT_OK){
+//
+//            Map<String,Product> map = (Map<String, Product>) data.getExtras().get(ScanNFCActivity.PRODUCTS);
+//            Stream.of(map).forEach(m ->
+//            {
+//                pantryAdapter.onResultNfcActivity(m.getValue());
+//                shoppingListAdapter.onResultNfcActivity(m.getValue());
+//                cartAdapter.onResultNfcActivity(m.getValue());
+//            });
+//
+//        }
     }
 
     private void setUpNavigationDrawer() {

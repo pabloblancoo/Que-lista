@@ -52,6 +52,9 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
         items = Stream.of(items).sortBy(i -> i.getDescription() + i.getNetValue()).collect(Collectors.toList());
         notifyDataSetChanged();
     }
+
+    public abstract void refresh();
+
     @Override
     public int getItemCount() {
         return items.size();
