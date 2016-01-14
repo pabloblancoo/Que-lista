@@ -106,6 +106,7 @@
     <string name="AddCarro">Añadir Carro</string>
     <string name="AddListCompra">Añadir Lista Compra</string>
     <string name="producto_existe">Ya existe un producto con ese código de barras</string>
+    <string name="nfc">NFC</string>
 
 
 </resources>

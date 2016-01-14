@@ -44,7 +44,7 @@
         </activity>
         <activity
             android:name=".igu.ProductInfoActivity"
-            android:label="@string/producto" />
+            android:label="" />
         <activity
             android:name=".igu.NewProductActivity"
             android:label="@string/producto_nuevo">

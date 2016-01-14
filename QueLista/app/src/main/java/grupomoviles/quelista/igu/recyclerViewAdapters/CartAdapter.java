@@ -1,5 +1,6 @@
 package grupomoviles.quelista.igu.recyclerViewAdapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -24,10 +25,12 @@ import grupomoviles.quelista.logic.Product;
 public class CartAdapter extends MyAdapter {
 
     private Cart cart;
+    private Context context;
 
     public CartAdapter(Context context, Cart cart) {
         super(context, Stream.of(cart.getProducts().values()).collect(Collectors.toList()));
         this.cart = cart;
+        this.context = context;
     }
 
     public Cart getCart() {
@@ -164,6 +167,10 @@ public class CartAdapter extends MyAdapter {
             adapter.items.remove(product);
             cart.remove(product);
             adapter.notifyItemRemoved(getAdapterPosition());
+            if (cart.getProducts().isEmpty()) {
+                ((Activity)context).findViewById(R.id.fabAcceptShop).setEnabled(false);
+                ((Activity)context).findViewById(R.id.fabAcceptShop).setVisibility(View.GONE);
+            }
         }
     }
 }

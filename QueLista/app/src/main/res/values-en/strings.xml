@@ -80,4 +80,5 @@
     <string name="Marca">Brand</string>
     <string name="Unidades">Units</string>
     <string name="producto_existe">There is already a product with that barcode</string>
+    <string name="nfc">NFC</string>
 </resources>

@@ -8,10 +8,10 @@
 
     <!-- Toolbar -->
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbarCaptureActivity"
+        android:id="@+id/toolbarNFC"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#E53935"
+        android:background="@color/color_rojo_app"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:layout_alignParentTop="true">
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/txTitle"
             android:layout_alignParentStart="true"
-            android:text="@string/escanear"
+            android:text="@string/nfc"
             android:textStyle="bold"
             android:textSize="20dp"
             android:textColor="#ffffff" />
@@ -31,38 +31,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/toolbarCaptureActivity"
         android:id="@+id/contenedor"
-        android:layout_above="@+id/layoutBotonTicket">
+        android:layout_below="@+id/toolbarNFC">
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txIfno"
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView2"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:text="@string/acerqueDispoNFC" />
-
-
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="53dp"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:background="#ffffff"
-        android:id="@+id/layoutBotonTicket">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/guardarCompra"
-            android:id="@+id/btGuardarTicket"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:onClick="guardarTicket" />
+            android:src="@drawable/nfc_hand" />
     </RelativeLayout>
 
 </RelativeLayout>
