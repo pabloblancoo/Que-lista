@@ -14,7 +14,7 @@
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:id="@+id/btnDeleteTicket"
-            android:text="Eliminar"
+            android:text="@string/Eliminar"
             android:background="#EF5350"
             android:backgroundTint="#EF5350"
             android:textColor="#ffffff" />

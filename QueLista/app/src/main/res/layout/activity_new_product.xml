@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/txTitleProducto"
             android:layout_alignParentStart="true"
-            android:text="@string/producto"
             android:textStyle="bold"
             android:textSize="20dp"
             android:textColor="#ffffff" />
@@ -105,7 +104,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/txBrand"
-                            android:hint="Marca"/>
+                            android:hint="@string/Marca"/>
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -122,7 +121,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/txNetValue"
-                        android:hint="Contenido" />
+                        android:hint="@string/Contenido" />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -138,7 +137,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/txCategory"
-                        android:hint="Categoría" />
+                        android:hint="@string/Categoria" />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -155,7 +154,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/txCode"
                         android:inputType="number"
-                        android:hint="Código de barras" />
+                        android:hint="@string/Codigo_barras" />
                     </android.support.design.widget.TextInputLayout>
 
                 </RelativeLayout>

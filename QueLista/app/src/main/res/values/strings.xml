@@ -37,7 +37,7 @@
     <string name="producto_nombre">Nombre del producto</string>
     <string name="err_msg_vacio">No puede estár vacio</string>
 
-    <string name="nombre_transicion_imagen">imagen_compartida</string>
+    <string name="nombre_transicion_imagen" translatable="false">imagen_compartida</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -89,6 +89,23 @@
     <string name="info_imagen">Pulse en la imágen para cambiarla</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="etiqueta_info_usuario">Desarrolladores</string>
+    <string name="alumno1">Carlos Alperi Meana</string>
+    <string name="email1">uo240679@uniovi.es</string>
+    <string name="alumno2">Daniel Toimil</string>
+    <string name="email2">uoXXXXXX@uniovi.es</string>
+    <string name="alumno3">Naucé López González</string>
+    <string name="email3">uo240371@uniovi.es</string>
+    <string name="alumno4">Pablo Blanco Pacho</string>
+    <string name="email4">uoXXXXXX@uniovi.es</string>
+    <string name="Marca">Marca</string>
+    <string name="Contenido">Contenido</string>
+    <string name="Categoria">Categoría</string>
+    <string name="Codigo_barras">Código de barras</string>
+    <string name="Unidades">Unidades</string>
+    <string name="Eliminar">Eliminar</string>
+    <string name="AddCarro">Añadir Carro</string>
+    <string name="AddListCompra">Añadir Lista Compra</string>
+    <string name="producto_existe">Ya existe un producto con ese código de barras</string>
 
 
 </resources>
