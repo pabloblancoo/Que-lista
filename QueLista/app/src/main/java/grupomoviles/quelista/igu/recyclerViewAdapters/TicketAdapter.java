@@ -46,8 +46,8 @@ public class TicketAdapter extends RecyclerSwipeAdapter<TicketAdapter.TicketView
         this.items = Stream.of(items2).sortBy(i -> i.getDescription() + i.getNetValue()).collect(Collectors.toList());
 
         // Procesar valores actuales de las preferencias.
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        miniaturasPref = sharedPref.getBoolean("miniaturas", true);
+        //sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        //miniaturasPref = sharedPref.getBoolean("miniaturas", true);
 
         this.ticket = ticket;
     }

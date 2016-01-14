@@ -268,7 +268,7 @@ public class ScanNFCActivity extends AppCompatActivity {
 
                 Intent i = new Intent();
                 i.putExtra(URLTAG, result);
-                setResult(RESULT_OK);
+                setResult(RESULT_OK,i);
                 finish();
 //                p.dismiss();
             }
