@@ -44,7 +44,7 @@
             android:id="@+id/nav_item_opciones"
             android:icon="@drawable/settings"/>
         <item android:title="@string/acerca_de"
-            android:id="@+id/nav_item_ayuda"
+            android:id="@+id/nav_item_about"
             android:icon="@drawable/help"/>
     </group>
 

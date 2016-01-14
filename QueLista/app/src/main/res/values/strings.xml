@@ -87,6 +87,8 @@
     <string name="acerca_de">Acerca de</string>
     <string name="categoria_apariencia">Apariencia</string>
     <string name="info_imagen">Pulse en la imágen para cambiarla</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="etiqueta_info_usuario">Desarrolladores</string>
 
 
 </resources>

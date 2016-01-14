@@ -11,8 +11,6 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 
-import java.security.Permission;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -30,9 +28,7 @@ import grupomoviles.quelista.logic.DownloadImageTask;
 import grupomoviles.quelista.logic.Pantry;
 import grupomoviles.quelista.logic.Product;
 import grupomoviles.quelista.logic.ShoppingList;
-import grupomoviles.quelista.logic.Ticket;
 import grupomoviles.quelista.onlineDatabase.GestorBD;
-import grupomoviles.quelista.onlineDatabase.GetProducts;
 
 
 import android.support.design.widget.NavigationView;
@@ -244,8 +240,9 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(this, SettingsActivity.class));
                     break;
 
-                case R.id.nav_item_ayuda:
-
+                case R.id.nav_item_about:
+                    startActivity(new Intent(this, AboutActivity.class));
+                    Log.i("MENU","about");
                     break;
             }
 
