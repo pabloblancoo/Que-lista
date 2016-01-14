@@ -173,6 +173,11 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
             unitsAddWhenHave.setText(String.valueOf(product.getUnitsToAdd()));
         }
 
+        changeTextUnits((TextView) findViewById(R.id.txUnitsTakesLabel), unitsDescontar);
+        changeTextDays((TextView) findViewById(R.id.txDaysTakesLabel), unitsDays);
+        changeTextUnits((TextView) findViewById(R.id.txUnitsWhenHaveLabel), unitsWhenHave);
+        changeTextUnits((TextView) findViewById(R.id.txUnitsAddWhenHaveLabel), unitsAddWhenHave);
+
     }
 
     @Override
@@ -266,57 +271,73 @@ public class ProductInfoActivity extends AppCompatActivity implements CompoundBu
         product.increaseConsumeUnits();
 
         makeChanges(unitsDescontar, true);
-
-//        Este es el metodo que hay que llamar para que cambie unidades, por unidad
-//        changeTextUnits(unitsDescontar);
-
-
+        changeTextUnits((TextView) findViewById(R.id.txUnitsTakesLabel), unitsDescontar);
     }
 
-    private void changeTextUnits(TextView textView) {
-        int units = Integer.parseInt(textView.getText().toString());
-        if(units > 1){
-            textView.setText(R.string.unitsTakesMore);
-        }
-        else{
+    private void changeTextUnits(TextView textView, TextView txUnits) {
+        int units = Integer.parseInt(txUnits.getText().toString());
+        if(units == 1)
             textView.setText(R.string.unitsTakes);
-        }
+        else
+            textView.setText(R.string.unitsTakesMore);
+    }
+
+    private void changeTextDays(TextView textView, TextView txUnits) {
+        int units = Integer.parseInt(txUnits.getText().toString());
+        if (units == 1)
+            textView.setText(R.string.dayTakes);
+        else
+            textView.setText(R.string.dayTakesMore);
     }
 
     public void disminuirUnitsDescontar(View view) {
-        product.decreaseConsumeUnits();
-        makeChanges(unitsDescontar, false);
+        if (product.getConsumeUnits() > 1) {
+            product.decreaseConsumeUnits();
+            makeChanges(unitsDescontar, false);
+            changeTextUnits((TextView) findViewById(R.id.txUnitsTakesLabel), unitsDescontar);
+        }
     }
 
     public void aumentarDays(View view) {
         product.increaseConsumeCycle();
         makeChanges(unitsDays, true);
+        changeTextDays((TextView) findViewById(R.id.txDaysTakesLabel), unitsDays);
     }
 
 
     public void disminuirDays(View view) {
-        product.decreaseConsumeCycle();
-        makeChanges(unitsDays, false);
+        if (product.getConsumeCycle() > 1) {
+            product.decreaseConsumeCycle();
+            makeChanges(unitsDays, false);
+            changeTextDays((TextView) findViewById(R.id.txDaysTakesLabel), unitsDays);
+        }
     }
 
     public void aumentarWhenHave(View view) {
         product.increaseMinStock();
         makeChanges(unitsWhenHave, true);
+        changeTextUnits((TextView) findViewById(R.id.txUnitsWhenHaveLabel), unitsWhenHave);
+
     }
 
     public void disminuirWhenHave(View view) {
         product.decreaseMinStock();
         makeChanges(unitsWhenHave, false);
+        changeTextUnits((TextView) findViewById(R.id.txUnitsWhenHaveLabel), unitsWhenHave);
     }
 
     public void aumentarAddWhenHave(View view) {
         product.increaseUnitsToAdd();
         makeChanges(unitsAddWhenHave, true);
+        changeTextUnits((TextView) findViewById(R.id.txUnitsAddWhenHaveLabel), unitsAddWhenHave);
     }
 
     public void disminuirAddWhenHave(View view) {
-        product.decreaseUnitsToAdd();
-        makeChanges(unitsAddWhenHave, false);
+        if (product.getUnitsToAdd() > 1) {
+            product.decreaseUnitsToAdd();
+            makeChanges(unitsAddWhenHave, false);
+            changeTextUnits((TextView) findViewById(R.id.txUnitsAddWhenHaveLabel), unitsAddWhenHave);
+        }
     }
 
     private void makeChanges(TextView textView, boolean sum) {

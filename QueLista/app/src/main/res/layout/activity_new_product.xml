@@ -201,8 +201,8 @@
                         android:gravity="center">
 
                         <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
                             android:id="@+id/imgPantry"
                             android:src="@drawable/icon_button_home"
                             android:layout_marginTop="6dp"/>
@@ -223,20 +223,20 @@
                             android:layout_marginRight="-6dp"/>
 
                         <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
                             android:id="@+id/btnPlusPantry"
                             android:background="@null"
                             android:src="@drawable/arrow_up"
                             android:scaleType="centerCrop"
                             android:layout_toEndOf="@id/txUnitsPantry"
-                            android:layout_alignTop="@id/imgPantry"
-                            android:layout_marginLeft="9dp"
+                            android:layout_alignTop="@id/txUnitsPantry"
+                            android:layout_marginLeft="2dp"
                             android:onClick="aumentarPantry" />
 
                         <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
                             android:id="@+id/btnMinusPantry"
                             android:background="@null"
                             android:src="@drawable/arrow_down"
@@ -253,8 +253,8 @@
                         android:gravity="center">
 
                         <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
                             android:id="@+id/imgShoppingList"
                             android:src="@drawable/icon_button_shopping_list"
                             android:layout_marginTop="6dp"/>
@@ -275,20 +275,20 @@
                             android:layout_marginRight="-6dp" />
 
                         <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
                             android:id="@+id/btnPlusShoppingList"
                             android:background="@null"
                             android:src="@drawable/arrow_up"
                             android:scaleType="centerCrop"
                             android:layout_toEndOf="@id/txUnitsShoppingList"
-                            android:layout_alignTop="@id/imgShoppingList"
-                            android:layout_marginLeft="9dp"
+                            android:layout_alignTop="@id/txUnitsShoppingList"
+                            android:layout_marginLeft="2dp"
                             android:onClick="aumentarShoppingList" />
 
                         <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
                             android:id="@+id/btnMinusShoppingList"
                             android:background="@null"
                             android:src="@drawable/arrow_down"
@@ -306,8 +306,8 @@
                         android:gravity="center">
 
                         <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
                             android:id="@+id/imgCart"
                             android:src="@drawable/icon_button_cart"
                             android:layout_marginTop="6dp" />
@@ -328,20 +328,20 @@
                             android:layout_marginRight="-6dp"/>
 
                         <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
                             android:id="@+id/btnPlusCart"
                             android:background="@null"
                             android:src="@drawable/arrow_up"
                             android:scaleType="centerCrop"
                             android:layout_toEndOf="@id/txUnitsCart"
-                            android:layout_alignTop="@id/imgCart"
+                            android:layout_alignTop="@id/txUnitsCart"
                             android:layout_marginLeft="9dp"
                             android:onClick="aumentarCartList" />
 
                         <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
                             android:id="@+id/btnMinusCart"
                             android:background="@null"
                             android:src="@drawable/arrow_down"
@@ -396,7 +396,8 @@
                             android:id="@+id/txUnitsTakes"
                             android:layout_gravity="center"
                             android:gravity="center_vertical"
-                            android:focusable="true" />
+                            android:focusable="true"
+                            android:layout_marginRight="2dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -408,24 +409,24 @@
                             android:gravity="center_vertical" />
 
                         <LinearLayout
-                            android:orientation="vertical"
+                            android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="6dp">
 
                             <Button
-                                android:layout_width="27dp"
-                                android:layout_height="27dp"
-                                android:id="@+id/btnPlusUnitsTakes"
-                                android:background="@drawable/arrow_up"
-                                android:onClick="aumentarUnitsDescontar" />
-
-                            <Button
-                                android:layout_width="27dp"
-                                android:layout_height="27dp"
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
                                 android:id="@+id/btnMinusUnitsTakes"
                                 android:background="@drawable/arrow_down"
                                 android:onClick="disminuirUnitsDescontar" />
+
+                            <Button
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:id="@+id/btnPlusUnitsTakes"
+                                android:background="@drawable/arrow_up"
+                                android:onClick="aumentarUnitsDescontar" />
                         </LinearLayout>
 
                         <TextView
@@ -434,15 +435,16 @@
                             android:text="/"
                             android:id="@+id/txSeparatorTakes"
                             android:gravity="center_vertical"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginRight="16dp" />
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="1"
                             android:id="@+id/txDaysTakes"
-                            android:gravity="center_vertical" />
+                            android:gravity="center_vertical"
+                            android:layout_marginRight="2dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -454,24 +456,24 @@
                             android:layout_marginLeft="2dp" />
 
                         <LinearLayout
-                            android:orientation="vertical"
+                            android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="6dp">
 
                             <Button
-                                android:layout_width="27dp"
-                                android:layout_height="27dp"
-                                android:id="@+id/btnPlusDaysTakes"
-                                android:background="@drawable/arrow_up"
-                                android:onClick="aumentarDays" />
-
-                            <Button
-                                android:layout_width="27dp"
-                                android:layout_height="27dp"
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
                                 android:id="@+id/btnMinusDaysTakes"
                                 android:background="@drawable/arrow_down"
                                 android:onClick="disminuirDays" />
+
+                            <Button
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:id="@+id/btnPlusDaysTakes"
+                                android:background="@drawable/arrow_up"
+                                android:onClick="aumentarDays" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -517,7 +519,7 @@
                             android:layout_alignBottom="@+id/linearLayout" />
 
                         <LinearLayout
-                            android:orientation="vertical"
+                            android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
@@ -527,18 +529,18 @@
                             android:layout_marginLeft="6dp">
 
                             <Button
-                                android:layout_width="27dp"
-                                android:layout_height="27dp"
-                                android:id="@+id/btnPlusWhenHave"
-                                android:background="@drawable/arrow_up"
-                                android:onClick="aumentarWhenHave" />
-
-                            <Button
-                                android:layout_width="27dp"
-                                android:layout_height="27dp"
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
                                 android:id="@+id/btnMinusWhenHave"
                                 android:background="@drawable/arrow_down"
                                 android:onClick="disminuirWhenHave" />
+
+                            <Button
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:id="@+id/btnPlusWhenHave"
+                                android:background="@drawable/arrow_up"
+                                android:onClick="aumentarWhenHave" />
                         </LinearLayout>
 
                         <TextView
@@ -549,7 +551,8 @@
                             android:gravity="center_vertical"
                             android:layout_alignParentTop="true"
                             android:layout_toStartOf="@+id/txUnitsWhenHaveLabel"
-                            android:layout_alignBottom="@+id/txUnitsWhenHaveLabel" />
+                            android:layout_alignBottom="@+id/txUnitsWhenHaveLabel"
+                            android:layout_marginRight="2dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -579,7 +582,8 @@
                             android:gravity="center_vertical"
                             android:layout_alignTop="@+id/txUnitsAddWhenHaveLabel"
                             android:layout_toStartOf="@+id/txUnitsAddWhenHaveLabel"
-                            android:layout_alignBottom="@+id/txUnitsAddWhenHaveLabel" />
+                            android:layout_alignBottom="@+id/txUnitsAddWhenHaveLabel"
+                            android:layout_marginRight="2dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -593,7 +597,7 @@
                             android:layout_marginLeft="2dp" />
 
                         <LinearLayout
-                            android:orientation="vertical"
+                            android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
@@ -603,18 +607,18 @@
                             android:layout_marginLeft="6dp">
 
                             <Button
-                                android:layout_width="27dp"
-                                android:layout_height="27dp"
-                                android:id="@+id/btnPlusAddWhenHave"
-                                android:background="@drawable/arrow_up"
-                                android:onClick="aumentarAddWhenHave" />
-
-                            <Button
-                                android:layout_width="27dp"
-                                android:layout_height="27dp"
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
                                 android:id="@+id/btnMinusAddWhenHave"
                                 android:background="@drawable/arrow_down"
                                 android:onClick="disminuirAddWhenHave" />
+
+                            <Button
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:id="@+id/btnPlusAddWhenHave"
+                                android:background="@drawable/arrow_up"
+                                android:onClick="aumentarAddWhenHave" />
                         </LinearLayout>
 
                     </RelativeLayout>

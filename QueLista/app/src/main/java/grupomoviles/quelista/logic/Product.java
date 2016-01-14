@@ -35,38 +35,18 @@ public class Product implements Serializable {
 
     private int stock = 0;		// (-1 == no)
     private int minStock;
-    private int unitsToAdd;	//Unidades a añadir a la lista de la compra automáticamente (Def: 1)
+    private int unitsToAdd = 1;	//Unidades a añadir a la lista de la compra automáticamente (Def: 1)
 
     private Date lastUpdate;	// (null == no añadir automáticamente)
-    private int consumeCycle;  //Período (a definir si van a ser días enteros)
-    private int consumeUnits;  //Unidades a descontar cada período
+    private int consumeCycle = 1;  //Período (a definir si van a ser días enteros)
+    private int consumeUnits = 1;  //Unidades a descontar cada período
 
     private int shoppingListUnits;	//Unidades en la lista de la compra (0 == no)
     private int cartUnits;		//Unidades en el carrito (0 == no)
 
 
     //Constructor con todos los valores inicializados, hay que borrarlo
-    public  Product(String code){
-        this.code = code;
-        description = "";
-        brand = "";
-        netValue="";
-        units = 1;  //(por ejemplo, la caja de yogures contiene 8 unidades. Por defecto 1)
-
-        category="";
-        subcategory="";
-        stock = 0;		// (-1 == no)
-        minStock=0;
-        unitsToAdd=1;	//Unidades a añadir a la lista de la compra automáticamente (Def: 1)
-
-        lastUpdate = new Date();	// (null == no añadir automáticamente)
-        consumeCycle=2;
-        consumeUnits=1;
-
-        shoppingListUnits=1;
-        cartUnits=1;
-
-    }
+    public  Product(){}
 
     /**
      * Constructor con todos los parametros
@@ -122,8 +102,6 @@ public class Product implements Serializable {
         this.subcategory = subcategory;
         this.units = units;
     }
-
-
 
 
     //GETTERS and SETTERS
@@ -247,7 +225,6 @@ public class Product implements Serializable {
         this.stock = stock;
     }
 
-
     //Metodos de logica
 
     public int increaseStock() {
@@ -367,9 +344,9 @@ public class Product implements Serializable {
                 long time = currentDate - productLastDate;
                 long hours = time / 1000 / 60 / 60;
                 long hoursConsume = getConsumeCycle() * 24;
-                if (hours >= hoursConsume) {
+                if (hours >= hoursConsume && hoursConsume > 0) {
                     int vecesADescontar = (int)(hours / hoursConsume);
-                    if (getStock() >= getConsumeUnits()) {
+                    if (getStock() >= (getConsumeUnits()*vecesADescontar)) {
                         setStock(getStock() - (getConsumeUnits()*vecesADescontar));
 
                     } else {
