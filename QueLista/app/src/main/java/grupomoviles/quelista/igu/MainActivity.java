@@ -1,8 +1,11 @@
 package grupomoviles.quelista.igu;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.nfc.NfcAdapter;
 
 import android.os.Bundle;
@@ -129,22 +132,28 @@ public class MainActivity extends AppCompatActivity {
                 product = cartAdapter.getCart().find(content);
             if (product == null) {
                 newProduct = true;
-                try {
-                    product = GestorBD.FindProduct(content);
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                if (isOnline()) {
+                    try {
+                        product = GestorBD.FindProduct(content);
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
-                if (product != null)
-                    new DownloadImageTask(this).execute(product.getCode());
+                    if (product != null)
+                        new DownloadImageTask(this).execute(product.getCode());
+                }
             }
 
             if (product == null) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setMessage(getString(R.string.producto_no_esta_online)
-                                    + "\n\n"+getString(R.string.desea_registrarlo));
+                if (isOnline())
+                    dialog.setMessage(getString(R.string.producto_no_esta_online)
+                            + "\n\n" + getString(R.string.desea_registrarlo));
+                else
+                    dialog.setMessage("No tiene conexión a internet"
+                            + "\n\n" + "¿Desea registrar el producto manualmente?");
                 dialog.setPositiveButton(getString(R.string.Aceptar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -168,13 +177,11 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, TicketActivity.class);
             intent.putExtra(ScanNFCActivity.URLTAG ,data.getExtras().getString(ScanNFCActivity.URLTAG));
             startActivityForResult(intent, TicketActivity.REQUEST_CODE);
-
         }
 
         else if (resultCode == RESULT_OK &&
                 IntentCaptureActivity.CODE_CAPTURE_ACTIVITY == requestCode
                 && data.getExtras().getString(CaptureActivity.SCAN_FORMAT).toString().equals(BarcodeFormat.QR_CODE.toString())) {
-            System.out.println(data.getExtras().getString(CaptureActivity.SCAN_CONTENT));
             Intent intent = new Intent(MainActivity.this, TicketActivity.class);
             intent.putExtra(ScanNFCActivity.URLTAG, data.getExtras().getString(CaptureActivity.SCAN_CONTENT));
             startActivityForResult(intent, TicketActivity.REQUEST_CODE);
@@ -230,14 +237,30 @@ public class MainActivity extends AppCompatActivity {
                     startActivityForResult(i, NewProductActivity.REQUEST_CODE);
                     break;
                 case R.id.nav_item_qr:
-                    IntentCaptureActivity ica = new IntentCaptureActivity();
-                    ica.setBarcodeFormat(BarcodeFormat.QR_CODE);
-                    ica.setReverseCamera(false);
-                    ica.initScan(this);
+                    if (isOnline()) {
+                        IntentCaptureActivity ica = new IntentCaptureActivity();
+                        ica.setBarcodeFormat(BarcodeFormat.QR_CODE);
+                        ica.setReverseCamera(false);
+                        ica.initScan(this);
+                    } else {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                        dialog.setMessage("No tiene conexión a internet");
+                        dialog.setPositiveButton(getString(R.string.Aceptar), null);
+                        dialog.setNegativeButton(getString(R.string.Cancelar), null);
+                        dialog.show();
+                    }
                     break;
                 case R.id.nav_item_nfc:
-                    Intent intent = new Intent(this,ScanNFCActivity.class);
-                    startActivityForResult(intent, ScanNFCActivity.REQUEST_CODE);
+                    if (isOnline()) {
+                        Intent intent = new Intent(this, ScanNFCActivity.class);
+                        startActivityForResult(intent, ScanNFCActivity.REQUEST_CODE);
+                    } else {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                        dialog.setMessage("No tiene conexión a internet");
+                        dialog.setPositiveButton(getString(R.string.Aceptar), null);
+                        dialog.setNegativeButton(getString(R.string.Cancelar), null);
+                        dialog.show();
+                    }
                     break;
                 case R.id.nav_item_opciones:
                     //fragmentTransaction.replace(R.id.fragment_container, new OpcionesFragment()).commit();
@@ -303,5 +326,18 @@ public class MainActivity extends AppCompatActivity {
         //Stream.of(p).forEach(x -> Log.i("PANTRY", "PRODUCTO " + x.getCode()));
 
         return  p;
+    }
+
+    public boolean isOnline() {
+        NetworkInfo i = ((ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+
+        if (i == null)
+            return false;
+        if (!i.isConnected())
+            return false;
+        if (!i.isAvailable())
+            return false;
+
+        return true;
     }
 }
