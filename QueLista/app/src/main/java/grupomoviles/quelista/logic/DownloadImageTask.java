@@ -19,19 +19,9 @@ import grupomoviles.quelista.igu.MainActivity;
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
     private Activity activity;
-    ProgressDialog p;
 
-    public DownloadImageTask(MainActivity activity) {
+    public DownloadImageTask(Activity activity) {
         this.activity = activity;
-    }
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-
-        p = new ProgressDialog(activity);
-        p.setMessage("Descargando imágenes...");
-        p.show();
     }
 
     public Bitmap doInBackground(String... product) {
@@ -68,11 +58,5 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         }
 
         return null;
-    }
-
-    @Override
-    protected void onPostExecute(Bitmap bitmap) {
-        super.onPostExecute(bitmap);
-        p.dismiss();
     }
 }

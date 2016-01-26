@@ -16,15 +16,6 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txTitleProducto"
-            android:layout_alignParentStart="true"
-            android:text="Producto"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:textColor="#ffffff" />
     </android.support.v7.widget.Toolbar>
 
     <ScrollView android:layout_width="match_parent"
@@ -34,6 +25,7 @@
         android:layout_marginTop="?attr/actionBarSize">
 
         <LinearLayout
+            android:id="@+id/linearLayoutWithPadding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -127,7 +119,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Unidades"
+                        android:text="@string/Unidades"
                         android:layout_marginBottom="6dp"
                         android:textColor="#000000"
                         android:id="@+id/txUnits" />
@@ -145,8 +137,8 @@
                         android:gravity="center">
 
                         <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
                             android:id="@+id/imgPantry"
                             android:src="@drawable/icon_button_home"
                             android:layout_marginTop="6dp"/>
@@ -167,20 +159,20 @@
                             android:layout_marginRight="-6dp"/>
 
                         <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
                             android:id="@+id/btnPlusPantry"
                             android:background="@null"
                             android:src="@drawable/arrow_up"
                             android:scaleType="centerCrop"
                             android:layout_toEndOf="@id/txUnitsPantry"
-                            android:layout_alignTop="@id/imgPantry"
-                            android:layout_marginLeft="9dp"
-                            android:onClick="aumentarPantry" />
+                            android:layout_alignTop="@id/txUnitsPantry"
+                            android:onClick="aumentarPantry"
+                            android:layout_marginLeft="2dp" />
 
                         <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
                             android:id="@+id/btnMinusPantry"
                             android:background="@null"
                             android:src="@drawable/arrow_down"
@@ -197,8 +189,8 @@
                         android:gravity="center">
 
                         <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
                             android:id="@+id/imgShoppingList"
                             android:src="@drawable/icon_button_shopping_list"
                             android:layout_marginTop="6dp"/>
@@ -219,20 +211,20 @@
                             android:layout_marginRight="-6dp" />
 
                         <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
                             android:id="@+id/btnPlusShoppingList"
                             android:background="@null"
                             android:src="@drawable/arrow_up"
                             android:scaleType="centerCrop"
                             android:layout_toEndOf="@id/txUnitsShoppingList"
-                            android:layout_alignTop="@id/imgShoppingList"
-                            android:layout_marginLeft="9dp"
-                            android:onClick="aumentarShoppingList" />
+                            android:layout_alignTop="@id/txUnitsShoppingList"
+                            android:onClick="aumentarShoppingList"
+                            android:layout_marginLeft="2dp" />
 
                         <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
                             android:id="@+id/btnMinusShoppingList"
                             android:background="@null"
                             android:src="@drawable/arrow_down"
@@ -250,8 +242,8 @@
                         android:gravity="center">
 
                         <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
                             android:id="@+id/imgCart"
                             android:src="@drawable/icon_button_cart"
                             android:layout_marginTop="6dp" />
@@ -272,20 +264,20 @@
                             android:layout_marginRight="-6dp"/>
 
                         <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
                             android:id="@+id/btnPlusCart"
                             android:background="@null"
                             android:src="@drawable/arrow_up"
                             android:scaleType="centerCrop"
                             android:layout_toEndOf="@id/txUnitsCart"
-                            android:layout_alignTop="@id/imgCart"
-                            android:layout_marginLeft="9dp"
+                            android:layout_alignTop="@id/txUnitsCart"
+                            android:layout_marginLeft="2dp"
                             android:onClick="aumentarCartList" />
 
                         <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
                             android:id="@+id/btnMinusCart"
                             android:background="@null"
                             android:src="@drawable/arrow_down"
@@ -320,10 +312,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/switchTakeUnits"
-                        android:checked="false"
+                        android:checked="true"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
-                        android:text="Descontar unidades"
+                        android:text="@string/descontarUnidades"
                         android:layout_alignParentStart="true"
                         android:singleLine="false" />
 
@@ -336,30 +328,41 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="1 unidad"
+                            android:text="1"
                             android:id="@+id/txUnitsTakes"
+                            android:layout_gravity="center"
+                            android:gravity="center_vertical"
+                            android:focusable="true"
+                            android:layout_marginRight="2dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="2dp"
+                            android:text="@string/unitsTakes"
+                            android:id="@+id/txUnitsTakesLabel"
                             android:layout_gravity="center"
                             android:gravity="center_vertical" />
 
                         <LinearLayout
-                            android:orientation="vertical"
+                            android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="6dp">
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:id="@+id/btnPlusUnitsTakes"
-                                android:background="@drawable/arrow_up"
-                                android:onClick="aumentarUnitsDescontar" />
-
-                            <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
                                 android:id="@+id/btnMinusUnitsTakes"
                                 android:background="@drawable/arrow_down"
                                 android:onClick="disminuirUnitsDescontar" />
+
+                            <Button
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:id="@+id/btnPlusUnitsTakes"
+                                android:background="@drawable/arrow_up"
+                                android:onClick="aumentarUnitsDescontar" />
                         </LinearLayout>
 
                         <TextView
@@ -368,35 +371,45 @@
                             android:text="/"
                             android:id="@+id/txSeparatorTakes"
                             android:gravity="center_vertical"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginRight="16dp" />
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="1 día"
+                            android:text="1"
                             android:id="@+id/txDaysTakes"
-                            android:gravity="center_vertical" />
+                            android:gravity="center_vertical"
+                            android:layout_marginRight="2dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/dayTakes"
+                            android:id="@+id/txDaysTakesLabel"
+                            android:layout_gravity="center"
+                            android:gravity="center_vertical"
+                            android:layout_marginLeft="2dp" />
 
                         <LinearLayout
-                            android:orientation="vertical"
+                            android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="6dp">
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:id="@+id/btnPlusDaysTakes"
-                                android:background="@drawable/arrow_up"
-                                android:onClick="aumentarDays" />
-
-                            <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
                                 android:id="@+id/btnMinusDaysTakes"
                                 android:background="@drawable/arrow_down"
                                 android:onClick="disminuirDays" />
+
+                            <Button
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:id="@+id/btnPlusDaysTakes"
+                                android:background="@drawable/arrow_up"
+                                android:onClick="aumentarDays" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -404,6 +417,7 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
+                android:id="@+id/cardViewWithPadding"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 card_view:contentPadding="12dp"
@@ -424,7 +438,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/switchAddToShoppingList"
-                        android:text="Añadir a la lista de la compra" />
+                        android:text="@string/añadirListaCompra"
+                        android:layout_marginBottom="3dp"
+                        android:checked="true" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -434,14 +450,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Cuando queden:"
+                            android:text="@string/cuandoQueden"
                             android:id="@+id/txWhenHave"
                             android:gravity="center_vertical"
                             android:layout_alignTop="@+id/linearLayout"
                             android:layout_alignBottom="@+id/linearLayout" />
 
                         <LinearLayout
-                            android:orientation="vertical"
+                            android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
@@ -451,34 +467,46 @@
                             android:layout_marginLeft="6dp">
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:id="@+id/btnPlusWhenHave"
-                                android:background="@drawable/arrow_up"
-                                android:onClick="aumentarWhenHave" />
-
-                            <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
                                 android:id="@+id/btnMinusWhenHave"
                                 android:background="@drawable/arrow_down"
                                 android:onClick="disminuirWhenHave" />
+
+                            <Button
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:id="@+id/btnPlusWhenHave"
+                                android:background="@drawable/arrow_up"
+                                android:onClick="aumentarWhenHave" />
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0 unidades"
+                            android:text="0"
                             android:id="@+id/txUnitsWhenHave"
-                            android:layout_toStartOf="@+id/linearLayout"
                             android:gravity="center_vertical"
-                            android:layout_alignTop="@+id/linearLayout"
-                            android:layout_alignBottom="@+id/linearLayout" />
+                            android:layout_alignParentTop="true"
+                            android:layout_toStartOf="@+id/txUnitsWhenHaveLabel"
+                            android:layout_alignBottom="@+id/txUnitsWhenHaveLabel"
+                            android:layout_marginRight="2dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Añadir:"
+                            android:text="@string/unitsTakesMore"
+                            android:id="@+id/txUnitsWhenHaveLabel"
+                            android:layout_toStartOf="@+id/linearLayout"
+                            android:gravity="center_vertical"
+                            android:layout_alignTop="@+id/linearLayout"
+                            android:layout_alignBottom="@+id/linearLayout"
+                            android:layout_marginLeft="2dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/añadir"
                             android:id="@+id/txAddWhenHave"
                             android:layout_alignBottom="@+id/linearLayout2"
                             android:layout_alignTop="@+id/linearLayout2"
@@ -487,15 +515,27 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1 unidad"
+                            android:text="1"
                             android:id="@+id/txUnitsAddWhenHave"
+                            android:gravity="center_vertical"
+                            android:layout_alignTop="@+id/txUnitsAddWhenHaveLabel"
+                            android:layout_toStartOf="@+id/txUnitsAddWhenHaveLabel"
+                            android:layout_alignBottom="@+id/txUnitsAddWhenHaveLabel"
+                            android:layout_marginRight="2dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/units"
+                            android:id="@+id/txUnitsAddWhenHaveLabel"
                             android:gravity="center_vertical"
                             android:layout_alignTop="@+id/linearLayout2"
                             android:layout_toStartOf="@+id/linearLayout2"
-                            android:layout_alignBottom="@+id/linearLayout2" />
+                            android:layout_alignBottom="@+id/linearLayout2"
+                            android:layout_marginLeft="2dp" />
 
                         <LinearLayout
-                            android:orientation="vertical"
+                            android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
@@ -505,18 +545,18 @@
                             android:layout_marginLeft="6dp">
 
                             <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:id="@+id/btnPlusAddWhenHave"
-                                android:background="@drawable/arrow_up"
-                                android:onClick="aumentarAddWhenHave" />
-
-                            <Button
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
                                 android:id="@+id/btnMinusAddWhenHave"
                                 android:background="@drawable/arrow_down"
                                 android:onClick="disminuirAddWhenHave" />
+
+                            <Button
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:id="@+id/btnPlusAddWhenHave"
+                                android:background="@drawable/arrow_up"
+                                android:onClick="aumentarAddWhenHave" />
                         </LinearLayout>
 
                     </RelativeLayout>
@@ -524,47 +564,36 @@
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                card_view:contentPadding="12dp"
-                card_view:cardCornerRadius="0dp"
-                card_view:cardElevation="0dp"
-                card_view:cardUseCompatPadding="true"
-                android:layout_marginBottom="-3dp"
-                android:layout_marginLeft="-1dp"
-                android:layout_marginTop="-1dp"
-                android:layout_marginRight="-1dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:id="@+id/layoutButtonsNewProduct">
-
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Cancelar"
-                        android:background="@color/color_rojo_app"
-                        android:id="@+id/btCancel"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:onClick="cancel" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Aceptar"
-                        android:background="@color/color_verde"
-                        android:id="@+id/btAcept"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/btCancel"
-                        android:onClick="acept" />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-
         </LinearLayout>
     </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabAccept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="12dp"
+        android:onClick="accept"
+        android:scaleType="centerCrop"
+        app:backgroundTint="#8BC34A"
+        app:elevation="4dp"
+        app:layout_anchorGravity="bottom|right|end"
+        app:layout_behavior="grupomoviles.quelista.igu.ScrollAwareFABBehavior"
+        android:visibility="gone"
+        android:src="@drawable/ic_check_white_24dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_margin="12dp"
+        android:onClick="cancel"
+        android:scaleType="centerCrop"
+        app:backgroundTint="@color/color_rojo_app"
+        app:elevation="4dp"
+        app:layout_anchorGravity="bottom|left|end"
+        app:layout_behavior="grupomoviles.quelista.igu.ScrollAwareFABBehavior"
+        android:visibility="gone"
+        android:src="@drawable/ic_close" />
 </android.support.design.widget.CoordinatorLayout>

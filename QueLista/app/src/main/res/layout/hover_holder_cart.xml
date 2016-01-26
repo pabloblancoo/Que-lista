@@ -5,7 +5,7 @@
     android:background="#F3ffffff"
     android:id="@+id/hover_layout">
 
-    <ImageButton
+    <ImageView
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:id="@+id/btnPantry"
@@ -15,7 +15,7 @@
         android:src="@drawable/icon_button_home"
         android:scaleType="centerCrop" />
 
-    <ImageButton
+    <ImageView
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:id="@+id/btnShoppingList"

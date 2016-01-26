@@ -1,5 +1,6 @@
 package grupomoviles.quelista.igu.recyclerViewAdapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -15,6 +16,8 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.androidviewhover.BlurLayout;
 import com.daimajia.swipe.SwipeLayout;
 
+import java.util.List;
+
 import grupomoviles.quelista.R;
 import grupomoviles.quelista.logic.Cart;
 import grupomoviles.quelista.logic.Product;
@@ -22,10 +25,12 @@ import grupomoviles.quelista.logic.Product;
 public class CartAdapter extends MyAdapter {
 
     private Cart cart;
+    private Context context;
 
     public CartAdapter(Context context, Cart cart) {
         super(context, Stream.of(cart.getProducts().values()).collect(Collectors.toList()));
         this.cart = cart;
+        this.context = context;
     }
 
     public Cart getCart() {
@@ -42,6 +47,23 @@ public class CartAdapter extends MyAdapter {
         if(cart.onResultProductInfoActivity(product))
             items.add(product);
         super.onResultProductInfoActivity(product);
+    }
+
+    public void onResultNewProductActivity(Product product) {
+        cart.getProducts().put(product.getCode(), product);
+        items.add(product);
+        notifyDataSetChanged();
+    }
+
+    public void onResultNfcActivity(Product product) {
+        cart.onResultNfcActivity(product);
+    }
+
+    @Override
+    public void refresh() {
+        cart.refresh();
+        swipeList();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -73,17 +95,32 @@ public class CartAdapter extends MyAdapter {
         Product currentItem = items.get(position);
 
         ((CartViewHolder)viewHolder).units.setText(String.valueOf(currentItem.getCartUnits()));
-        ((CartViewHolder)viewHolder).unitsPantry.setText(String.valueOf(currentItem.getStock()));
+        ((CartViewHolder)viewHolder).unitsPantry.setText(String.valueOf(currentItem.getStock() == Product.NOT_IN_PANTRY ? 0:currentItem.getStock()));
         ((CartViewHolder)viewHolder).unitsShoppinglist.setText(String.valueOf(currentItem.getShoppingListUnits()));
 
         super.onBindViewHolder(viewHolder, position);
     }
 
+    public void addToCart(Product product) {
+        product.setCartUnits(product.getShoppingListUnits());
+        cart.add(product);
+        guardarDatosBDLocal(product);
+        items.add(product);
+        items = Stream.of(items).sortBy(i -> i.getDescription().charAt(0)).collect(Collectors.toList());
+    }
+
+    public void filtrar(String cadena) {
+        items = Stream.of(cart.getProducts().values())
+                .filter(p -> p.getDescription().trim().replace("-", "").concat(" ")
+                        .concat(p.getBrand().trim()).concat(" ")
+                        .concat(p.getNetValue().trim()).toLowerCase().contains(cadena.trim().toLowerCase()))
+                .sortBy(p -> p.getDescription() + p.getNetValue())
+                .collect(Collectors.toList());
+    }
+
     public class CartViewHolder extends MyViewHolder{
 
-        /**
-         * Hover
-         */
+        //Hover
         private TextView unitsPantry;
         private TextView unitsShoppinglist;
 
@@ -97,37 +134,49 @@ public class CartAdapter extends MyAdapter {
         @Override
         public void onClick(View v) {
             YoYo.with(Techniques.Pulse).duration(100).playOn(v);
-            if (v.getId() == R.id.btnPlusStock)
-                units.setText(String.valueOf(product.increaseCartUnits()));
-            else if (v.getId() == R.id.btnMinusStock) {
-                if (product.getCartUnits() > 1)
-                    units.setText(String.valueOf(product.decreaseCartUnits()));
-                else {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
-                    dialog.setTitle("¿Desea eliminar este producto del carrito?");
-                    dialog.setNegativeButton("Cancelar", null);
-                    dialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            removeProduct();
-                        }
-                    });
-                    dialog.show();
-                }
+            switch (v.getId()) {
+                case R.id.btnPlusStock:
+                    units.setText(String.valueOf(product.increaseCartUnits()));
+                    guardarDatosBDLocal(product);
+                    break;
+                case R.id.btnMinusStock:
+                    if (product.getCartUnits() > 1) {
+                        units.setText(String.valueOf(product.decreaseCartUnits()));
+                        guardarDatosBDLocal(product);
+                    }
+                    else {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
+                        dialog.setTitle("¿Desea eliminar este producto del carrito?");
+                        dialog.setNegativeButton("Cancelar", null);
+                        dialog.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                removeProduct();
+                            }
+                        });
+                        dialog.show();
+                    }
+                    break;
+                case R.id.btnDelete:
+                    removeProduct();
+                    break;
+                default:
+                    super.onClick(v);
             }
-            else if (v.getId() == R.id.btnDelete) {
-                removeProduct();
-            } else
-                super.onClick(v);
         }
 
         private void removeProduct() {
-            product.setCartUnits(0);
             ((SwipeLayout)itemView).close(false);
             blurLayout.dismissHover();
+            product.setCartUnits(0);
+            guardarDatosBDLocal(product);
             adapter.items.remove(product);
             cart.remove(product);
             adapter.notifyItemRemoved(getAdapterPosition());
+            if (cart.getProducts().isEmpty()) {
+                ((Activity)context).findViewById(R.id.fabAcceptShop).setEnabled(false);
+                ((Activity)context).findViewById(R.id.fabAcceptShop).setVisibility(View.GONE);
+            }
         }
     }
 }

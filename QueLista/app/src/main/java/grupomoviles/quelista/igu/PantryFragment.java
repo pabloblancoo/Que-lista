@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import java.util.concurrent.ExecutionException;
 
 import grupomoviles.quelista.R;
 import grupomoviles.quelista.igu.recyclerViewAdapters.MyAdapter;
+import grupomoviles.quelista.logic.DownloadImageTask;
 import grupomoviles.quelista.logic.Product;
 import grupomoviles.quelista.onlineDatabase.GestorBD;
 
@@ -47,21 +49,23 @@ public class PantryFragment extends Fragment {
                 }
         );
 
-        List<Product> products = null;
+        if(((MainActivity) getActivity()).getPantryAdapter().getPantry().getProducts().size() == 0
+                && ((MainActivity) getActivity()).getShoppingListAdapter().getShoppingList().getProducts().size() == 0
+                && ((MainActivity) getActivity()).getCartAdapter().getCart().getProducts().size() == 0) {
+            Log.i("VACIA", "LO ESTA");
+            List<Product> products = null;
 
-        try {
-            products = GestorBD.FindProducts("5449000000996", "8410297112041", "8410297170058",
-                    "8410188012092", "5449000009067", "8410000826937", "8410014307682", "8410014312495", "5000127281752");
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            if(products !=  null) {
+                Stream.of(products).forEach(p -> {
+                    ((MainActivity) getActivity()).getPantryAdapter().onResultProductInfoActivity(p);
+                    ((MainActivity) getActivity()).getPantryAdapter().guardarDatosBDLocal(p);
+                    ((MainActivity) getActivity()).getPantryAdapter().notifyDataSetChanged();
+                });
+            }
         }
 
-        Stream.of(products).forEach(p -> ((MainActivity) getActivity()).pantryAdapter.getPantry().getProducts().put(p.getCode(), p));
-
-        recycler.setAdapter(((MainActivity) getActivity()).pantryAdapter);
-        ((MainActivity) getActivity()).pantryAdapter.swipeList();
+        recycler.setAdapter(((MainActivity) getActivity()).getPantryAdapter());
+        ((MainActivity) getActivity()).getPantryAdapter().swipeList();
 
         return view;
     }

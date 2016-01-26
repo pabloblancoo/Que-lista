@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import grupomoviles.quelista.R;
 import grupomoviles.quelista.igu.ProductInfoActivity;
+import grupomoviles.quelista.localDatabase.ProductDataSource;
 import grupomoviles.quelista.logic.Product;
 
 /**
@@ -34,21 +36,19 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
 
     public MyAdapter(Context context, List<Product> items) {
         this.context = context;
-        this.items = Stream.of(items).sortBy(i -> i.getDescription().charAt(0)).collect(Collectors.toList());
+        this.items = Stream.of(items).sortBy(i -> i.getDescription() + i.getNetValue()).collect(Collectors.toList());
 
         // Procesar valores actuales de las preferencias.
         sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         miniaturasPref = sharedPref.getBoolean("miniaturas", true);
     }
 
-    public void refresh() {
+    public void onResultProductInfoActivity(Product product) {
+        items = Stream.of(items).sortBy(i -> i.getDescription() + i.getNetValue()).collect(Collectors.toList());
         notifyDataSetChanged();
     }
 
-    public void onResultProductInfoActivity(Product product) {
-        items = Stream.of(items).sortBy(i -> i.getDescription().charAt(0)).collect(Collectors.toList());
-        notifyDataSetChanged();
-    }
+    public abstract void refresh();
 
     @Override
     public int getItemCount() {
@@ -83,6 +83,11 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
         viewHolder.description.setText(currentItem.getDescription());
         viewHolder.brand.setText(currentItem.getBrand());
         viewHolder.netValue.setText(currentItem.getNetValue());
+
+        if (position == getItemCount() - 1)
+            viewHolder.itemView.setPadding(0, 0, 0, 12);
+        else
+            viewHolder.itemView.setPadding(0, 0, 0, 0);
 
         mItemManger.bindView(viewHolder.itemView, position);
     }
@@ -135,5 +140,16 @@ public abstract class MyAdapter extends RecyclerSwipeAdapter<MyAdapter.MyViewHol
             notifyDataSetChanged();
         }
 
+    }
+
+    public void guardarDatosBDLocal(Product product) {
+        ProductDataSource database = new ProductDataSource(context);
+        database.openDatabase();
+        if(product.getStock()==-1 && product.getShoppingListUnits()==0 && product.getCartUnits()==0) {
+            database.deleteProduct(product.getCode());
+        } else {
+            database.insertProduct(product);
+        }
+        database.close();
     }
 }

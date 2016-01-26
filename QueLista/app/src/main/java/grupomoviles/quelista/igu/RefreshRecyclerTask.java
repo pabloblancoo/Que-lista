@@ -25,6 +25,7 @@ public class RefreshRecyclerTask extends AsyncTask<MyAdapter, Void, List<Product
 
     @Override
     protected void onPostExecute(List<Product> products) {
+        adapter.refresh();
         adapter.notifyDataSetChanged();
     }
 }

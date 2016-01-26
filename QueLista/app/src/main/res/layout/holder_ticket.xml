@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:id="@+id/swipeLayout">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/layout_buttons_ticket"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:id="@+id/btnDeleteTicket"
+            android:text="@string/Eliminar"
+            android:background="#EF5350"
+            android:backgroundTint="#EF5350"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:id="@+id/blurLayout">
+
+        <ImageView
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:id="@+id/imgProductTicket"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignBottom="@+id/view"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/cereales_miel_pops"
+            android:scaleType="centerInside"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="6dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txDescriptionTicket"
+            android:layout_alignParentTop="true"
+            android:text="Cereales Miel Pops"
+            android:textSize="16dp"
+            android:layout_toEndOf="@+id/imgProductTicket"
+            android:layout_toStartOf="@+id/txUnitsTicket"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kellogg&apos;s"
+            android:id="@+id/txBrandTicket"
+            android:layout_below="@+id/txDescriptionTicket"
+            android:layout_toEndOf="@+id/imgProductTicket"
+            android:layout_toStartOf="@+id/txUnitsTicket"
+            android:textSize="15dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Caja de 375 g"
+            android:id="@+id/txNetValueTicket"
+            android:layout_below="@+id/txBrandTicket"
+            android:layout_toEndOf="@+id/imgProductTicket"
+            android:layout_toStartOf="@+id/txUnitsTicket"
+            android:textSize="15dp" />
+
+        <ImageButton
+            android:layout_width="36dp"
+            android:layout_height="42dp"
+            android:id="@+id/btnPlusStockTicket"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/arrow_up"
+            android:nestedScrollingEnabled="false"
+            android:scaleType="fitStart"
+            android:background="@null"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="6dp"/>
+
+        <ImageButton
+            android:layout_width="36dp"
+            android:layout_height="42dp"
+            android:id="@+id/btnMinusStockTicket"
+            android:layout_below="@+id/btnPlusStockTicket"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/arrow_down"
+            android:scaleType="fitEnd"
+            android:background="@null"
+            android:layout_marginRight="12dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:id="@+id/txUnitsTicket"
+            android:layout_toStartOf="@+id/btnPlusStockTicket"
+            android:layout_alignBottom="@+id/btnMinusStockTicket"
+            android:layout_alignTop="@+id/btnPlusStockTicket"
+            android:gravity="center_vertical"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="#000000"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_below="@+id/btnMinusStockTicket" />
+
+    </RelativeLayout>
+</com.daimajia.swipe.SwipeLayout>

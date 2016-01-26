@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    tools:context=".igu.ProductInfoActivity">
+
+    <!-- Toolbar -->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_info"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/color_rojo_app"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txTitleProducto"
+            android:layout_alignParentStart="true"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="#ffffff" />
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:focusable="false"
+            android:background="#e0e0e0">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                card_view:contentPadding="12dp"
+                card_view:cardCornerRadius="0dp"
+                card_view:cardElevation="0dp"
+                card_view:cardUseCompatPadding="true"
+                android:layout_marginBottom="-3dp"
+                android:layout_marginLeft="-1dp"
+                android:layout_marginTop="-1dp"
+                android:layout_marginRight="-1dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="116dp"
+                        android:layout_height="125dp"
+                        android:id="@+id/imgProduct"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/cereales_miel_pops"
+                        android:onClick="changeImage"
+                        android:layout_marginRight="12dp" />
+                    <TextView
+                        android:layout_width="116dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:id="@+id/info_imagen"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/info_imagen"
+                        android:textAlignment="center"
+                        android:singleLine="false"
+                        android:gravity="center_vertical|center_horizontal" />
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_txDescripcion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@+id/imgProduct">
+
+                        <EditText
+                            android:id="@+id/txDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                            android:singleLine="true"
+                            android:hint="@string/producto_nombre" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_txBrand"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@+id/imgProduct"
+                        android:layout_alignEnd="@+id/input_layout_txDescripcion"
+                        android:layout_below="@+id/input_layout_txDescripcion">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txBrand"
+                            android:hint="@string/Marca"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_txNetValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignEnd="@+id/input_layout_txBrand"
+                        android:layout_below="@+id/input_layout_txBrand"
+                        android:layout_toEndOf="@+id/imgProduct"
+                        android:layout_alignStart="@+id/input_layout_txDescripcion">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txNetValue"
+                        android:hint="@string/Contenido" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_txCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignEnd="@+id/input_layout_txNetValue"
+                        android:layout_below="@+id/input_layout_txNetValue"
+                        android:layout_toEndOf="@+id/imgProduct">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txCategory"
+                        android:hint="@string/Categoria" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_txCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignEnd="@+id/input_layout_txCategory"
+                        android:layout_below="@+id/input_layout_txCategory"
+                        android:layout_toEndOf="@+id/imgProduct">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txCode"
+                        android:inputType="number"
+                        android:hint="@string/Codigo_barras" />
+                    </android.support.design.widget.TextInputLayout>
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                card_view:contentPadding="12dp"
+                card_view:contentPaddingTop="6dp"
+                card_view:cardCornerRadius="0dp"
+                card_view:cardElevation="0dp"
+                card_view:cardUseCompatPadding="true"
+                android:layout_marginBottom="-3dp"
+                android:layout_marginLeft="-1dp"
+                android:layout_marginTop="-1dp"
+                android:layout_marginRight="-1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/Unidades"
+                        android:layout_marginBottom="6dp"
+                        android:textColor="#000000"
+                        android:id="@+id/txUnits" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:id="@+id/imgPantry"
+                            android:src="@drawable/icon_button_home"
+                            android:layout_marginTop="6dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3"
+                            android:id="@+id/txUnitsPantry"
+                            android:background="@drawable/circle_red"
+                            android:paddingLeft="6dp"
+                            android:paddingRight="5dp"
+                            android:textAlignment="center"
+                            android:textColor="#ffffff"
+                            android:gravity="center"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignEnd="@+id/imgPantry"
+                            android:layout_marginRight="-6dp"/>
+
+                        <ImageButton
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
+                            android:id="@+id/btnPlusPantry"
+                            android:background="@null"
+                            android:src="@drawable/arrow_up"
+                            android:scaleType="centerCrop"
+                            android:layout_toEndOf="@id/txUnitsPantry"
+                            android:layout_alignTop="@id/txUnitsPantry"
+                            android:layout_marginLeft="2dp"
+                            android:onClick="aumentarPantry" />
+
+                        <ImageButton
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
+                            android:id="@+id/btnMinusPantry"
+                            android:background="@null"
+                            android:src="@drawable/arrow_down"
+                            android:layout_alignLeft="@id/btnPlusPantry"
+                            android:layout_below="@id/btnPlusPantry"
+                            android:scaleType="centerCrop"
+                            android:onClick="disminuirPantry" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:id="@+id/imgShoppingList"
+                            android:src="@drawable/icon_button_shopping_list"
+                            android:layout_marginTop="6dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3"
+                            android:id="@+id/txUnitsShoppingList"
+                            android:background="@drawable/circle_red"
+                            android:paddingLeft="6dp"
+                            android:paddingRight="5dp"
+                            android:textAlignment="center"
+                            android:textColor="#ffffff"
+                            android:gravity="center"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignEnd="@+id/imgShoppingList"
+                            android:layout_marginRight="-6dp" />
+
+                        <ImageButton
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
+                            android:id="@+id/btnPlusShoppingList"
+                            android:background="@null"
+                            android:src="@drawable/arrow_up"
+                            android:scaleType="centerCrop"
+                            android:layout_toEndOf="@id/txUnitsShoppingList"
+                            android:layout_alignTop="@id/txUnitsShoppingList"
+                            android:layout_marginLeft="2dp"
+                            android:onClick="aumentarShoppingList" />
+
+                        <ImageButton
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
+                            android:id="@+id/btnMinusShoppingList"
+                            android:background="@null"
+                            android:src="@drawable/arrow_down"
+                            android:scaleType="centerCrop"
+                            android:layout_below="@+id/btnPlusShoppingList"
+                            android:layout_alignLeft="@+id/btnPlusShoppingList"
+                            android:onClick="disminuirShoppingList" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:id="@+id/imgCart"
+                            android:src="@drawable/icon_button_cart"
+                            android:layout_marginTop="6dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3"
+                            android:id="@+id/txUnitsCart"
+                            android:background="@drawable/circle_red"
+                            android:paddingLeft="6dp"
+                            android:paddingRight="5dp"
+                            android:textAlignment="center"
+                            android:textColor="#ffffff"
+                            android:gravity="center_horizontal"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignEnd="@+id/imgCart"
+                            android:layout_marginRight="-6dp"/>
+
+                        <ImageButton
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
+                            android:id="@+id/btnPlusCart"
+                            android:background="@null"
+                            android:src="@drawable/arrow_up"
+                            android:scaleType="centerCrop"
+                            android:layout_toEndOf="@id/txUnitsCart"
+                            android:layout_alignTop="@id/txUnitsCart"
+                            android:layout_marginLeft="9dp"
+                            android:onClick="aumentarCartList" />
+
+                        <ImageButton
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
+                            android:id="@+id/btnMinusCart"
+                            android:background="@null"
+                            android:src="@drawable/arrow_down"
+                            android:scaleType="centerCrop"
+                            android:layout_alignLeft="@id/btnPlusCart"
+                            android:layout_below="@id/btnPlusCart"
+                            android:onClick="disminuirCartList" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                card_view:contentPadding="12dp"
+                card_view:cardCornerRadius="0dp"
+                card_view:cardElevation="0dp"
+                card_view:cardUseCompatPadding="true"
+                android:layout_marginBottom="-3dp"
+                android:layout_marginLeft="-1dp"
+                android:layout_marginTop="-1dp"
+                android:layout_marginRight="-1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/switchTakeUnits"
+                        android:checked="false"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/descontarUnidades"
+                        android:layout_alignParentStart="true"
+                        android:singleLine="false" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:id="@+id/layoutTakeUnitsSwitch">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="1"
+                            android:id="@+id/txUnitsTakes"
+                            android:layout_gravity="center"
+                            android:gravity="center_vertical"
+                            android:focusable="true"
+                            android:layout_marginRight="2dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="2dp"
+                            android:text="@string/unitsTakes"
+                            android:id="@+id/txUnitsTakesLabel"
+                            android:layout_gravity="center"
+                            android:gravity="center_vertical" />
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp">
+
+                            <Button
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:id="@+id/btnMinusUnitsTakes"
+                                android:background="@drawable/arrow_down"
+                                android:onClick="disminuirUnitsDescontar" />
+
+                            <Button
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:id="@+id/btnPlusUnitsTakes"
+                                android:background="@drawable/arrow_up"
+                                android:onClick="aumentarUnitsDescontar" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="/"
+                            android:id="@+id/txSeparatorTakes"
+                            android:gravity="center_vertical"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="1"
+                            android:id="@+id/txDaysTakes"
+                            android:gravity="center_vertical"
+                            android:layout_marginRight="2dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/dayTakes"
+                            android:id="@+id/txDaysTakesLabel"
+                            android:layout_gravity="center"
+                            android:gravity="center_vertical"
+                            android:layout_marginLeft="2dp" />
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="6dp">
+
+                            <Button
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:id="@+id/btnMinusDaysTakes"
+                                android:background="@drawable/arrow_down"
+                                android:onClick="disminuirDays" />
+
+                            <Button
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:id="@+id/btnPlusDaysTakes"
+                                android:background="@drawable/arrow_up"
+                                android:onClick="aumentarDays" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                card_view:contentPadding="12dp"
+                card_view:cardCornerRadius="0dp"
+                card_view:cardElevation="0dp"
+                card_view:cardUseCompatPadding="true"
+                android:layout_marginLeft="-1dp"
+                android:layout_marginTop="-1dp"
+                android:layout_marginRight="-1dp"
+                android:layout_marginBottom="-3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/switchAddToShoppingList"
+                        android:text="@string/añadirListaCompra"
+                        android:layout_marginBottom="3dp"/>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/layoutAddToShoppingListSwitch">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/cuandoQueden"
+                            android:id="@+id/txWhenHave"
+                            android:gravity="center_vertical"
+                            android:layout_alignTop="@+id/linearLayout"
+                            android:layout_alignBottom="@+id/linearLayout" />
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_alignParentRight="true"
+                            android:id="@+id/linearLayout"
+                            android:layout_marginBottom="6dp"
+                            android:layout_marginLeft="6dp">
+
+                            <Button
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:id="@+id/btnMinusWhenHave"
+                                android:background="@drawable/arrow_down"
+                                android:onClick="disminuirWhenHave" />
+
+                            <Button
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:id="@+id/btnPlusWhenHave"
+                                android:background="@drawable/arrow_up"
+                                android:onClick="aumentarWhenHave" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:id="@+id/txUnitsWhenHave"
+                            android:gravity="center_vertical"
+                            android:layout_alignParentTop="true"
+                            android:layout_toStartOf="@+id/txUnitsWhenHaveLabel"
+                            android:layout_alignBottom="@+id/txUnitsWhenHaveLabel"
+                            android:layout_marginRight="2dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/unitsTakesMore"
+                            android:id="@+id/txUnitsWhenHaveLabel"
+                            android:layout_toStartOf="@+id/linearLayout"
+                            android:gravity="center_vertical"
+                            android:layout_alignTop="@+id/linearLayout"
+                            android:layout_alignBottom="@+id/linearLayout"
+                            android:layout_marginLeft="2dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/añadir"
+                            android:id="@+id/txAddWhenHave"
+                            android:layout_alignBottom="@+id/linearLayout2"
+                            android:layout_alignTop="@+id/linearLayout2"
+                            android:gravity="center_vertical" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:id="@+id/txUnitsAddWhenHave"
+                            android:gravity="center_vertical"
+                            android:layout_alignTop="@+id/txUnitsAddWhenHaveLabel"
+                            android:layout_toStartOf="@+id/txUnitsAddWhenHaveLabel"
+                            android:layout_alignBottom="@+id/txUnitsAddWhenHaveLabel"
+                            android:layout_marginRight="2dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/units"
+                            android:id="@+id/txUnitsAddWhenHaveLabel"
+                            android:gravity="center_vertical"
+                            android:layout_alignTop="@+id/linearLayout2"
+                            android:layout_toStartOf="@+id/linearLayout2"
+                            android:layout_alignBottom="@+id/linearLayout2"
+                            android:layout_marginLeft="2dp" />
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:id="@+id/linearLayout2"
+                            android:layout_below="@+id/linearLayout"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginLeft="6dp">
+
+                            <Button
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:id="@+id/btnMinusAddWhenHave"
+                                android:background="@drawable/arrow_down"
+                                android:onClick="disminuirAddWhenHave" />
+
+                            <Button
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:id="@+id/btnPlusAddWhenHave"
+                                android:background="@drawable/arrow_up"
+                                android:onClick="aumentarAddWhenHave" />
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+</android.support.design.widget.CoordinatorLayout>

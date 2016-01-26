@@ -57,7 +57,7 @@ public class CartFragment extends Fragment {
                 }
         );
 
-        recycler.setAdapter(((MainActivity) getActivity()).cartAdapter);
+        recycler.setAdapter(((MainActivity) getActivity()).getCartAdapter());
 
         return view;
     }

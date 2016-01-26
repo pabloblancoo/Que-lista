@@ -49,7 +49,7 @@ public class ShoppingListFragment extends Fragment {
                 }
         );
 
-        recycler.setAdapter(((MainActivity) getActivity()).shoppingListAdapter);
+        recycler.setAdapter(((MainActivity) getActivity()).getShoppingListAdapter());
 
         return view;
     }

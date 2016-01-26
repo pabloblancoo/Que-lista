@@ -3,7 +3,12 @@ package grupomoviles.quelista.logic;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
+import android.util.Log;
 
+import com.annimon.stream.Stream;
+
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
@@ -15,7 +20,9 @@ import java.util.Objects;
  */
 public class Product implements Serializable {
 
-    public static int NOT_IN_PANTRY = -1;
+    public static final int NOT_IN_PANTRY = -1;
+    public static final int NOT_IN_CART = 0;
+    public static final int NOT_IN_SHOPPING_LIST = 0;
 
     private String code;
     private String description;
@@ -28,38 +35,18 @@ public class Product implements Serializable {
 
     private int stock = 0;		// (-1 == no)
     private int minStock;
-    private int unitsToAdd;	//Unidades a añadir a la lista de la compra automáticamente (Def: 1)
+    private int unitsToAdd = 1;	//Unidades a añadir a la lista de la compra automáticamente (Def: 1)
 
     private Date lastUpdate;	// (null == no añadir automáticamente)
-    private int consumeCycle;  //Período (a definir si van a ser días enteros)
-    private int consumeUnits;  //Unidades a descontar cada período
+    private int consumeCycle = 1;  //Período (a definir si van a ser días enteros)
+    private int consumeUnits = 1;  //Unidades a descontar cada período
 
     private int shoppingListUnits;	//Unidades en la lista de la compra (0 == no)
     private int cartUnits;		//Unidades en el carrito (0 == no)
 
 
     //Constructor con todos los valores inicializados, hay que borrarlo
-    public  Product(String code){
-        this.code = code;
-        description = "";
-        brand = "";
-        netValue="";
-        units = 1;  //(por ejemplo, la caja de yogures contiene 8 unidades. Por defecto 1)
-
-        category="";
-        subcategory="";
-        stock = 0;		// (-1 == no)
-        minStock=0;
-        unitsToAdd=1;	//Unidades a añadir a la lista de la compra automáticamente (Def: 1)
-
-        lastUpdate = new Date();	// (null == no añadir automáticamente)
-        consumeCycle=2;
-        consumeUnits=1;
-
-        shoppingListUnits=1;
-        cartUnits=1;
-
-    }
+    public  Product(){}
 
     /**
      * Constructor con todos los parametros
@@ -115,6 +102,7 @@ public class Product implements Serializable {
         this.subcategory = subcategory;
         this.units = units;
     }
+
 
     //GETTERS and SETTERS
     public String getDescription() {
@@ -237,7 +225,6 @@ public class Product implements Serializable {
         this.stock = stock;
     }
 
-
     //Metodos de logica
 
     public int increaseStock() {
@@ -319,16 +306,56 @@ public class Product implements Serializable {
 
     public Bitmap getImage(Context context) {
         Bitmap bitmap = null;
+        Log.e("IMAGEN", this.code.toString());
+        Log.e("IMAGEN_RUTA "+this.code, Environment.getExternalStorageDirectory() +
+                "/QueLista/" + this.code + ".jpg");
+
 
         try {
-            FileInputStream fileInputStream =
-                    new FileInputStream(context.getApplicationContext().getFilesDir().getPath()+ "/" + this.code + ".png");
-            bitmap = BitmapFactory.decodeStream(fileInputStream);
-        } catch (IOException io){
+            File imagesFolder = new File(Environment.getExternalStorageDirectory(), "QueLista");
+            File from = new File(imagesFolder, this.code + ".jpg");
+
+            Log.e("IMAGEN_RUTA "+this.code, Environment.getExternalStorageDirectory() +
+                    "/QueLista/" + this.code + ".jpg");
+            if (!from.exists()) {
+                FileInputStream fileInputStream =
+                        new FileInputStream(context.getApplicationContext().getFilesDir().getPath() + "/" + this.code + ".png");
+
+                bitmap = BitmapFactory.decodeStream(fileInputStream);
+            } else {
+                bitmap = BitmapFactory.decodeFile(
+                        Environment.getExternalStorageDirectory() +
+                                "/QueLista/" + this.code + ".jpg");
+                Log.e("IMAGEN_RUTA", Environment.getExternalStorageDirectory() +
+                        "/QueLista/" + this.code + ".jpg");
+            }
+
+        } catch (IOException io) {
             io.printStackTrace();
         }
 
         return bitmap;
+    }
+
+    public void spendUnits(){
+        long currentDate = new Date().getTime();
+            if (getLastUpdate() != null) {
+                Long productLastDate = getLastUpdate().getTime();
+                long time = currentDate - productLastDate;
+                long hours = time / 1000 / 60 / 60;
+                long hoursConsume = getConsumeCycle() * 24;
+                if (hours >= hoursConsume && hoursConsume > 0) {
+                    int vecesADescontar = (int)(hours / hoursConsume);
+                    if (getStock() >= (getConsumeUnits()*vecesADescontar)) {
+                        setStock(getStock() - (getConsumeUnits()*vecesADescontar));
+
+                    } else {
+                        setStock(0);
+                    }
+                    setLastUpdate(new Date());
+                }
+            }
+
     }
 
     @Override
