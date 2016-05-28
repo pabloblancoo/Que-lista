@@ -2,8 +2,6 @@ package grupomoviles.quelista.logic;
 
 import android.os.AsyncTask;
 
-import com.annimon.stream.Stream;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,16 +9,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import grupomoviles.quelista.onlineDatabase.GestorBD;
 
 /**
  * Created by Nauce on 4/1/16.
  */
 public class DownloadTicketFileTask extends AsyncTask<String, Void, String> {
+
     @Override
-    protected String doInBackground(String... url) {;
+    protected String doInBackground(String... url) {
+        ;
         try {
 
             HttpURLConnection conn = (HttpURLConnection) new URL(url[0]).openConnection();

@@ -7,17 +7,23 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.nfc.NfcAdapter;
-
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+
+import com.annimon.stream.Stream;
+import com.google.zxing.BarcodeFormat;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-
 
 import grupomoviles.quelista.R;
 import grupomoviles.quelista.captureCodes.CaptureActivity;
@@ -32,16 +38,6 @@ import grupomoviles.quelista.logic.Pantry;
 import grupomoviles.quelista.logic.Product;
 import grupomoviles.quelista.logic.ShoppingList;
 import grupomoviles.quelista.onlineDatabase.GestorBD;
-
-
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-
-import com.annimon.stream.Stream;
-import com.google.zxing.BarcodeFormat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -75,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         cartAdapter = new CartAdapter(this, new Cart(this));
 
         List<Product> temp = cargarBDLocal();
-        if(temp!=null && !temp.isEmpty()) {
+        if (temp != null && !temp.isEmpty()) {
             Stream.of(temp).forEach(p -> {
                 pantryAdapter.onResultProductInfoActivity(p);
                 shoppingListAdapter.onResultProductInfoActivity(p);
@@ -109,15 +105,13 @@ public class MainActivity extends AppCompatActivity {
             pantryAdapter.onResultProductInfoActivity(product);
             shoppingListAdapter.onResultProductInfoActivity(product);
             cartAdapter.onResultProductInfoActivity(product);
-        }
-        else if (NewProductActivity.REQUEST_CODE == requestCode && resultCode == RESULT_OK) {
+        } else if (NewProductActivity.REQUEST_CODE == requestCode && resultCode == RESULT_OK) {
             Product product = (Product) data.getExtras().get(NewProductActivity.PRODUCT);
             Log.i("PRODUCTO_NEW", "Codigo: " + product.getCode() + " -- Unidades: " + product.getStock());
             pantryAdapter.onResultNewProductActivity(product);
             shoppingListAdapter.onResultNewProductActivity(product);
             cartAdapter.onResultNewProductActivity(product);
-        }
-        else if (resultCode == RESULT_OK && IntentCaptureActivity.CODE_CAPTURE_ACTIVITY == requestCode &&
+        } else if (resultCode == RESULT_OK && IntentCaptureActivity.CODE_CAPTURE_ACTIVITY == requestCode &&
                 data.getExtras().getString(CaptureActivity.SCAN_FORMAT).toString().equals(BarcodeFormat.EAN_13.toString())) {
             String content = data.getExtras().getString(CaptureActivity.SCAN_CONTENT);
             Product product;
@@ -167,46 +161,37 @@ public class MainActivity extends AppCompatActivity {
                 });
                 dialog.setNegativeButton(getString(R.string.Cancelar), null);
                 dialog.show();
-            }
-            else {
+            } else {
                 Intent intent = new Intent(MainActivity.this, ProductInfoActivity.class);
                 intent.putExtra(ProductInfoActivity.PRODUCT, product);
                 intent.putExtra(ProductInfoActivity.NEWPRODUCT, newProduct);
                 startActivityForResult(intent, ProductInfoActivity.REQUEST_CODE);
             }
-        }
-
-        else if(resultCode == RESULT_OK && ScanNFCActivity.REQUEST_CODE == requestCode) {
+        } else if (resultCode == RESULT_OK && ScanNFCActivity.REQUEST_CODE == requestCode) {
             if (isOnline()) {
                 Intent intent = new Intent(MainActivity.this, TicketActivity.class);
                 intent.putExtra(ScanNFCActivity.URLTAG, data.getExtras().getString(ScanNFCActivity.URLTAG));
                 startActivityForResult(intent, TicketActivity.REQUEST_CODE);
-            }
-            else {
+            } else {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                 dialog.setMessage("No tiene conexión a internet");
                 dialog.show();
             }
-        }
-
-        else if (resultCode == RESULT_OK &&
+        } else if (resultCode == RESULT_OK &&
                 IntentCaptureActivity.CODE_CAPTURE_ACTIVITY == requestCode
                 && data.getExtras().getString(CaptureActivity.SCAN_FORMAT).toString().equals(BarcodeFormat.QR_CODE.toString())) {
             if (isOnline()) {
                 Intent intent = new Intent(MainActivity.this, TicketActivity.class);
                 intent.putExtra(ScanNFCActivity.URLTAG, data.getExtras().getString(CaptureActivity.SCAN_CONTENT));
                 startActivityForResult(intent, TicketActivity.REQUEST_CODE);
-            }
-            else {
+            } else {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                 dialog.setMessage("No tiene conexión a internet");
                 dialog.show();
             }
-        }
+        } else if (resultCode == RESULT_OK && TicketActivity.REQUEST_CODE == requestCode) {
 
-        else if(resultCode == RESULT_OK && TicketActivity.REQUEST_CODE == requestCode){
-
-            Map<String,Product> map = (Map<String, Product>) data.getExtras().get(TicketActivity.PRODUCTS);
+            Map<String, Product> map = (Map<String, Product>) data.getExtras().get(TicketActivity.PRODUCTS);
             Stream.of(map).forEach(m ->
             {
                 pantryAdapter.onResultNfcActivity(m.getValue());
@@ -261,12 +246,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case R.id.nav_item_nfc:
-                    if(NfcAdapter.getDefaultAdapter(this) == null) {
+                    if (NfcAdapter.getDefaultAdapter(this) == null) {
                         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                         dialog.setMessage("Este dispostivo no tiene NFC");
                         dialog.show();
-                    }
-                    else if (isOnline()) {
+                    } else if (isOnline()) {
                         Intent intent = new Intent(this, ScanNFCActivity.class);
                         startActivityForResult(intent, ScanNFCActivity.REQUEST_CODE);
                     } else {
@@ -348,11 +332,11 @@ public class MainActivity extends AppCompatActivity {
 
         //Stream.of(p).forEach(x -> Log.i("PANTRY", "PRODUCTO " + x.getCode()));
 
-        return  p;
+        return p;
     }
 
     public boolean isOnline() {
-        NetworkInfo i = ((ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+        NetworkInfo i = ((ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
 
         if (i == null)
             return false;

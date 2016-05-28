@@ -6,9 +6,7 @@ import com.annimon.stream.Stream;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import grupomoviles.quelista.localDatabase.ProductDataSource;
 
@@ -18,11 +16,11 @@ import grupomoviles.quelista.localDatabase.ProductDataSource;
 public class ShoppingList {
 
     private Context context;
+    private Map<String, Product> products = new HashMap<String, Product>();
 
-    public ShoppingList(Context context){
+    public ShoppingList(Context context) {
         this.context = context;
     }
-    private Map<String, Product> products = new HashMap<String, Product>();
 
     public Map<String, Product> getProducts() {
         return products;

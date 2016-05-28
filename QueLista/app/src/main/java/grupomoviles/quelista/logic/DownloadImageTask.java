@@ -1,20 +1,18 @@
 package grupomoviles.quelista.logic;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import grupomoviles.quelista.igu.MainActivity;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
@@ -25,8 +23,6 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     }
 
     public Bitmap doInBackground(String... product) {
-        FTPClient f = new FTPClient();
-
         try {
             Bitmap bp;
             ByteArrayOutputStream stream;
@@ -34,12 +30,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
             FileOutputStream outputStream;
 
             for (String s : product) {
-                f.connect("31.170.164.153", 21);
-                f.login("u750524270.solocarpeta", "moviles2015");
-                f.enterLocalActiveMode();
-                f.setFileType(FTP.BINARY_FILE_TYPE);
-
-                bp = BitmapFactory.decodeStream(f.retrieveFileStream("/" + s + ".png"));
+                bp = DownloadImage("http://quelista.comli.com/app/images/" + s + ".png");
 
                 if (bp != null) {
                     stream = new ByteArrayOutputStream();
@@ -50,7 +41,6 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
                     outputStream.write(byteArray);
                     outputStream.close();
                 }
-                f.disconnect();
             }
 
         } catch (IOException e) {
@@ -58,5 +48,43 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         }
 
         return null;
+    }
+
+    private InputStream OpenHttpConnection(String urlString) throws IOException {
+        InputStream in = null;
+        int response = -1;
+
+        URL url = new URL(urlString);
+        URLConnection conn = url.openConnection();
+
+        try {
+            HttpURLConnection httpConn = (HttpURLConnection) conn;
+            httpConn.setAllowUserInteraction(false);
+            httpConn.setInstanceFollowRedirects(true);
+            httpConn.setRequestMethod("GET");
+            httpConn.connect();
+            response = httpConn.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK) {
+                in = httpConn.getInputStream();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return in;
+    }
+
+    private Bitmap DownloadImage(String URL) {
+        Bitmap bitmap = null;
+        InputStream in = null;
+        try {
+            in = OpenHttpConnection(URL);
+            bitmap = BitmapFactory.decodeStream(in);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
     }
 }

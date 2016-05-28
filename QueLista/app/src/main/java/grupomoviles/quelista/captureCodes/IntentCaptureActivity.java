@@ -19,36 +19,36 @@ public class IntentCaptureActivity implements Serializable {
     private boolean reverseCamera;
     private String statusText = "Código de barras";
 
-    public void setBarcodeFormat(BarcodeFormat barcodeFormat) {
-        this.barcodeFormat = barcodeFormat;
-    }
-
     public BarcodeFormat getBarcodeFormat() {
         return barcodeFormat;
     }
 
-    public void setBeep(boolean beep) {
-        this.beep = beep;
+    public void setBarcodeFormat(BarcodeFormat barcodeFormat) {
+        this.barcodeFormat = barcodeFormat;
     }
 
     public boolean isBeep() {
         return beep;
     }
 
-    public void setReverseCamera(boolean reverseCamera) {
-        this.reverseCamera = reverseCamera;
+    public void setBeep(boolean beep) {
+        this.beep = beep;
     }
 
     public boolean isReverseCamera() {
         return reverseCamera;
     }
 
-    public void setStatusText(String statusText) {
-        this.statusText = statusText;
+    public void setReverseCamera(boolean reverseCamera) {
+        this.reverseCamera = reverseCamera;
     }
 
     public String getStatusText() {
         return statusText;
+    }
+
+    public void setStatusText(String statusText) {
+        this.statusText = statusText;
     }
 
     public void initScan(Activity activity) {

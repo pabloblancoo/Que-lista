@@ -3,13 +3,10 @@ package grupomoviles.quelista.logic;
 import android.content.Context;
 
 import com.annimon.stream.Stream;
-import com.mongodb.util.Hash;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import grupomoviles.quelista.igu.MainActivity;
 import grupomoviles.quelista.localDatabase.ProductDataSource;
@@ -23,7 +20,7 @@ public class Cart {
 
     private Map<String, Product> products = new HashMap<String, Product>();
 
-    public Cart(Context context){
+    public Cart(Context context) {
         this.context = context;
     }
 
@@ -49,7 +46,7 @@ public class Cart {
         ProductDataSource database = new ProductDataSource(context);
         database.openDatabase();
 
-        if(product.getStock() == Product.NOT_IN_PANTRY && product.getCartUnits() == Product.NOT_IN_CART && product.getShoppingListUnits() == Product.NOT_IN_SHOPPING_LIST)
+        if (product.getStock() == Product.NOT_IN_PANTRY && product.getCartUnits() == Product.NOT_IN_CART && product.getShoppingListUnits() == Product.NOT_IN_SHOPPING_LIST)
             database.deleteProduct(product.getCode());
         else
             database.update(product);
@@ -87,11 +84,11 @@ public class Cart {
         database.openDatabase();
 
         Stream.of(products.values()).forEach(p -> {
-            p.setStock(p.getStock() + (p.getCartUnits()*p.getUnits()));
+            p.setStock(p.getStock() + (p.getCartUnits() * p.getUnits()));
             p.setCartUnits(Product.NOT_IN_CART);
-            ((MainActivity)context).getShoppingListAdapter().getShoppingList().remove(p);
-            ((MainActivity)context).getShoppingListAdapter().getShoppingList().refresh();
-            ((MainActivity)context).getShoppingListAdapter().notifyDataSetChanged();
+            ((MainActivity) context).getShoppingListAdapter().getShoppingList().remove(p);
+            ((MainActivity) context).getShoppingListAdapter().getShoppingList().refresh();
+            ((MainActivity) context).getShoppingListAdapter().notifyDataSetChanged();
             database.update(p);
         });
 

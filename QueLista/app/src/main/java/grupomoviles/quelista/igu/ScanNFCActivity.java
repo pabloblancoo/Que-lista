@@ -57,7 +57,7 @@ public class ScanNFCActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scan_nfc);
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbarNFC));
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ticketAdapter = new TicketAdapter(this, new Ticket());

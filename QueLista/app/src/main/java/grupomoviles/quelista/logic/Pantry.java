@@ -6,11 +6,8 @@ import com.annimon.stream.Stream;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
-import grupomoviles.quelista.igu.MainActivity;
 import grupomoviles.quelista.localDatabase.ProductDataSource;
 
 /**
@@ -47,7 +44,7 @@ public class Pantry {
         ProductDataSource database = new ProductDataSource(context);
         database.openDatabase();
 
-        if(product.getStock() == Product.NOT_IN_PANTRY && product.getCartUnits() == Product.NOT_IN_CART && product.getShoppingListUnits() == Product.NOT_IN_SHOPPING_LIST)
+        if (product.getStock() == Product.NOT_IN_PANTRY && product.getCartUnits() == Product.NOT_IN_CART && product.getShoppingListUnits() == Product.NOT_IN_SHOPPING_LIST)
             database.deleteProduct(product.getCode());
         else
             database.update(product);
@@ -74,10 +71,9 @@ public class Pantry {
         database.openDatabase();
 
         if (p != null) {
-            p.setStock(p.getStock() + (product.getStock()*p.getUnits()));
+            p.setStock(p.getStock() + (product.getStock() * p.getUnits()));
             database.update(p);
-        }
-        else {
+        } else {
             products.put(product.getCode(), product);
             database.insertProduct(product);
         }

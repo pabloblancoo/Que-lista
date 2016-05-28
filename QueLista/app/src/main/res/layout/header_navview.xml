@@ -2,13 +2,14 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingTop="45dp">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitStart"
         android:src="@drawable/banner"
-        android:paddingTop="25dp"
-        android:paddingLeft="10dp"/>
+        android:paddingTop="0dp"
+        android:paddingLeft="12dp"/>
 </FrameLayout>

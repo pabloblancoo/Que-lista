@@ -2,7 +2,6 @@ package grupomoviles.quelista.captureCodes;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -32,6 +31,19 @@ public class CaptureActivity extends AppCompatActivity {
 
     private boolean flash;
     private int cameraId = 0;
+    private BarcodeCallback callback = new BarcodeCallback() {
+        @Override
+        public void barcodeResult(BarcodeResult result) {
+            if (result.getBarcodeFormat().equals(ica.getBarcodeFormat())
+                    && result.getText() != null) {
+                handleDecode(result);
+            }
+        }
+
+        @Override
+        public void possibleResultPoints(List<ResultPoint> resultPoints) {
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +94,7 @@ public class CaptureActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        switch(id) {
+        switch (id) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
@@ -91,8 +103,7 @@ public class CaptureActivity extends AppCompatActivity {
                 if (flash) {
                     torchOff();
                     flash = false;
-                }
-                else {
+                } else {
                     barcodeView.setTorchOn();
                     flash = true;
                 }
@@ -107,8 +118,7 @@ public class CaptureActivity extends AppCompatActivity {
                     barcodeView.pause();
                     barcodeView.getBarcodeView().getCameraSettings().setRequestedCameraId(cameraId);
                     barcodeView.resume();
-                }
-                else {
+                } else {
                     cameraId = 0;
                     barcodeView.pause();
                     barcodeView.getBarcodeView().getCameraSettings().setRequestedCameraId(cameraId);
@@ -130,20 +140,6 @@ public class CaptureActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    private BarcodeCallback callback = new BarcodeCallback() {
-        @Override
-        public void barcodeResult(BarcodeResult result) {
-            if (result.getBarcodeFormat().equals(ica.getBarcodeFormat())
-                    && result.getText() != null) {
-                handleDecode(result);
-            }
-        }
-
-        @Override
-        public void possibleResultPoints(List<ResultPoint> resultPoints) {
-        }
-    };
 
     public void handleDecode(BarcodeResult rawResult) {
         barcodeView.setTorchOff();
@@ -226,7 +222,7 @@ public class CaptureActivity extends AppCompatActivity {
         barcodeView.getBarcodeView().getCameraSettings().setExposureEnabled(true);
         barcodeView.getBarcodeView().getCameraSettings().setMeteringEnabled(true);
         barcodeView.getBarcodeView().getCameraSettings().setBarcodeSceneModeEnabled(true);
-        if(flash)
+        if (flash)
             barcodeView.setTorchOn();
         torchOff();
     }

@@ -47,7 +47,7 @@
         android:layout_margin="12dp"
         android:onClick="accept"
         android:scaleType="centerCrop"
-        android:src="@drawable/barcode"
+        android:src="@drawable/ic_check_white_24dp"
         app:backgroundTint="@color/color_rojo_app"
         app:elevation="4dp"
         app:layout_anchorGravity="bottom|right|end"

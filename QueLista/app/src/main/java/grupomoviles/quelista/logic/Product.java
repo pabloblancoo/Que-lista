@@ -6,14 +6,11 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
 
-import com.annimon.stream.Stream;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * Created by Nauce on 22/12/15.
@@ -33,23 +30,25 @@ public class Product implements Serializable {
     private String category;
     private String subcategory;
 
-    private int stock = 0;		// (-1 == no)
+    private int stock = 0;        // (-1 == no)
     private int minStock;
-    private int unitsToAdd = 1;	//Unidades a añadir a la lista de la compra automáticamente (Def: 1)
+    private int unitsToAdd = 1;    //Unidades a añadir a la lista de la compra automáticamente (Def: 1)
 
-    private Date lastUpdate;	// (null == no añadir automáticamente)
+    private Date lastUpdate;    // (null == no añadir automáticamente)
     private int consumeCycle = 1;  //Período (a definir si van a ser días enteros)
     private int consumeUnits = 1;  //Unidades a descontar cada período
 
-    private int shoppingListUnits;	//Unidades en la lista de la compra (0 == no)
-    private int cartUnits;		//Unidades en el carrito (0 == no)
+    private int shoppingListUnits;    //Unidades en la lista de la compra (0 == no)
+    private int cartUnits;        //Unidades en el carrito (0 == no)
 
 
     //Constructor con todos los valores inicializados, hay que borrarlo
-    public  Product(){}
+    public Product() {
+    }
 
     /**
      * Constructor con todos los parametros
+     *
      * @param code
      * @param description
      * @param brand
@@ -109,16 +108,32 @@ public class Product implements Serializable {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getBrand() {
         return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public String getNetValue() {
         return netValue;
     }
 
+    public void setNetValue(String netValue) {
+        this.netValue = netValue;
+    }
+
     public int getStock() {
         return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public String getCode() {
@@ -127,18 +142,6 @@ public class Product implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public void setNetValue(String netValue) {
-        this.netValue = netValue;
     }
 
     public int getUnits() {
@@ -221,10 +224,6 @@ public class Product implements Serializable {
         this.cartUnits = cartUnits;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
     //Metodos de logica
 
     public int increaseStock() {
@@ -233,81 +232,81 @@ public class Product implements Serializable {
     }
 
     public int decreaseStock() {
-        if(stock > 0)
+        if (stock > 0)
             stock--;
         return stock;
     }
 
-    public int increaseShoppingListUnits(){
+    public int increaseShoppingListUnits() {
         shoppingListUnits++;
-        return  shoppingListUnits;
+        return shoppingListUnits;
     }
 
-    public int decreaseShoppingListUnits(){
-        if(shoppingListUnits > 0 )
+    public int decreaseShoppingListUnits() {
+        if (shoppingListUnits > 0)
             shoppingListUnits--;
-        return  shoppingListUnits;
+        return shoppingListUnits;
     }
 
-    public int increaseCartUnits(){
+    public int increaseCartUnits() {
         cartUnits++;
-        return  cartUnits;
+        return cartUnits;
     }
 
-    public int decreaseCartUnits(){
-        if(cartUnits > 0 )
-        cartUnits--;
-        return  cartUnits;
+    public int decreaseCartUnits() {
+        if (cartUnits > 0)
+            cartUnits--;
+        return cartUnits;
     }
 
-    public int increaseConsumeCycle(){
+    public int increaseConsumeCycle() {
         consumeCycle++;
-        return  consumeCycle;
+        return consumeCycle;
     }
 
-    public int decreaseConsumeCycle(){
-        if(consumeCycle > 0)
-        consumeCycle--;
-        return  consumeCycle;
+    public int decreaseConsumeCycle() {
+        if (consumeCycle > 0)
+            consumeCycle--;
+        return consumeCycle;
     }
 
-    public int increaseConsumeUnits(){
+    public int increaseConsumeUnits() {
         consumeUnits++;
-        return  consumeUnits;
+        return consumeUnits;
     }
 
-    public int decreaseConsumeUnits(){
-       if(consumeUnits > 0)
-        consumeUnits--;
-        return  consumeUnits;
+    public int decreaseConsumeUnits() {
+        if (consumeUnits > 0)
+            consumeUnits--;
+        return consumeUnits;
     }
 
-    public int increaseUnitsToAdd(){
+    public int increaseUnitsToAdd() {
         unitsToAdd++;
-        return  unitsToAdd;
+        return unitsToAdd;
     }
 
-    public int decreaseUnitsToAdd(){
+    public int decreaseUnitsToAdd() {
         if (unitsToAdd > 0)
-        unitsToAdd--;
-        return  unitsToAdd;
+            unitsToAdd--;
+        return unitsToAdd;
     }
 
-    public int increaseMinStock(){
+    public int increaseMinStock() {
         minStock++;
-        return  unitsToAdd;
+        return unitsToAdd;
     }
 
-    public int decreaseMinStock(){
-       if(minStock > 0)
-        minStock--;
-        return  unitsToAdd;
+    public int decreaseMinStock() {
+        if (minStock > 0)
+            minStock--;
+        return unitsToAdd;
     }
 
     public Bitmap getImage(Context context) {
         Bitmap bitmap = null;
         Log.e("IMAGEN", this.code.toString());
-        Log.e("IMAGEN_RUTA "+this.code, Environment.getExternalStorageDirectory() +
+        Log.e("IMAGEN_RUTA " + this.code, Environment.getExternalStorageDirectory() +
                 "/QueLista/" + this.code + ".jpg");
 
 
@@ -315,7 +314,7 @@ public class Product implements Serializable {
             File imagesFolder = new File(Environment.getExternalStorageDirectory(), "QueLista");
             File from = new File(imagesFolder, this.code + ".jpg");
 
-            Log.e("IMAGEN_RUTA "+this.code, Environment.getExternalStorageDirectory() +
+            Log.e("IMAGEN_RUTA " + this.code, Environment.getExternalStorageDirectory() +
                     "/QueLista/" + this.code + ".jpg");
             if (!from.exists()) {
                 FileInputStream fileInputStream =
@@ -337,24 +336,24 @@ public class Product implements Serializable {
         return bitmap;
     }
 
-    public void spendUnits(){
+    public void spendUnits() {
         long currentDate = new Date().getTime();
-            if (getLastUpdate() != null) {
-                Long productLastDate = getLastUpdate().getTime();
-                long time = currentDate - productLastDate;
-                long hours = time / 1000 / 60 / 60;
-                long hoursConsume = getConsumeCycle() * 24;
-                if (hours >= hoursConsume && hoursConsume > 0) {
-                    int vecesADescontar = (int)(hours / hoursConsume);
-                    if (getStock() >= (getConsumeUnits()*vecesADescontar)) {
-                        setStock(getStock() - (getConsumeUnits()*vecesADescontar));
+        if (getLastUpdate() != null) {
+            Long productLastDate = getLastUpdate().getTime();
+            long time = currentDate - productLastDate;
+            long hours = time / 1000 / 60 / 60;
+            long hoursConsume = getConsumeCycle() * 24;
+            if (hours >= hoursConsume && hoursConsume > 0) {
+                int vecesADescontar = (int) (hours / hoursConsume);
+                if (getStock() >= (getConsumeUnits() * vecesADescontar)) {
+                    setStock(getStock() - (getConsumeUnits() * vecesADescontar));
 
-                    } else {
-                        setStock(0);
-                    }
-                    setLastUpdate(new Date());
+                } else {
+                    setStock(0);
                 }
+                setLastUpdate(new Date());
             }
+        }
 
     }
 
